@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Focusable elements */
+a[href],
+button,
+input,
+textarea,
+select,
+details,
+[tabindex]:not([tabindex="-1"]) {
+  @apply focus:outline-none focus-visible:!outline-4 focus-visible:!outline-blue-600 focus-visible:![outline-style:solid];
+}
+
+@layer components {
+  .button {
+    @apply flex rounded-full select-none items-center px-4 py-2 font-semibold transition-colors justify-center focus:z-10;
+  }
+
+  .button svg {
+    @apply w-5 h-5 -mx-1;
+  }
+
+  .button :is(svg + span, span + svg) {
+    @apply ml-2.5;
+  }
+
+  .button-primary {
+    @apply bg-primary-500 text-white border border-primary-600 hover:bg-primary-600 dark:bg-primary-600 dark:border-primary-500 dark:hover:bg-primary-500;
+  }
+
+  .button-gray {
+    @apply bg-gray-50 text-gray-700 hover:text-gray-950 border border-gray-200 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-300 dark:hover:text-gray-50 dark:border-gray-700 dark:hover:bg-gray-800;
+  }
+}
