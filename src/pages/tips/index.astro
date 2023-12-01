@@ -1,0 +1,14 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import TipsGrid from "~/components/TipsGrid.astro";
+
+const tips = await getCollection("tips");
+---
+
+<BaseLayout title="Tips">
+  <section class="max-w-6xl mx-auto px-4">
+    <h1>Tips</h1>
+    <TipsGrid {tips} />
+  </section>
+</BaseLayout>

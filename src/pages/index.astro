@@ -1,44 +1,10 @@
 ---
-import "@fontsource-variable/inter";
-import interFile from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
-import "@fontsource-variable/jetbrains-mono";
-import jetbrainsMonoFile from "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url";
-import Header from "~/components/Header.astro";
-import "~/styles/main.css";
+import BaseLayout from "~/layouts/BaseLayout.astro"
 import Hero from "~/components/pages/index/Hero.astro";
 import LatestTips from "~/components/pages/index/LatestTips.astro";
 ---
 
-<html lang="en" class="h-full">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro Tips</title>
-    <link
-      rel="preload"
-      as="font"
-      crossorigin="anonymous"
-      href={interFile}
-      type="font/woff2"
-    />
-    <link
-      rel="preload"
-      as="font"
-      crossorigin="anonymous"
-      href={jetbrainsMonoFile}
-      type="font/woff2"
-    />
-  </head>
-  <body
-    class="bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 flex flex-col min-h-full"
-  >
-    <Header />
-    <main>
-      <Hero />
-      <LatestTips />
-    </main>
-    <footer class="mt-auto">FOOTER</footer>
-  </body>
-</html>
+<BaseLayout title="Home">
+  <Hero />
+  <LatestTips />
+</BaseLayout>

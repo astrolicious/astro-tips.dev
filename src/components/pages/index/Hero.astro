@@ -1,22 +1,27 @@
 ---
+import { getCollection } from "astro:content";
+
+const authors = await getCollection("authors")
+const tips = await getCollection("tips")
+
 const stats: Array<{
   stat: string;
   label: string;
 }> = [
   {
-    stat: "5",
+    stat: `${tips.length}`,
     label: "Tips",
   },
   {
-    stat: "3",
+    stat: "N/A",
     label: "Articles",
   },
   {
-    stat: "0",
+    stat: "N/A",
     label: "Stars",
   },
   {
-    stat: "2",
+    stat: `${authors.length}`,
     label: "Authors",
   },
 ];

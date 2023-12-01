@@ -1,0 +1,20 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { getCollection, getEntry } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  const tips = await getCollection("tips");
+
+  return tips.map((tip) => ({ params: { slug: tip.slug }, props: { tip } }));
+}) satisfies GetStaticPaths;
+
+const { tip } = Astro.props;
+const authors = await Promise.all(
+  tip.data.authors.map((author) => getEntry(author))
+);
+---
+
+<BaseLayout title={tip.data.title}>
+  <pre>{JSON.stringify({ tip, authors }, null, 2)}</pre>
+</BaseLayout>
