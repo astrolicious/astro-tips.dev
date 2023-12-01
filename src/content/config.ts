@@ -17,8 +17,8 @@ const tips = defineCollection({
     schema: z.object({
         title: z.string(),
         description: z.string(),
-        tags: z.array(z.string()),
-        authors: z.array(reference("authors"))
+        authors: z.array(reference("authors")),
+        date: z.coerce.date()
     })
 })
 
