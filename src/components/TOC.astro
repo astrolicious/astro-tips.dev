@@ -1,0 +1,33 @@
+---
+import type { MarkdownHeading } from "astro";
+
+export interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+// Other acceptable setting is <= 3, but a bit too lengthy.
+// Would require some more clever display like on Medusa's blog
+// const filteredHeadings = headings.filter((heading) => heading.depth === 2);
+const filteredHeadings = headings;
+---
+
+<div class="top-16 md:sticky">
+  <ul class="border-l border-gray-200 pl-4 dark:border-gray-800">
+    {
+      filteredHeadings.map((heading) => (
+        <li class="contents">
+          <a
+            href={`#${heading.slug}`}
+            style={{
+              paddingLeft: `${Math.max(0, heading.depth - 2) * 20}px`,
+            }}
+            class="block py-1.5 text-sm font-medium text-gray-500 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-white md:text-sm"
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>

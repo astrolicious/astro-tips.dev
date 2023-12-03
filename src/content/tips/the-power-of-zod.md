@@ -5,7 +5,24 @@ authors: [florian-lefebvre]
 date: 2023-12-01
 ---
 
-- preprocess
-- transform
-- refine
-- coerce
+introduction
+
+## preprocess
+
+do not use full path for images
+
+## transform
+
+clean data when constrained by CMS
+
+## refine
+
+Advanced validation
+
+## coerce
+
+Better date parsing
+
+## Conclusion
+
+there are probably more hidden gems, if you discover one please let us know on GitHub
