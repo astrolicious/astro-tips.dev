@@ -1,0 +1,102 @@
+---
+title: Leverage Zod's power
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+[Zod](https://zod.dev/) is a TypeScript-first schema validation with static type inference. It's used in many parts
+of Astro and can help you achieve more advanced behavior.
+
+A common place where Astronauts want more customization is in the
+[Content Collections config](https://docs.astro.build/en/guides/content-collections/#defining-collections). We'll look at
+3 powerful zod features that cover basic needs.
+
+### `preprocess`
+
+People often want a bit more customization regarding how they reference images inside their frontmatter. For instance:
+
+<Tabs>
+    <TabItem label="Current">
+    ```mdx title="src/content/blog/hello-world.md"
+    ---
+    title: Hello world
+    image: ~/src/assets/blog/hello-world.png
+    ---
+    ```
+    </TabItem>
+    <TabItem label="Wanted">
+    ```mdx title="src/content/blog/hello-world.md"
+    ---
+    title: Hello world
+    image: hello-world.png
+    ---
+    ```
+    </TabItem>
+</Tabs>
+
+This can be easily be done using [`preprocess`](https://zod.dev/?id=preprocess)!
+
+```ts title="src/content/config.ts" del={8} ins={9}
+import { defineCollection, z } from "astro:content"
+
+export const collections = {
+    blog: defineCollection({
+        type: "content",
+        schema: ({ image }) => z.object({
+            title: z.string(),
+            image: image(),
+            image: z.preprocess(val => `~/src/assets/blog/${val}`, image()),
+        })
+    })
+}
+```
+
+### `transform`
+
+You may not have the data in the shape you want in the frontmatter but you don't want (or can't) change
+all your entries. This is where [`transform`](https://zod.dev/?id=transform) comes in! This transform will
+allow us to you use those coordinates conveniently with library like `mapbox-gl`:
+
+```ts title="src/content/config.ts" ins={12}
+import { defineCollection, z } from "astro:content"
+
+export const collections = {
+    blog: defineCollection({
+        type: "content",
+        schema: z.object({
+            coordinates: z
+                .object({
+                    latitude: z.number(),
+                    longitude: z.number(),
+                })
+                .transform((e) => [e.longitude, e.latitude] as [number, number])
+        })
+    })
+}
+```
+
+### `refine`
+
+You may want to add extra validation to your frontmatter. For example, what if you want to make sure your
+images are big enough? Let's have a look at [`refine`](https://zod.dev/?id=refine). You can set a condition
+that should be met, and a message that will be shown if not!
+
+```ts title="src/content/config.ts" del={7} ins={8-10}
+import { defineCollection, z } from "astro:content"
+
+export const collections = {
+    blog: defineCollection({
+        type: "content",
+        schema: ({ image }) => z.object({
+            image: image(),
+            image: image().refine((img) => img.width >= 1080, {
+                message: "Cover image must be at least 1080 pixels wide!",
+            })
+        })
+    })
+}
+```
+
+### Conclusion
+
+We've only scratched the surface! Have a look at the official [Zod docs](https://zod.dev/) to discover more powerful APIs!
