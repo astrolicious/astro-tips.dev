@@ -13,6 +13,14 @@ export default defineConfig({
       },
       sidebar: [
         {
+          label: "Home",
+          link: "/",
+        },
+        {
+          label: "Contributing",
+          link: "/contributing/",
+        },
+        {
           label: "Recipes",
           autogenerate: { directory: "recipes" },
         },
