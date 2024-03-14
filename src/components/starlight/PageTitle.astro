@@ -1,46 +1,38 @@
 ---
-// Starlight doesn't expose it's PAGE_TITLE_ID, so we have to import it like this
-import { PAGE_TITLE_ID } from '~/../node_modules/@astrojs/starlight/constants';
-import type { Props } from '@astrojs/starlight/props';
+import type { Props } from '@astrojs/starlight/props'
+import Default from '@astrojs/starlight/components/PageTitle.astro'
+import { Icon } from '@astrojs/starlight/components'
 
-// import {  } from 'semver'
-import { Icon } from '@astrojs/starlight/components';
-
-const { astroRange } = Astro.props.entry.data;
+const { astroRange } = Astro.props.entry.data
 ---
 
-<h1 id={PAGE_TITLE_ID}>{Astro.props.entry.data.title}</h1>
+<Default {...Astro.props} />
 
-<div>
-  <p>
-    <Icon name="astro" />
-    <span>{astroRange}</span>
-  </p>
-  
-  <!-- future: add builtin link to canonical for cross-posted content -->
-</div>
+{
+  astroRange && (
+    <div>
+      <p>
+        <span class="sr-only">Astro</span>
+        <Icon name="astro" />
+        <span title={`Compatible with Astro version ${astroRange}`}>{astroRange}</span>
+      </p>
+    </div>
+  )
+}
 
 <style>
-	h1 {
-		margin-top: 1rem;
-		font-size: var(--sl-text-h1);
-		line-height: var(--sl-line-height-headings);
-		font-weight: 600;
-		color: var(--sl-color-white);
+	p {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
 	}
 
-  p {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-  }
-
-  div {
-    margin-top: 0.5rem !important;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: .5rem 1rem;
-    font-size: var(--sl-text-xs);
-  }
+	div {
+		margin-top: 0.5rem !important;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem 1rem;
+		font-size: var(--sl-text-xs);
+	}
 </style>
