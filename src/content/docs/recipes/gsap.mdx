@@ -6,29 +6,29 @@ import { Tabs, TabItem, LinkCard } from "@astrojs/starlight/components";
 
 You can easily add GSAP to your Astro project!
 
-To start, install GSAP.
+Start by installing the `gsap` package using your favorite package manager:
 
 <Tabs>
     <TabItem label="npm">
         ```sh
-            npm install gsap
+        npm install gsap
         ```
     </TabItem>
     <TabItem label="pnpm">
         ```sh
-            pnpm add gsap
+        pnpm add gsap
         ```
     </TabItem>
     <TabItem label="yarn">
         ```sh
-            yarn add gsap
+        yarn add gsap
         ```
     </TabItem>
 </Tabs>
 
-After it's installed you can import it into your project inside a `script` tag on your page.
+You can now import it into your project inside a `script` in any `.astro` file:
 
-```html title="MyComponent.astro"
+```html title="src/components/Foo.astro"
 <script>
 import { gsap } from "gsap";
 
