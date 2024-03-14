@@ -3,22 +3,22 @@
 import { PAGE_TITLE_ID } from '~/../node_modules/@astrojs/starlight/constants';
 import type { Props } from '@astrojs/starlight/props';
 
-import { Aside } from '@astrojs/starlight/components';
-import { coerce, satisfies } from 'semver'
+// import {  } from 'semver'
+import { Icon } from '@astrojs/starlight/components';
 
 const { astroRange } = Astro.props.entry.data;
 ---
 
 <h1 id={PAGE_TITLE_ID}>{Astro.props.entry.data.title}</h1>
 
-{
-  // only show if the range is specified, and is not satisfied by the latest version
-  astroRange && !satisfies(Astro.locals.astroLatest, astroRange) && (
-    <Aside type="caution">
-      This guide was written for Astro {coerce(astroRange)} and may not work with more recent versions of Astro.
-    </Aside>
-  )
-}
+<div>
+  <p>
+    <Icon name="astro" />
+    <span>{astroRange}</span>
+  </p>
+  
+  <!-- future: add builtin link to canonical for cross-posted content -->
+</div>
 
 <style>
 	h1 {
@@ -28,4 +28,19 @@ const { astroRange } = Astro.props.entry.data;
 		font-weight: 600;
 		color: var(--sl-color-white);
 	}
+
+  p {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  div {
+    margin-top: 0.5rem !important;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem 1rem;
+    font-size: var(--sl-text-xs);
+  }
 </style>
