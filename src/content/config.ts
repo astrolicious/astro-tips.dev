@@ -7,7 +7,8 @@ export const collections = {
 		schema: docsSchema({
 			extend: z.object({
 				astroRange: z
-					.custom<string>(range => typeof range === 'string' && validRange(range))
+					.string()
+					.refine(validRange, {message: 'Must be a valid semver range'})
 					.optional(),
 			}),
 		}),
