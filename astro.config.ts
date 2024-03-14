@@ -29,6 +29,9 @@ export default defineConfig({
           autogenerate: { directory: "tips" }
         },
       ],
+      components: {
+        PageTitle: './src/components/starlight/PageTitle.astro'
+      }
     }),
   ],
 });

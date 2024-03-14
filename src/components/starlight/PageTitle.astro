@@ -1,0 +1,31 @@
+---
+// Starlight doesn't expose it's PAGE_TITLE_ID, so we have to import it like this
+import { PAGE_TITLE_ID } from '~/../node_modules/@astrojs/starlight/constants';
+import type { Props } from '@astrojs/starlight/props';
+
+import { Aside } from '@astrojs/starlight/components';
+import { coerce, satisfies } from 'semver'
+
+const { astroRange } = Astro.props.entry.data;
+---
+
+<h1 id={PAGE_TITLE_ID}>{Astro.props.entry.data.title}</h1>
+
+{
+  // only show if the range is specified, and is not satisfied by the latest version
+  astroRange && !satisfies(Astro.locals.astroLatest, astroRange) && (
+    <Aside type="caution">
+      This guide was written for Astro {coerce(astroRange)} and may not work with more recent versions of Astro.
+    </Aside>
+  )
+}
+
+<style>
+	h1 {
+		margin-top: 1rem;
+		font-size: var(--sl-text-h1);
+		line-height: var(--sl-line-height-headings);
+		font-weight: 600;
+		color: var(--sl-color-white);
+	}
+</style>
