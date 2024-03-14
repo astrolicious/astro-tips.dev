@@ -24,6 +24,10 @@ export default defineConfig({
           label: "Recipes",
           autogenerate: { directory: "recipes" },
         },
+        {
+          label: "Tips",
+          autogenerate: { directory: "tips" }
+        },
       ],
     }),
   ],
