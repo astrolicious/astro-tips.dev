@@ -1,20 +1,20 @@
 ---
-import type { Props } from '@astrojs/starlight/props';
-import '@astrojs/starlight/style/markdown.css';
-
-import { Aside } from '@astrojs/starlight/components';
+import type { Props } from '@astrojs/starlight/props'
+import Default from '@astrojs/starlight/components/MarkdownContent.astro'
+import { Aside } from '@astrojs/starlight/components'
 import { coerce, satisfies } from 'semver'
 
-const { astroRange } = Astro.props.entry.data;
+const { astroRange } = Astro.props.entry.data
 ---
 
 {
-  // only show if the range is specified, and is not satisfied by the latest version
-  astroRange && !satisfies(Astro.locals.astroLatest, astroRange) && (
-    <Aside type="caution">
-      This guide was written for Astro {coerce(astroRange)} and may not work with more recent versions of Astro.
-    </Aside>
-  )
+	// only show if the range is specified, and is not satisfied by the latest version
+	astroRange && !satisfies(Astro.locals.astroLatest, astroRange) && (
+		<Aside type="caution">
+			This guide was written for Astro {coerce(astroRange)} and may not work
+			with more recent versions of Astro.
+		</Aside>
+	)
 }
 
-<div class="sl-markdown-content"><slot /></div>
+<Default {...Astro.props} />
