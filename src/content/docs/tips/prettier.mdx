@@ -1,0 +1,116 @@
+---
+title: Setting up Prettier
+description: Quickly configure Prettier for your Astro project
+---
+import { Tabs, TabItem, LinkCard } from "@astrojs/starlight/components";
+
+Quickly configure Prettier for your Astro project!
+
+## Prettier Plugin for Astro
+
+Start by installing `prettier` & `prettier-plugin-astro` using your preferred package manager:
+
+<Tabs>
+    <TabItem label="npm">
+        ```sh
+        npm install --save-dev prettier prettier-plugin-astro
+        ```
+    </TabItem>
+    <TabItem label="pnpm">
+        ```sh
+        pnpm add -D prettier prettier-plugin-astro
+        ```
+    </TabItem>
+    <TabItem label="yarn">
+        ```sh
+        yarn add --dev prettier prettier-plugin-astro
+        ```
+    </TabItem>
+</Tabs>
+
+Next, update your [Prettier config](https://prettier.io/docs/en/configuration) in the project's root to include `prettier-plugin-astro` plugin. This example will use `.prettierrc.json`:
+
+```json title=".prettierrc.json"
+{
+  "plugins": ["prettier-plugin-astro"],
+  "overrides": [
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro",
+      }
+    }
+  ]
+}
+```
+
+That's it. Run `prettier --write .` command with your preferred package manager to format all of the astro files in the project.
+
+Additionally if you are using the [VSCode Prettier Extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), you can set the following VSCode Config in your User/Workspace Settings:
+
+```json title=".vscode/settings.json"
+{
+  "prettier.documentSelectors": ["**/*.astro"],
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
+```
+
+and now Prettier will format any selected document.
+
+## Adding an NPM script
+
+You can use Prettier CLI with your preferred package manager by adding following scripts in `package.json` of your project's directory:
+
+```json title="package.json" ins={3,4}
+{
+  "scripts": {
+    "format:check": "prettier --check .",
+    "format::write": "prettier --write ."
+  }
+}
+```
+
+## Prettier Plugin for Tailwind CSS
+
+When using the Tailwind CSS integration, there is another dev dependency for automated class sorting: [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss).
+
+Start by installing `prettier-plugin-tailwindcss` using your preferred package manager:
+
+<Tabs>
+    <TabItem label="npm">
+        ```sh
+        npm install --save-dev prettier-plugin-tailwindcss
+        ```
+    </TabItem>
+    <TabItem label="pnpm">
+        ```sh
+        pnpm add -D prettier-plugin-tailwindcss
+        ```
+    </TabItem>
+    <TabItem label="yarn">
+        ```sh
+        yarn add --dev prettier-plugin-tailwindcss
+        ```
+    </TabItem>
+</Tabs>
+
+Next, update the [Prettier Config](https://prettier.io/docs/en/configuration) to include following plugins. This example will use `.prettierrc`:
+
+```json title=".prettierrc.json" del={2} ins={3}
+{
+  "plugins": ["prettier-plugin-astro"],
+  "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
+  "overrides": [
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro",
+      }
+    }
+  ]
+}
+```
+
+Make sure to place the Tailwind CSS plugin at the end. Additionally, you might need to reload your [VSCode Window](https://stackoverflow.com/a/42002990) if Prettier is not working as expected.
