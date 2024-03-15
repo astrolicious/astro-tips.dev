@@ -101,3 +101,17 @@ Next, update the [Prettier Config](https://prettier.io/docs/en/configuration) to
 ```
 
 Make sure to place the Tailwind CSS plugin at the end. Additionally, you might need to reload your [VSCode Window](https://stackoverflow.com/a/42002990) if Prettier is not working as expected.
+
+
+## Configure Prettier CLI
+
+You can use Prettier CLI with your preferred package manager by adding following scripts in `package.json` of your project's directory:
+
+```json title=".package.json" ins={3,4}
+{
+  "scripts": {
+    "format:check": "prettier --check ./src/",
+    "format::write": "prettier --write ./src/"
+  }
+}
+```
