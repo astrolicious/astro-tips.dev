@@ -1,0 +1,38 @@
+---
+import type { Props } from '@astrojs/starlight/props'
+import Default from '@astrojs/starlight/components/PageTitle.astro'
+import { Icon } from '@astrojs/starlight/components'
+
+const { astroRange } = Astro.props.entry.data
+---
+
+<Default {...Astro.props} />
+
+{
+  astroRange && (
+    <div>
+      <p>
+        <span class="sr-only">Astro</span>
+        <Icon name="astro" />
+        <span title={`Compatible with Astro version ${astroRange}`}>{astroRange}</span>
+      </p>
+    </div>
+  )
+}
+
+<style>
+	p {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	div {
+		margin-top: 0.5rem !important;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem 1rem;
+		font-size: var(--sl-text-xs);
+	}
+</style>

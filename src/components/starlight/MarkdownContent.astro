@@ -1,0 +1,21 @@
+---
+import type { Props } from '@astrojs/starlight/props'
+import Default from '@astrojs/starlight/components/MarkdownContent.astro'
+import { Aside } from '@astrojs/starlight/components'
+import { coerce, satisfies } from 'semver'
+import pkg from 'package.json'
+
+const { astroRange } = Astro.props.entry.data
+---
+
+{
+	// only show if the range is specified, and is not satisfied by the latest version
+	astroRange && !satisfies(pkg.dependencies.astro, astroRange) && (
+		<Aside type="caution">
+			This guide was written for Astro {coerce(astroRange)} and may not work
+			with more recent versions of Astro.
+		</Aside>
+	)
+}
+
+<Default {...Astro.props} />

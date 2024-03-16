@@ -11,10 +11,14 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.5.9",
     "@astrojs/starlight": "^0.21.1",
+    "semver": "^7.6.0",
     "astro": "^4.5.4",
     "sharp": "^0.33.2",
-    "@astrojs/check": "^0.5.9",
     "typescript": "^5.4.2"
+  },
+  "devDependencies": {
+    "@types/semver": "^7.5.8"
   }
 }
