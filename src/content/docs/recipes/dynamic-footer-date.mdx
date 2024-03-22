@@ -1,0 +1,48 @@
+---
+title: Dynamic footer date
+astroRange: ^4.0.0
+---
+
+Having a copyright notice with the current year such as `© 2024 - All rights reserved` is a common
+need (although it doesn't legally enforce anything).
+
+## The problem (maybe not!)
+
+Looking at this solution:
+
+```astro title="src/components/Footer.astro" {2} "year"
+---
+const year = new Date().getFullYear()
+---
+
+<footer>
+    <p>&copy; {year} - All rights reserved</p>
+</footer>
+```
+
+It works but the year will only be refreshed each time you rebuild the site.
+
+## The solution
+
+With a tiny bit of JavaScript we can solve this issue really easily!
+
+```astro title="src/components/Footer.astro" {"1. We prepare a build time fallback": 2-3} {"2. We add a span with an id and pass the fallback": 7-8} {"3. We create the date client-side so it's up to date": 10-18}
+---
+
+const year = new Date().getFullYear()
+---
+
+<footer>
+
+    <p>&copy; <span id="footer-year">{year}</span> - All rights reserved</p>
+</footer>
+
+  <script is:inline>
+    const handleFooterDate = () => {
+      document.getElementById("footer-year").innerText = new Date().getFullYear();
+    };
+
+    handleFooterDate();
+    document.addEventListener("astro:after-swap", () => handleFooterDate());
+  </script>
+```
