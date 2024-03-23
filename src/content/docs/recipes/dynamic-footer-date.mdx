@@ -3,14 +3,14 @@ title: Dynamic footer date
 astroRange: ^4.0.0
 ---
 
+import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
+
 Having a copyright notice with the current year such as `© 2024 - All rights reserved` is a common
 need (although it doesn't legally enforce anything).
 
-## The problem (maybe not!)
+## Server side date: the issue
 
-Looking at this solution:
-
-```astro title="src/components/Footer.astro" {2} "year"
+```astro title="src/components/Footer.astro" {2} "{year}"
 ---
 const year = new Date().getFullYear()
 ---
@@ -20,22 +20,94 @@ const year = new Date().getFullYear()
 </footer>
 ```
 
-It works but the year will only be refreshed each time you rebuild the site.
+It works and displays the current year...of when the website was last built! It will only update next time
+you rebuild your site.
 
 ## The solution
 
-With a tiny bit of JavaScript we can solve this issue really easily!
+The solution relies on client-side JavaScript to get the current year when the page loads.
 
-```astro title="src/components/Footer.astro" {"1. We prepare a build time fallback": 2-3} {"2. We add a span with an id and pass the fallback": 7-8} {"3. We create the date client-side so it's up to date": 10-18}
----
+<Steps>
 
-const year = new Date().getFullYear()
----
+1. We prepare a date fallback at build time. Indeed, if the user's browser can't run JavaScript,
+we need to show the last known date.
 
-<footer>
+    ```astro
+    ---
+    const year = new Date().getFullYear()
+    ---
+    ```
 
+2. We write the markup. We have a span with an id of `footer-year` so that it can be referenced
+from our script. It has a default value of the fallback date of step 1.
+
+    ```astro
+    <footer>
+      <p>&copy; <span id="footer-year">{year}</span> - All rights reserved</p>
+    </footer>
+    ```
+
+3. We write a script to get the `<span>` element by id and update its content to the current year.
+The code differs depending on if you're using View Transitions and your Astro version.
+
+    <Tabs>
+      <TabItem label="MPA">
+      ```astro "is:inline"
+      <script is:inline>
+        document.getElementById("footer-year").innerText = new Date().getFullYear();  
+      </script>
+      ```
+      </TabItem>
+      <TabItem label="VT < 4.5">
+      ```astro "is:inline" {7}
+      <script is:inline>
+        const handleFooterDate = () => {
+          document.getElementById("footer-year").innerText = new Date().getFullYear();
+        };
+
+        handleFooterDate();
+        document.addEventListener("astro:after-swap", () => handleFooterDate());
+      </script>
+      ```
+      </TabItem>
+      <TabItem label="VT >= 4.5">
+      ```astro "is:inline" "data-astro-rerun"
+      <script is:inline data-astro-rerun>
+        document.getElementById("footer-year").innerText = new Date().getFullYear();  
+      </script>
+      ```
+      </TabItem>
+    </Tabs>
+
+</Steps>
+
+## Full code
+
+<Tabs>
+  <TabItem label="MPA">
+  ```astro "{year}" "is:inline" {2}
+  ---
+  const year = new Date().getFullYear()
+  ---
+
+  <footer>
     <p>&copy; <span id="footer-year">{year}</span> - All rights reserved</p>
-</footer>
+  </footer>
+
+  <script is:inline>
+    document.getElementById("footer-year").innerText = new Date().getFullYear();  
+  </script>
+  ```
+  </TabItem>
+  <TabItem label="VT < 4.5">
+  ```astro "{year}" "is:inline" {2,14,15}
+  ---
+  const year = new Date().getFullYear()
+  ---
+
+  <footer>
+    <p>&copy; <span id="footer-year">{year}</span> - All rights reserved</p>
+  </footer>
 
   <script is:inline>
     const handleFooterDate = () => {
@@ -45,4 +117,21 @@ const year = new Date().getFullYear()
     handleFooterDate();
     document.addEventListener("astro:after-swap", () => handleFooterDate());
   </script>
-```
+  ```
+  </TabItem>
+  <TabItem label="VT >= 4.5">
+  ```astro "{year}" "is:inline" "data-astro-rerun" {2}
+  ---
+  const year = new Date().getFullYear()
+  ---
+
+  <footer>
+    <p>&copy; <span id="footer-year">{year}</span> - All rights reserved</p>
+  </footer>
+
+  <script is:inline data-astro-rerun>
+    document.getElementById("footer-year").innerText = new Date().getFullYear();  
+  </script>
+  ```
+  </TabItem>
+</Tabs>
