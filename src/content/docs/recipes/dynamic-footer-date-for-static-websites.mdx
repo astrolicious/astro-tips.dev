@@ -1,5 +1,5 @@
 ---
-title: Dynamic footer date
+title: Dynamic footer date for static websites
 astroRange: ^4.0.0
 ---
 
@@ -22,6 +22,10 @@ const year = new Date().getFullYear()
 
 It works and displays the current year...of when the website was last built! It will only update next time
 you rebuild your site.
+
+:::note
+This works perfectly fine in SSR because the data is computed on page load.
+:::
 
 ## The solution
 
