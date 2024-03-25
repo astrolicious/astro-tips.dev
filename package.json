@@ -16,7 +16,7 @@
     "semver": "^7.6.0",
     "astro": "^4.5.9",
     "sharp": "^0.33.3",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   },
   "devDependencies": {
     "@types/semver": "^7.5.8"
