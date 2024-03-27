@@ -2,11 +2,11 @@
 import type { Props } from '@astrojs/starlight/props'
 import Default from '@astrojs/starlight/components/MarkdownContent.astro'
 import { Aside } from '@astrojs/starlight/components'
-import { coerce, satisfies } from 'semver'
+import { minVersion, satisfies } from 'semver'
 import pkg from 'package.json'
 
 const { astroRange } = Astro.props.entry.data
-const astroVersion = coerce(pkg.dependencies.astro)?.version
+const astroVersion = minVersion(pkg.dependencies.astro)?.version
 const outRange = astroRange && astroVersion && !satisfies(astroVersion, astroRange)
 ---
 
