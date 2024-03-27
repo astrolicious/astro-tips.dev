@@ -6,14 +6,15 @@ import { coerce, satisfies } from 'semver'
 import pkg from 'package.json'
 
 const { astroRange } = Astro.props.entry.data
-const coerceVersion = coerce(pkg.dependencies.astro)?.version
+const astroVersion = coerce(pkg.dependencies.astro)?.version
+const outRange = astroRange && astroVersion && !satisfies(astroVersion, astroRange)
 ---
 
 {
 	// only show if the range is specified, and is not satisfied by the latest version
-	astroRange && coerceVersion && !satisfies(coerceVersion, astroRange) && (
+	outRange && (
 		<Aside type="caution">
-			This guide was written for Astro {coerce(astroRange)} and may not work
+			This guide was written for Astro {astroRange} and may not work
 			with more recent versions of Astro.
 		</Aside>
 	)
