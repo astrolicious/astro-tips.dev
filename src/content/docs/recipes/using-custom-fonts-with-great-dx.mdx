@@ -1,0 +1,112 @@
+---
+title: Using custom fonts with great DX
+description: Learn how to use community projects to use custom fonts easily and with great DX
+astroRange: ^4.0.0
+---
+
+import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
+
+Using custom fonts is already [officially documented](https://docs.astro.build/en/guides/fonts/) but the process is fairly manual. In this recipe, you'll see how to use community projects to use custom fonts easily and with great DX.
+
+## `astro-font`
+
+<Tabs>
+    <TabItem label="npm">
+        ```sh
+        npm install astro-font
+        ```
+    </TabItem>
+    <TabItem label="pnpm">
+        ```sh
+        pnpm add astro-font
+        ```
+    </TabItem>
+    <TabItem label="yarn">
+        ```sh
+        yarn add astro-font
+        ```
+    </TabItem>
+</Tabs>
+
+### Using local fonts
+
+<Steps>
+1. Make sure you have the local font in `public/fonts` directory. This example will use IBM Plex Sans
+  
+2. Configure `astro-font` in your layout
+
+   ```astro title="src/layouts/BaseLayout.astro" ins={2, 4-21}
+   ---
+   import { AstroFont } from "astro-font";
+   ---
+   <AstroFont
+      config={[
+        {
+          name: "IBMPlexSans",
+          src: [
+            {
+              style: 'normal',
+              weight: '400',
+              path: './public/fonts/IBMPlexSans-Regular.ttf'
+            },
+          ],
+          preload: true,
+          display: "swap",
+          fallback: "sans-serif",
+          cssVariable: "font-ibm"
+        }
+      ]}
+    />
+   ```
+
+3. Start using the font
+  
+   ```css ins={2}
+   body {
+       font-family: "font-ibm"
+   }
+   ```
+  
+</Steps>
+
+### Using Google Fonts
+
+<Steps> 
+1. Configure `astro-font` in your layout. This example will use Inter
+
+   ```astro title="src/layouts/BaseLayout.astro" {13}
+   ---
+   import { AstroFont } from "astro-font";
+   ---
+   <AstroFont
+      config={[
+        {
+          src: [],
+          name: "Inter",
+          preload: false,
+          display: "swap",
+          fallback: "sans-serif",
+          cssVariable: "font-inter",
+          googleFontsURL: 'https://fonts.googleapis.com/css?family=Inter',
+        },
+      ]}
+    />
+   ```
+
+2. Start using the font
+  
+   ```css title="globals.css" {2}
+   body {
+       font-family: "font-inter"
+   }
+   ```
+  
+</Steps>
+
+### With TailwindCSS
+
+See [Astro Docs on adding custom font families](https://docs.astro.build/en/guides/fonts/#register-fonts-in-tailwind) for complete information.
+  
+:::note
+Make sure to read through [astro-font README](https://github.com/rishi-raj-jain/astro-font/blob/master/packages/astro-font/README.md) in case your deployment service does not supports Node.js runtime
+:::
