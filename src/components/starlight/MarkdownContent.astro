@@ -16,7 +16,8 @@ const semverUrl = `https://semver.otterlord.dev/?package=astro&range=${astroRang
 	// only show if the Astro version is less than the required range.
 	outRange && (
 		<Aside type="caution">
-			This guide was written for Astro <a href={semverUrl}>{astroRange}</a> and may not work for versions outside of that range.
+			This guide was written for Astro <a href={semverUrl}>{astroRange}</a> and may not work for versions outside of that range.<br />
+			We always try to keep our tips up to date, but if you see this caution, please open an <a href="https://github.com/astrolicious/astro-tips.dev/issues">issue</a> to let us know.
 		</Aside>
 	)
 }
