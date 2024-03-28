@@ -4,6 +4,7 @@ import Default from '@astrojs/starlight/components/PageTitle.astro'
 import { Icon } from '@astrojs/starlight/components'
 
 const { astroRange } = Astro.props.entry.data
+const semverUrl = `https://semver.otterlord.dev/?package=astro&range=${astroRange}&filter=on`
 ---
 
 <Default {...Astro.props} />
@@ -14,7 +15,7 @@ const { astroRange } = Astro.props.entry.data
       <p>
         <span class="sr-only">Astro</span>
         <Icon name="astro" />
-        <span title={`Compatible with Astro version ${astroRange}`}>{astroRange}</span>
+        <a href={semverUrl} title={`Compatible with Astro version ${astroRange}`}>{astroRange}</a>
       </p>
     </div>
   )
