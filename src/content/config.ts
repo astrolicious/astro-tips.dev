@@ -12,7 +12,7 @@ export const collections = {
 					.refine(validRange, {message: 'Must be a valid semver range'})
 					.refine((range) => {
 						const astroVersion = minVersion(pkg.dependencies.astro)?.version
-						// check if range is less than the current astro version
+						// check if range is bigger than the current Astro version.
 						return astroVersion && !outside(astroVersion, range, '<')
 					}, {message: 'Must be compatible with the current Astro version'})
 					.optional(),
