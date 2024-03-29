@@ -2,7 +2,11 @@
 title: Toggle Dark & Light Theme
 ---
 
-With help of this, you will understand basic concept of implementing dark and light theme in your Astro project.
+import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
+
+It's common that's users will going to ask for a dark theme or light theme.
+
+The features which you expected from a component script
 
 Now, we can start writing javascript code, for:
     - Getting the current theme from local storage or system preference
@@ -12,156 +16,144 @@ Now, we can start writing javascript code, for:
     - Listening for system changes to update the theme 
     - Listening for ViewTransition event to update the theme on page change ❌
 
-Getting the current theme from local storage or system preference
+<Steps>
 
-```html
-<script>
-    const getColorPreference = () => {
-        if ('theme' in localStorage) return localStorage.theme;
-        else return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    };
-</script>
-```
-Creating a theme object to store the current theme value;
-```html {4-6}
-<script>
-    ...
+1. Getting the current theme from local storage or system preference
 
-    const theme = {
-        value: getColorPreference() ?? 'light';
+    ```ts title="src/components/theme-toggle/script.ts"
+    let theme: 'dark' | 'light' | 'automatic' = ('theme' in localStorage) 
+        ? localStorage.theme 
+        : window.matchMedia('(prefers-color-scheme: dark)').matches 
+            ? 'dark' 
+            : 'light'
+    ```
+
+2. Define a Setter function to store the theme value in local storage
+
+    ```ts title="src/components/theme-toggle/script.ts"
+    let setTheme = (theme: 'dark' | 'light' | 'automatic' = 'automatic') => {
+        localStorage.setItem('theme', theme);
+        theme = theme;
     }
-</script>
-```
-Toggle the value of theme, and store it in local storage
-```html {4-6}
-<script>
-    ...
+    ```
 
-    const setPreference = () => {
-        localStorage.setItem('theme', theme.value);
-    };
-</script>
-```
-Define a Init function for clicks on the button with `#theme-toggle` **id** to **_toggle the theme_**
-```html
-<script>
-    ...
+3. if the theme is "dark", add the "dark" class to the `html` element, else remove the "dark" class from `html` element
 
-    const initClickListener = () => {
-        // flip the current value
-        const onClick = () => {
-            theme.value = theme.value === 'light' ? 'dark' : 'light';
-            setPreference();
+    ```ts title="src/components/theme-toggle/script.ts"
+    let setTheme = (theme: 'dark' | 'light' | 'automatic' = 'automatic') => {
+        localStorage.setItem('theme', theme);
+        theme = theme;
+        if (theme === 'dark') 
+            document.documentElement.classList.add('dark');
+        else if (theme === 'light')
+            document.documentElement.classList.remove('dark');
+        else {
+            if(window.matchMedia('(prefers-color-scheme: dark)').matches)
+                document.documentElement.classList.add('dark');
+            else 
+                document.documentElement.classList.remove('dark');
         }
-        document.querySelector('#theme-toggle')?.addEventListener('click', onClick);
     }
-</script>
-```
+    ```
 
-Reflecting the current theme in the document
-```html {6,10-15,19,23,26}
-<script>
-    ...
-    
-    const setPreference = () => {
-        localStorage.setItem('theme', theme.value);
-        reflectPreference();
-    };
-    
-    const reflectPreference = () => {
-        if (theme.value === 'dark') 
+4. in the same folder define a button with `#theme-toggle` **id** to toggle the theme
+
+    ```html title="src/components/theme-toggle/index.astro"
+    <button id="theme-toggle">Toggle Theme</button>
+    ```
+
+5. Listening for Click Event on the button with `#theme-toggle` **id** to toggle the theme
+    <Tabs>
+        <TabItem label="MPA">
+            ```ts title="src/components/theme-toggle/script.ts"
+            const options = ['dark', 'light', 'automatic'];
+            setTheme('automatic')
+            window.onload = () => {
+                document.querySelector('#theme-toggle')
+                    ?.addEventListener('click', () => {
+                    // rotate through options
+                    setTheme(options[(options.indexOf(theme) + 1) % options.length]);
+                });
+            };
+            ```
+        </TabItem>
+        <TabItem label="VT">
+            ```ts title="src/components/theme-toggle/script.ts"
+            const options = ['dark', 'light', 'automatic'];
+            setTheme('automatic')
+            document.addEventListener('astro:page-load', () => {
+                document.querySelector('#theme-toggle')
+                    ?.addEventListener('click', () => {
+                    // rotate through options
+                    setTheme(options[(options.indexOf(theme) + 1) % options.length]);
+                });
+            });
+            ```
+        </TabItem>
+    </Tabs>
+
+6. Listening for System Changes    
+
+    ```ts
+        window.matchMedia('(prefers-color-scheme: dark)')
+            .addEventListener('change', ({ matches: isDark }) => {
+                setTheme(isDark ? 'dark' : 'light')
+            })
+    ```
+
+7. Load the `toggle-theme/script.ts` in the layouts, to make it available in all pages and include `is:inline` attribute to avoid FOUC
+
+    ```html title="src/layouts/layout.astro"
+    <html>
+        <head>
+            ...
+            <script is:inline src="/path-to/theme-toggle/script.ts"></script>
+            <!-- load it earlier then, other scripts to avoid Flash of Content -->
+        </head>
+        ...
+    </html>
+    ```
+</Steps>
+
+## Full Code
+
+```ts title="src/components/theme-toggle/script.ts"
+let theme: 'dark' | 'light' | 'automatic' = ('theme' in localStorage) 
+    ? localStorage.theme 
+    : window.matchMedia('(prefers-color-scheme: dark)').matches 
+        ? 'dark' 
+        : 'light';
+
+let setTheme = (theme: 'dark' | 'light' | 'automatic' = 'automatic') => {
+    localStorage.setItem('theme', theme);
+    theme = theme;
+    if (theme === 'dark') 
+        document.documentElement.classList.add('dark');
+    else if (theme === 'light')
+        document.documentElement.classList.remove('dark');
+    else {
+        if(window.matchMedia('(prefers-color-scheme: dark)').matches)
             document.documentElement.classList.add('dark');
         else 
             document.documentElement.classList.remove('dark');
-        // for screen readers
-        document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
-    };
-
-    // set early so no page flashes / CSS is made aware
-    reflectPreference();
-
-    window.onload = () => {
-        // set on load so screen readers can see latest value on the button
-        reflectPreference();
-
-        // set up click listener
-        initClickListener();
     }
-</script>
-```
-Listening for system changes to update the theme
-```html
-<script>
-    ...
+}
+// If you don't support automatic, just change this option to
+// ['dark','light'] it will still work
+const options = ['dark', 'light', 'automatic'];
+// initial theme, based on the last user preferences otherwise, based on system
+setTheme('automatic')
 
-    // sync with system changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches: isDark }) => {
-        theme.value = isDark ? 'dark' : 'light';
-        setPreference();
+document.addEventListener('astro:page-load', () => {
+    document.querySelector('#theme-toggle')
+    ?.addEventListener('click', () => {
+        // rotate through options
+        setTheme(options[(options.indexOf(theme) + 1) % options.length]);
     });
-</script>
-```
-{/* Listening to ViewTransition event to update the theme on page change
-```html
-<script>
-    ...
-    document.addEventListener('astro:before-swap', (ev) => {
-        if (theme.value === 'dark')
-            ev.newDocument.documentElement.classList.add('dark');
-        else
-            ev.newDocument.documentElement.classList.remove('dark');
-    });
-</script>
-``` */}
+});
 
-## Full Code
-```html
-<!-- On page load or when changing themes, best to add inline in `head` to avoid FOUC -->
-<script is:inline>
-    const onClick = () => {
-        // flip current value
-        theme.value = theme.value === 'light' ? 'dark' : 'light';
-        setPreference();
-    };
-
-    const getColorPreference = () => {
-        if ('theme' in localStorage) return localStorage.theme;
-        else return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    };
-
-    const setPreference = () => {
-        localStorage.setItem('theme', theme.value);
-        reflectPreference();
-    };
-
-    const reflectPreference = () => {
-        if (theme.value === 'dark')
-            document.documentElement.classList.add('dark');
-        else
-            document.documentElement.classList.remove('dark');
-
-        document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
-    };
-
-    const theme = {
-        value: getColorPreference() ?? 'light',
-    };
-
-    // set early so no page flashes / CSS is made aware
-    reflectPreference();
-
-    window.onload = () => {
-        // set on load so screen readers can see latest value on the button
-        reflectPreference();
-
-        // now this script can find and listen for clicks on the control
-        document.querySelector('#theme-toggle')?.addEventListener('click', onClick);
-    };
-
-    // sync with system changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches: isDark }) => {
-        theme.value = isDark ? 'dark' : 'light';
-        setPreference();
-    });
-</script>
+window.matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', ({ matches: isDark }) => {
+        setTheme(isDark ? 'dark' : 'light')
+    })
 ```
