@@ -1,0 +1,54 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    ":pinAllExceptPeerDependencies"
+  ],
+  "dependencyDashboard": true,
+  "npm": {
+    "minimumReleaseAge": "3 days"
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": false,
+    "automergeType": "branch"
+  },
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "^@astrojs"
+      ],
+      "minimumReleaseAge": "0 hours"
+    },
+    {
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchPackagePatterns": [
+        "@biomejs/biome"
+      ],
+      "automerge": false,
+      "automergeType": "branch"
+    },
+    {
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": false,
+      "automergeType": "branch"
+    },
+    {
+      "matchDepTypes": [
+        "packageManager",
+        "engines"
+      ],
+      "enabled": false
+    }
+  ],
+  "ignoreTests": true,
+  "nodenv": {
+    "enabled": false
+  },
+  "prHourlyLimit": 0
+}
