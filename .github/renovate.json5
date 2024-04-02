@@ -1,0 +1,54 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    // https://docs.renovatebot.com/presets-config/#configbest-practices
+    "config:best-practices",
+    // for apps (others won't depend on this in their package.json), it is recommended to pin all dependency types
+    ":pinAllExceptPeerDependencies"
+  ],
+  // pinned GitHub Issue, which helps with managing the PRs (force, retrigger, etc.)
+  "dependencyDashboard": true,
+  // npm packages can be unreleased for 3 days, meaning if we update them and they are pulled, the install will break (if we however think packages we depent on don't unrelease a version, we don't need this)
+  "npm": {
+    "minimumReleaseAge": "3 days"
+  },
+  // lock file makes sure that even subdependencies are updated in the lockfile, I recommend to enable automerge for this, once we are happy with it(tests vs breaking for now)
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": false,
+    "automergeType": "branch"
+  },
+  "packageRules": [
+    // normally astro packages are not unreleased, and we want to update them as soon as possible
+    {
+      "matchPackagePatterns": [
+        "^@astrojs"
+      ],
+      "minimumReleaseAge": "0 hours"
+    },
+    // I would recommend to automerge the linter, once we are happy with it (tests vs breaking for now)
+    {
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchPackagePatterns": [
+        "@biomejs/biome"
+      ],
+      "automerge": false,
+      "automergeType": "branch"
+    },
+    // Patch updates for every package > 1.0.0, are stable according to semver, I recommend automerging them, once we are happy with it (tests vs breaking for now)
+    {
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": false,
+      "automergeType": "branch"
+    }
+  ],
+  // since we don't have tests yet, we ignore the check for now
+  "ignoreTests": true,
+  // we allow renovate to create as many PRs per hour as it wants
+  "prHourlyLimit": 0
+}
