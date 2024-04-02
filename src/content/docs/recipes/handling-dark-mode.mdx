@@ -26,9 +26,9 @@ Adding dark mode support to improve the user experience is now a common need on 
     /**
     * @param {'dark'|'light'|'auto'} theme
     */
-    const setTheme = (theme = 'auto') => {
+    const setTheme = (_theme = 'auto') => {
+        theme = _theme;
         localStorage.setItem('theme', theme);
-        theme = theme;
     }
     ```
 
