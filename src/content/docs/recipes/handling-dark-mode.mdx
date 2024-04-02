@@ -10,9 +10,24 @@ Adding dark mode support to improve the user experience is now a common need on 
 
 <Steps>
 
-1. Getting the current theme from local storage or system preference
+1. To Avoid FOUC, we need to load the script in the layout file, the `is:inline` attribute in the script tag.
 
-    ```ts title="src/components/theme-toggle/script.js"
+    ```html
+    <html>
+        <head>
+            ...
+            <script is:inline>
+                // your script here
+            </script>
+            <!-- load it earlier then, other scripts to avoid Flash of Content -->
+        </head>
+        ...
+    </html>
+    ```
+
+2. Getting the current theme from local storage or system preference
+
+    ```ts
     /** @type {'dark'|'light'|'auto'} */
     let theme = localStorage.getItem('theme') ??
         window.matchMedia('(prefers-color-scheme: dark)').matches 
@@ -20,9 +35,9 @@ Adding dark mode support to improve the user experience is now a common need on 
             : 'light'
     ```
 
-2. Define a Setter function to store the theme value in local storage
+3. Define a Setter function to store the theme value in local storage
 
-    ```ts title="src/components/theme-toggle/script.js"
+    ```ts
     /**
     * @param {'dark'|'light'|'auto'} theme
     */
@@ -32,15 +47,15 @@ Adding dark mode support to improve the user experience is now a common need on 
     }
     ```
 
-3. if the theme is "dark", add the "dark" class to the `html` element, else remove the "dark" class from `html` element
+4. if the theme is "dark", add the "dark" class to the `html` element, else remove the "dark" class from `html` element
 
-    ```ts title="src/components/theme-toggle/script.js"
+    ```ts
     /**
     * @param {'dark'|'light'|'auto'} theme
     */
-    const setTheme = (theme = 'auto') => {
+    const setTheme = (_theme = 'auto') => {
+        theme = _theme;
         localStorage.setItem('theme', theme);
-        theme = theme;
         if (theme === 'dark') 
             document.documentElement.classList.add('dark');
         else if (theme === 'light')
@@ -54,18 +69,18 @@ Adding dark mode support to improve the user experience is now a common need on 
     }
     ```
 
-4. in the same folder define a button with `#theme-toggle` **id** to toggle the theme
+5. Create button tag with `#theme-toggle` **id** to toggle the theme!
 
-    ```html title="src/components/theme-toggle/index.astro"
+    ```html
     <button id="theme-toggle">Toggle Theme</button>
     ```
 
-5. Listening for Click Event on the button with `#theme-toggle` **id** to toggle the theme
+6. Listening for Click Event on the button with `#theme-toggle` **id** to toggle the theme
     <Tabs>
         <TabItem label="MPA">
-            ```ts title="src/components/theme-toggle/script.js"
+            ```ts
             const options = ['dark', 'light', 'auto'];
-            setTheme('auto')
+            setTheme(theme)
             window.onload = () => {
                 document.querySelector('#theme-toggle')
                     ?.addEventListener('click', () => {
@@ -76,9 +91,9 @@ Adding dark mode support to improve the user experience is now a common need on 
             ```
         </TabItem>
         <TabItem label="VT">
-            ```ts title="src/components/theme-toggle/script.js"
+            ```ts
             const options = ['dark', 'light', 'auto'];
-            setTheme('auto')
+            setTheme(theme)
             document.addEventListener('astro:page-load', () => {
                 document.querySelector('#theme-toggle')
                     ?.addEventListener('click', () => {
@@ -90,26 +105,13 @@ Adding dark mode support to improve the user experience is now a common need on 
         </TabItem>
     </Tabs>
 
-6. Listening for System Changes    
+7. Listening for System Changes    
 
     ```ts
-        window.matchMedia('(prefers-color-scheme: dark)')
-            .addEventListener('change', ({ matches: isDark }) => {
-                setTheme(isDark ? 'dark' : 'light')
-            })
-    ```
-
-7. Load the `toggle-theme/script.js` in the layouts, to make it available in all pages and include `is:inline` attribute to avoid FOUC
-
-    ```html title="src/layouts/layout.astro"
-    <html>
-        <head>
-            ...
-            <script is:inline src="/path-to/theme-toggle/script.js"></script>
-            <!-- load it earlier then, other scripts to avoid Flash of Content -->
-        </head>
-        ...
-    </html>
+    window.matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', ({ matches: isDark }) => {
+            setTheme(isDark ? 'dark' : 'light')
+        })
     ```
 </Steps>
 
@@ -126,9 +128,9 @@ let theme = ('theme' in localstorage)
 /**
 * @param {'dark'|'light'|'auto'} theme
 */
-const setTheme = (theme = 'auto') => {
+const setTheme = (_theme = 'auto') => {
+    theme = _theme;
     localStorage.setItem('theme', theme);
-    theme = theme;
     if (theme === 'dark') 
         document.documentElement.classList.add('dark');
     else if (theme === 'light')
@@ -144,7 +146,7 @@ const setTheme = (theme = 'auto') => {
 // ['dark','light'] it will still work
 const options = ['dark', 'light', 'auto'];
 // initial theme, based on the last user preferences otherwise, based on system
-setTheme('auto')
+setTheme(theme)
 
 document.addEventListener('astro:page-load', () => {
     document.querySelector('#theme-toggle')
