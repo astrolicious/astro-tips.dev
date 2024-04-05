@@ -10,7 +10,7 @@ Adding dark mode support to improve the user experience is now a common need on 
 
 <Steps>
 
-1. To Avoid FOUC, we need to load the script in the layout file, the `is:inline` attribute in the script tag.
+1. To Avoid [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content), we need to load the script in the layout file, the `is:inline` attribute in the script tag, that will make sure the script is executed before the page is rendered.
 
     ```html {4} "is:inline"
     <html>
