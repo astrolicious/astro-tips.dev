@@ -1,0 +1,44 @@
+---
+import ThemeProvider from "../components/ThemeProvider.astro"
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+		<ThemeProvider default-theme="auto" />
+	</head>
+	<body>
+		<h1>Astro</h1>
+
+		<select onchange="theme.setTheme(this.value);">
+			{
+			  ["auto", "light", "dark"].map((e) => (
+				<option value={e} onload={'this.selected = theme.getTheme() === ' + JSON.stringify(e)}>
+				  {e}
+				</option>
+			  ))
+			}
+		  </select>
+
+		<div id="whatsgoingon"></div>
+		<script>
+			declare const theme: any;
+
+			function showTheme(currentTheme: string) {
+				const whatsGoingOn = document.getElementById("whatsgoingon")!;
+				whatsGoingOn.innerHTML = `The current theme is: ${currentTheme}`;
+			}
+
+			showTheme(theme.getTheme());
+
+			document.addEventListener("theme-changed", (e: any) => {
+				console.log('Received event:', e);
+				showTheme(e.detail.theme);
+			})
+		</script>
+	</body>
+</html>
