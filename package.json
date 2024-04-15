@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
-    "@astrojs/starlight": "^0.21.4",
+    "@astrojs/starlight": "^0.21.5",
     "semver": "^7.6.0",
     "astro": "^4.5.16",
     "sharp": "^0.33.3",
