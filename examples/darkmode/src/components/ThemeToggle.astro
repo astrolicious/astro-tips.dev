@@ -1,0 +1,114 @@
+<button is="theme-toggle"></button>
+<style>
+  button[is="theme-toggle"] {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    width: 2.5rem;
+    height: auto;
+    cursor: pointer;
+  }
+</style>
+<script is:inline>
+  if (!customElements.get("theme-toggle")) {
+    class ThemeToggle extends HTMLButtonElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.render();
+        this.bindEvents();
+        this.updateAriaLabel();
+      }
+
+      render() {
+        this.innerHTML = `
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              id="moon"
+              aria-hidden="true"
+            >
+              <path
+                  d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
+              ></path>
+            </svg>
+
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              id="sun"
+              aria-hidden="true"
+            >
+              <path
+                  d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+              ></path>
+            </svg>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              id="auto"
+            >
+              <path
+                  fill="currentColor"
+                  d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5l1.43 1.43L4.93 20.5L3.5 19.07zm-6.18 2.43L11.41 5L9.97 6l.42-1.7L9 3.24l1.75-.12l.58-1.65L12 3.1l1.73.03l-1.35 1.13zm-3.3 3.61l-1.16-.73l-1.12.78l.34-1.32l-1.09-.83l1.36-.09l.45-1.29l.51 1.27l1.36.03l-1.05.87zM19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58l2.77-1.15l-.24 3.35zm4.33-2.7l1.15-2.77l2.2 2.54zm1.15-4.96l-1.14-2.78l3.34.24zM9.63 18.93l2.77 1.15l-2.53 2.19z"
+              ></path>
+            </svg>
+        
+        `;
+        this.updateThemeIcon();
+      }
+
+      bindEvents() {
+        this.addEventListener("click", () => this.toggleTheme());
+        document.addEventListener("theme-changed", () => {
+          this.updateThemeIcon();
+          this.updateAriaLabel();
+        });
+      }
+
+      toggleTheme() {
+        const currentTheme = theme.getTheme();
+        if (currentTheme === "auto") {
+          const systemTheme = theme.getSystemTheme();
+          theme.setTheme(systemTheme === "dark" ? "light" : "dark");
+        } else {
+          theme.setTheme(currentTheme === "dark" ? "light" : "dark");
+        }
+        this.updateThemeIcon();
+        this.updateAriaLabel();
+      }
+
+      updateThemeIcon() {
+        const currentTheme = theme.getTheme();
+        this.querySelector("#sun").style.display =
+          currentTheme === "dark" ? "block" : "none";
+        this.querySelector("#moon").style.display =
+          currentTheme === "light" ? "block" : "none";
+        this.querySelector("#auto").style.display =
+          currentTheme === "auto" ? "block" : "none";
+      }
+
+      updateAriaLabel() {
+        const currentTheme = theme.getTheme();
+        this.ariaLabel =
+          currentTheme === "dark"
+            ? "Activate Light Mode"
+            : "Activate Dark Mode";
+        if (currentTheme === "auto") {
+          this.ariaLabel =
+            theme.getSystemTheme() === "dark"
+              ? "Activate Light Mode"
+              : "Activate Dark Mode";
+        }
+      }
+    }
+
+    customElements.define("theme-toggle", ThemeToggle, { extends: "button" });
+  }
+</script>

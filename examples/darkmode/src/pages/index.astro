@@ -1,22 +1,35 @@
 ---
 import Layout from "../components/Layout.astro";
+import ThemeSelect from "../components/ThemeSelect.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 ---
 
 <Layout>
-  <a href="/page2">page2</a>
-  <div id="currentThemeDiv"></div>
-  <script>
-    declare const theme: any;
+  <h1>Hello World</h1>
+  <ThemeSelect />
+  <ThemeToggle />
+  <button id="setTheme">theme.setTheme("auto")</button>
+  <p><code>theme.getTheme()</code> returns: <code id="getTheme"></code></p>
+  <script is:inline>
+    document
+      .getElementById("setTheme")
+      .addEventListener("click", () => theme.setTheme("auto"));
 
-    function showTheme(currentTheme: string) {
-      const currentThemeDiv = document.getElementById("currentThemeDiv")!;
-      currentThemeDiv.innerHTML = `The current theme is: ${currentTheme}`;
-    }
+    document.getElementById("getTheme").innerHTML = theme.getTheme();
 
-    showTheme(theme.getTheme());
-
-    document.addEventListener("theme-changed", (e: any) => {
-      showTheme(e.detail.theme);
+    document.addEventListener("theme-changed", () => {
+      const resultsElem = document.getElementById("getTheme");
+      resultsElem && (resultsElem.innerHTML = theme.getTheme());
     });
   </script>
 </Layout>
+
+<style>
+  code {
+    background-color: black;
+    color: white;
+    font-style: italic;
+    border-radius: 5px;
+    padding: 2px;
+  }
+</style>

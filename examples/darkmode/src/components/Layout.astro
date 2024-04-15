@@ -1,5 +1,5 @@
 ---
-import ThemeProvider from "./ThemeProvider.astro";
+import ThemeProvider from "./ThemeManager.astro";
 import { ViewTransitions } from "astro:transitions";
 ---
 
@@ -14,55 +14,22 @@ import { ViewTransitions } from "astro:transitions";
     <ViewTransitions />
   </head>
   <main>
-    <theme-selector />
-    <script is:inline>
-      customElements.define(
-        "theme-selector",
-        class extends HTMLElement {
-          connectedCallback() {
-            this.innerHTML = `
-                        <select onchange="theme.setTheme(this.value)">
-                            <option value="auto">auto</option>
-                            <option value="light">light</option>
-                            <option value="dark">dark</option>
-                        </select>
-                      `;
-            const currentTheme = theme.getTheme();
-            this.querySelector("select").value = currentTheme;
-          }
-        }
-      );
-    </script>
-    <!-- <select id="themeSelector" onchange="theme.setTheme(this.value);">
-      {["auto", "light", "dark"].map((e) => <option value={e}>{e}</option>)}
-    </select>
-    <script is:inline data-astro-rerun>
-      (() => {
-        var currentTheme = theme.getTheme();
-        document.getElementById("themeSelector").value = currentTheme;
-      })();
-    </script> -->
     <body>
       <slot />
     </body>
-    <style is:global>
-      /* Define CSS variables for light theme */
-      :root[data-theme="light"] {
-        --background-color: #ffffff;
-        --text-color: #000000;
-        --link-color: #0000ee;
-      }
-
-      /* Define CSS variables for dark theme */
-      :root[data-theme="dark"] {
-        --background-color: #333333;
-        --text-color: #ffffff;
-        --link-color: #0094ff;
-      }
-      body {
-        background-color: var(--background-color);
-        color: var(--text-color);
-      }
-    </style>
   </main>
+  <style is:global>
+    :root[data-theme="light"] {
+      --background-color: #ffffff;
+      --text-color: #000000;
+    }
+    :root[data-theme="dark"] {
+      --background-color: #333333;
+      --text-color: #ffffff;
+    }
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+  </style>
 </html>

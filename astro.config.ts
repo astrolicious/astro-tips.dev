@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,13 +27,16 @@ export default defineConfig({
         },
         {
           label: "Tips",
-          autogenerate: { directory: "tips" }
+          autogenerate: { directory: "tips" },
         },
       ],
       components: {
-        PageTitle: './src/components/starlight/PageTitle.astro',
-        MarkdownContent: './src/components/starlight/MarkdownContent.astro'
-      }
+        PageTitle: "./src/components/starlight/PageTitle.astro",
+        MarkdownContent: "./src/components/starlight/MarkdownContent.astro",
+      },
+      expressiveCode: {
+        plugins: [pluginLineNumbers()],
+      },
     }),
   ],
 });

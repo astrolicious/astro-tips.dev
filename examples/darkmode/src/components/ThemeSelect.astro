@@ -1,0 +1,28 @@
+<theme-selector></theme-selector>
+<script is:inline>
+  if (!customElements.get("theme-selector")) {
+    customElements.define(
+      "theme-selector",
+      class extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+            <select onchange="theme.setTheme(this.value)" aria-label="Select Theme">
+              <option value="auto">Auto</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          `;
+          this.updateSelectedTheme();
+
+          document.addEventListener("theme-changed", (event) => {
+            this.updateSelectedTheme(event.detail.theme);
+          });
+        }
+
+        updateSelectedTheme(newTheme = theme.getTheme()) {
+          this.querySelector("select").value = newTheme;
+        }
+      }
+    );
+  }
+</script>
