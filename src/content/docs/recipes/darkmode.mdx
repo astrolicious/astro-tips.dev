@@ -32,6 +32,7 @@ This component will live in the `<head>` of your layout or pages, it is responsi
 1. This component starts off with an inline script that handles the themes by creating a `window.theme` api. We will put the window.theme definition inside an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE), so that we can avoid polluting the window and have control over what exactly is made global.  
 
     ```astro
+    <theme-manager data-default-theme={defaultTheme}></theme-manager>
     <script is:inline>
       if (!customElements.get("theme-manager")) {
         class ThemeManager extends HTMLElement {
