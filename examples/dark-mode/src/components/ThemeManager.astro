@@ -1,9 +1,9 @@
 ---
 type Props = {
-  "default-theme"?: "auto" | "dark" | "light";
+  "defaultTheme"?: "auto" | "dark" | "light";
 };
 
-const { "default-theme": defaultTheme = "auto" } = Astro.props;
+const { defaultTheme = "auto" } = Astro.props;
 ---
 
 <theme-manager data-default-theme={defaultTheme}></theme-manager>

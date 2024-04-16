@@ -9,7 +9,7 @@ Having light and dark theme is almost neccessary for a website, and there are ma
 
 This recipe will be for two components, one that managers the themes and creates the API, and one that the client interacts with to manually select the theme of their choosing. We will also go over styling and usage of the components.
 
-Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) example of this recipe, and here is an [example repo](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode).
+Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) example of this recipe, and here is an [example repo](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/dark-mode).
 
 ## Key Features
 
@@ -248,10 +248,10 @@ import { ViewTransitions } from "astro:transitions";
 ```astro
 ---
 type Props = {
-  "default-theme"?: "auto" | "dark" | "light";
+  "defaultTheme"?: "auto" | "dark" | "light";
 };
 
-const { "default-theme": defaultTheme = "auto" } = Astro.props;
+const { defaultTheme = "auto" } = Astro.props;
 ---
 
 <theme-manager data-default-theme={defaultTheme}></theme-manager>
