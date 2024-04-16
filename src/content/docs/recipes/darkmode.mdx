@@ -9,7 +9,7 @@ Having a theme toggle is almost neccessary, and there are many ways to handle th
 
 This recipe will be for two components, one that managers the themes and creates the API that provides the nice DX, and one that the client interacts with to manually select the theme of their choosing. We will also go over styling and usage of the components.
 
-Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) example of this recipe.
+Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) example of this recipe, and here is an [example repo](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode).
 
 ## Key Features
 
@@ -17,7 +17,7 @@ Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) exampl
 - Uses [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) for nice DX and easy [View Transitions](https://docs.astro.build/en/guides/view-transitions/) compatibility
 - Allows for setting a default theme easily with a prop
 - Dispatches a custom `theme-changed` event that can be listened for and gives access to `event.details.theme` and `event.details.systemTheme`
-- Includes a [button](./src/components/ThemeToggle.astro) and [select](./src/components/ThemeToggle.astro) toggling component (which aren't necesary to use the `ThemeManager.astro` component)
+- Includes a [select](#theme-select-component) toggling component (which isn't necesary to use the `ThemeManager.astro` component) in this recipe and a [button](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode/src/components/ThemeToggle.astro) in the [example](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode) on GitHub
 - Exposes `theme` global for a nice API
   - `theme.getTheme()`
   - `theme.setTheme()`
@@ -120,7 +120,7 @@ This component will live in the `<head>` of your layout or pages, it is responsi
 
 ## Theme Select Component
 
-For this recipe we will go over a basic `<select>` based element. This is very much like what is default in [Starlight](https://starlight.astro.build/) but even more simple, for the sake of brevity. A more complex theme toggle button is included in the [examples](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode) on this repository's github and on the stackblitz included with this recipe. 
+For this recipe we will go over a basic `<select>` based element. This is very much like what is default in [Starlight](https://starlight.astro.build/) but even more simple, for the sake of brevity. A more complex theme toggle button is included in the [examples](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode) on this repository's GitHub and on the [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) included with this recipe. 
 
 <Steps>
 
@@ -192,7 +192,7 @@ So obviously our theme solution wouldn't be complete without styling the differe
 
 ### Tailwind darkMode
 
-What would a recipe's style section be if it didn't mention [tailwindcss](https://tailwindcss.com/), especially when setting it up is as this:
+What would a recipe's style section be if it didn't mention [Tailwind CSS](https://tailwindcss.com/), especially when setting it up is as this:
 
 ```ts
 /** @type {import('tailwindcss').Config} */
