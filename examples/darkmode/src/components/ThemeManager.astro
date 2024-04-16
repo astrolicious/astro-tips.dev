@@ -11,7 +11,7 @@ const { "default-theme": defaultTheme = "auto" } = Astro.props;
   if (!customElements.get("theme-manager")) {
     class ThemeManager extends HTMLElement {
       connectedCallback() {
-        this.initThemeManagement(this.dataset.defaultTheme || "auto");
+        this.initThemeManagement(this.dataset.defaultTheme);
       }
 
       initThemeManagement(defaultTheme) {
@@ -54,7 +54,11 @@ const { "default-theme": defaultTheme = "auto" } = Astro.props;
             return systemTheme;
           }
 
-          return { setTheme, getTheme, getSystemTheme };
+          function getDefaultTheme() {
+            return defaultTheme;
+          }
+
+          return { setTheme, getTheme, getSystemTheme, getDefaultTheme };
         })();
 
         theme.setTheme(theme.getTheme());

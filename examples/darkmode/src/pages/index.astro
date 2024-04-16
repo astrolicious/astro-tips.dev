@@ -1,13 +1,13 @@
 ---
 import Layout from "../components/Layout.astro";
 import ThemeSelect from "../components/ThemeSelect.astro";
-import ThemeToggle from "../components/ThemeToggle.astro";
+import ThemeToggleButton from "../components/ThemeToggleButton.astro";
 ---
 
 <Layout>
   <h1>Hello World</h1>
   <ThemeSelect />
-  <ThemeToggle />
+  <ThemeToggleButton />
   <button id="setTheme">theme.setTheme("auto")</button>
   <p><code>theme.getTheme()</code> returns: <code id="getTheme"></code></p>
   <script is:inline>
