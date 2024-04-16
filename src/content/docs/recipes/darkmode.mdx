@@ -149,12 +149,14 @@ Of course we need a way to allow users to switch between themes, and for this re
     class extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-          <select onchange="theme.setTheme(this.value)" aria-label="Select Theme">
+          <select>
             <option value="auto">Auto</option>
             <option value="light">Light</option>
             <option value="dark">Dark</option>
           </select>
         `;
+        this.onchange= theme.setTheme(this.value);
+        this.ariaLabel="select theme";
         this.updateSelectedTheme();
 
         document.addEventListener("theme-changed", (event) => {
@@ -242,7 +244,7 @@ import { ViewTransitions } from "astro:transitions";
 ## Full code
 
 <Tabs>
-  <TabItem label="ThemeManager">
+  <TabItem label="ThemeManager.astro">
 ```astro
 ---
 type Props = {
@@ -315,8 +317,10 @@ const { "default-theme": defaultTheme = "auto" } = Astro.props;
 </script>
 ```
   </TabItem>
-  <TabItem label="ThemeSelect">
+  <TabItem label="ThemeSelect.astro">
 ```astro
+---
+---
 <theme-selector></theme-selector>
 <script is:inline>
   if (!customElements.get("theme-selector")) {
@@ -325,12 +329,14 @@ const { "default-theme": defaultTheme = "auto" } = Astro.props;
       class extends HTMLElement {
         connectedCallback() {
           this.innerHTML = `
-            <select onchange="theme.setTheme(this.value)" aria-label="Select Theme">
+            <select>
               <option value="auto">Auto</option>
               <option value="light">Light</option>
               <option value="dark">Dark</option>
             </select>
           `;
+          this.onchange= theme.setTheme(this.value);
+          this.ariaLabel="Select Theme";
           this.updateSelectedTheme();
 
           document.addEventListener("theme-changed", (event) => {
@@ -345,7 +351,6 @@ const { "default-theme": defaultTheme = "auto" } = Astro.props;
     );
   }
 </script>
-
 ```
   </TabItem>
 </Tabs>
