@@ -1,0 +1,63 @@
+---
+title: Tailwind V4
+description: Quick set up guide for Tailwind v4
+---
+import { Tabs, TabItem, LinkCard } from "@astrojs/starlight/components";
+
+How to use Tailwind's v4 Vite plugin instead of Astro's Tailwind integration.
+
+Be sure to check out the [Tailwind v4 Blogpost](https://tailwindcss.com/blog/tailwindcss-v4-alpha#using-vite) for details on using v4.
+
+## Install
+
+<Tabs>
+    <TabItem label="npm">
+        ```sh
+        npm install --save-dev @tailwindcss/vite
+        ```
+    </TabItem>
+    <TabItem label="pnpm">
+        ```sh
+        pnpm add -D @tailwindcss/vite
+        ```
+    </TabItem>
+    <TabItem label="yarn">
+        ```sh
+        yarn add --dev @tailwindcss/vite
+        ```
+    </TabItem>
+</Tabs>
+
+## Configure
+
+Next, update your [Prettier config](https://prettier.io/docs/en/configuration) in the project's root to include `prettier-plugin-astro` plugin. This example will use `.prettierrc.json`:
+
+```ts title="astro.config.mjs"
+import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
+
+// https://astro.build/config
+export default defineConfig({
+  vite: {
+    plugins: [tailwindcss()],
+    css: {
+      transformer: 'lightningcss'
+    }
+  }
+});
+```
+
+## CSS File
+
+Instead of Astro's Tailwind integration importing the default tailwind `.css` file for you, you'll need to do this yourself.
+
+```css title="tailwind.css"
+@import "tailwindcss";
+```
+
+```astro title="Layout.astro"
+---
+import "path/to/tailwind.css"
+---
+<!--  -->
+```
