@@ -2,60 +2,75 @@
 title: Tailwind v4
 description: Quick set up guide for Tailwind v4
 ---
-import { Tabs, TabItem, LinkCard } from "@astrojs/starlight/components";
+import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
 
 How to use Tailwind's v4 Vite plugin instead of Astro's Tailwind integration.
 
-Be sure to check out the [Tailwind v4 Blogpost](https://tailwindcss.com/blog/tailwindcss-v4-alpha#using-vite) for details on using v4.
+Be sure to check out the [Tailwind v4 Blogpost](https://tailwindcss.com/blog/tailwindcss-v4-alpha) for details on using v4.
 
-## Install
+## Setup
+<Steps>
 
-<Tabs>
-    <TabItem label="npm">
-        ```sh
-        npm install --save-dev @tailwindcss/vite
-        ```
-    </TabItem>
-    <TabItem label="pnpm">
-        ```sh
-        pnpm add -D @tailwindcss/vite
-        ```
-    </TabItem>
-    <TabItem label="yarn">
-        ```sh
-        yarn add --dev @tailwindcss/vite
-        ```
-    </TabItem>
-</Tabs>
+1. Install Tailwind's official Vite plugin
 
-## Configure
+    <Tabs>
+        <TabItem label="npm">
+            ```sh
+            npm install --save-dev @tailwindcss/vite
+            ```
+        </TabItem>
+        <TabItem label="pnpm">
+            ```sh
+            pnpm add -D @tailwindcss/vite
+            ```
+        </TabItem>
+        <TabItem label="yarn">
+            ```sh
+            yarn add --dev @tailwindcss/vite
+            ```
+        </TabItem>
+    </Tabs>
 
-```ts title="astro.config.mjs" {tailwindcss()} {7-10}
-import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
+2. Add the plugin to Astro config and enable Lightning CSS
 
-// https://astro.build/config
-export default defineConfig({
-  vite: {
-    plugins: [tailwindcss()],
-    css: {
-      transformer: 'lightningcss'
-    }
-  }
-});
-```
+    ```ts title="astro.config.mjs" {tailwindcss()} ins={2} ins={7-10}
+    import { defineConfig } from 'astro/config';
+    import tailwindcss from '@tailwindcss/vite';
 
-## CSS File
+    // https://astro.build/config
+    export default defineConfig({
+      vite: {
+        plugins: [tailwindcss()],
+        css: {
+          transformer: 'lightningcss'
+        }
+      }
+    });
+    ```
 
-Instead of Astro's Tailwind integration importing the default tailwind `.css` file for you, you'll need to do this yourself.
+3. Import the CSS file that imports Tailwind into your `.astro` components
 
-```css title="src/styles/tailwind.css"
-@import "tailwindcss";
-```
+    Instead of Astro's Tailwind integration importing the default tailwind `.css` file for you, you'll need to do this yourself. Either import this `.css` file into a shared layout, or into the individual `.astro` components/pages you'd like to use Tailwind in.
 
-```astro title="src/layouts/Layout.astro"
----
-import "../styles/tailwind.css";
----
-<!--  -->
-```
+    ```css title="src/styles/tailwind.css"
+    @import "tailwindcss";
+    ```
+
+    ```astro title="src/layouts/Layout.astro" ins={2} "class="prose""
+    ---
+    import "../styles/tailwind.css";
+    ---
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <!-- ... -->
+      </head>
+      <body>
+        <article class="prose">
+          <slot />
+        </article>
+      </body>
+    </html>
+    ```
+
+</Steps>
