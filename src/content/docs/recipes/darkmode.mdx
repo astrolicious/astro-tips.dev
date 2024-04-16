@@ -5,20 +5,18 @@ astroRange: ^4.0.0
 
 import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
 
-Having a theme toggle is almost neccessary, and there are many ways to handle this. This recipe will cover one method which follows the best practices and keeps DX in mind.
+Having light and dark theme is almost neccessary for a website, and there are many ways to handle this. This recipe will cover one method which follows best practices and keeps DX in mind.
 
-This recipe will be for two components, one that managers the themes and creates the API that provides the nice DX, and one that the client interacts with to manually select the theme of their choosing. We will also go over styling and usage of the components.
+This recipe will be for two components, one that managers the themes and creates the API, and one that the client interacts with to manually select the theme of their choosing. We will also go over styling and usage of the components.
 
 Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) example of this recipe, and here is an [example repo](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode).
 
 ## Key Features
 
-- View Transitions Compatible ( but not required )
-- Uses [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) for nice DX and easy [View Transitions](https://docs.astro.build/en/guides/view-transitions/) compatibility
-- Allows for setting a default theme easily with a prop
+- Compatible with [View Transitions](https://docs.astro.build/en/guides/view-transitions/) and uses [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
 - Dispatches a custom `theme-changed` event that can be listened for and gives access to `event.details.theme` and `event.details.systemTheme`
-- Includes a [select](#theme-select-component) toggling component (which isn't necesary to use the `ThemeManager.astro` component) in this recipe and a [button](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode/src/components/ThemeToggle.astro) in the [example](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode) on GitHub
-- Exposes `theme` global for a nice API
+- Includes a [`<select>`](#theme-select-component) toggling component (which isn't necesary to use the `ThemeManager.astro` component) in this recipe and a [`<button>`](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode/src/components/ThemeToggle.astro) in the [example](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode) on GitHub
+- Exposes `theme` global on client for a nice API
   - `theme.getTheme()`
   - `theme.setTheme()`
   - `theme.getSystemTheme()`
