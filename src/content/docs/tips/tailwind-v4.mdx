@@ -1,13 +1,16 @@
 ---
-title: Tailwind v4
-description: Quick set up guide for Tailwind v4
+title: Tailwind v4 alpha
+description: Quick set up for trying out Tailwind v4 alpha using the vite plugin
 astroRange: ^4.0.0
 ---
 import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
 
-How to use Tailwind's v4 Vite plugin instead of Astro's Tailwind integration.
+Tailwind 4.0 plans to introduce some big changes, including a new Vite plugin, which will improve accuracy and performance. 
 
-Be sure to check out the [Tailwind v4 Blogpost](https://tailwindcss.com/blog/tailwindcss-v4-alpha) for more details.
+On top of the Vite plugin v4 comes with some major changes, most notably a redesign of the `tailwind.config.mjs`. The plan is to continue to support using the existing configs, but steer users toward using the entry point `.css` file as the config file. 
+
+The alpha does not have all the features implemented yet, most notably dark mode other than media queries. Check out the [Tailwind v4.0 Blogpost](https://tailwindcss.com/blog/tailwindcss-v4-alpha) for more details.
+
 
 ## Setup
 
@@ -18,17 +21,17 @@ Be sure to check out the [Tailwind v4 Blogpost](https://tailwindcss.com/blog/tai
     <Tabs>
         <TabItem label="npm">
             ```sh
-            npm install --save-dev @tailwindcss/vite
+            npm install --save-dev tailwindcss@next @tailwindcss/vite@next
             ```
         </TabItem>
         <TabItem label="pnpm">
             ```sh
-            pnpm add -D @tailwindcss/vite
+            pnpm add -D tailwindcss@next @tailwindcss/vite@next
             ```
         </TabItem>
         <TabItem label="yarn">
             ```sh
-            yarn add --dev @tailwindcss/vite
+            yarn add --dev tailwindcss@next @tailwindcss/vite@next
             ```
         </TabItem>
     </Tabs>
