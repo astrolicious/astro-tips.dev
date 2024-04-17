@@ -9,7 +9,7 @@ export default defineConfig({
       title: "Astro Tips",
       social: {
         github: "https://github.com/astrolicious/astro-tips.dev",
-        discord: "https://astro.build/chat",
+        discord: "https://chat.astrolicious.dev/",
       },
       sidebar: [
         {
