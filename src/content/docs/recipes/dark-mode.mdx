@@ -200,13 +200,28 @@ So obviously our theme solution wouldn't be complete without styling the differe
 
 What would a recipe's style section be if it didn't mention [Tailwind CSS](https://tailwindcss.com/), especially when setting it up is as this:
 
-```ts
+```ts title="tailwind.config.cjs" ins={3}
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['selector', '[data-theme="dark"]'],
   // ...
 }
 ```
+
+## ESLint
+
+If you're using ESLint there's a good chance you'll run into `'theme' is not defined` due to the [no-undef](https://eslint.org/docs/latest/rules/no-undef) rule. To solve this we can add `theme` as a global:
+
+```js title="eslintrc.cjs" ins={3-5}
+/** @type {import("@types/eslint").Linter.Config} */
+module.exports = {
+  globals: {
+    theme: "readonly",
+  },
+  // ...
+};
+```
+
 ## Usage
 
 ```astro title="Layout.astro"
@@ -237,8 +252,6 @@ import { ViewTransitions } from "astro:transitions";
     }
   </style>
 </html>
-
-
 ```
 
 ## Full code
