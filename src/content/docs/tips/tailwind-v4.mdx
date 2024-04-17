@@ -1,6 +1,7 @@
 ---
 title: Tailwind v4
 description: Quick set up guide for Tailwind v4
+astroRange: ^4.0.0
 ---
 import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
 
@@ -50,13 +51,13 @@ Be sure to check out the [Tailwind v4 Blogpost](https://tailwindcss.com/blog/tai
 
 3. Import the CSS file that imports Tailwind into your `.astro` components
 
-    Instead of Astro's Tailwind integration importing the default tailwind `.css` file for you, you'll need to do this yourself. Either import this `.css` file into a shared layout, or into the individual `.astro` components/pages you'd like to use Tailwind in.
+    Instead of Astro's Tailwind integration importing the default Tailwind `.css` file for you, you'll need to do this yourself. Either import this `.css` file into a shared layout, or into the individual `.astro` components/pages you'd like to use Tailwind in.
 
     ```css title="src/styles/tailwind.css"
     @import "tailwindcss";
     ```
 
-    ```astro title="src/layouts/Layout.astro" ins={2} "class="prose""
+    ```astro title="src/layouts/Layout.astro" ins={2} "class="max-w-2xl""
     ---
     import "../styles/tailwind.css";
     ---
@@ -66,7 +67,7 @@ Be sure to check out the [Tailwind v4 Blogpost](https://tailwindcss.com/blog/tai
         <!-- ... -->
       </head>
       <body>
-        <article class="prose">
+        <article class="max-w-2xl">
           <slot />
         </article>
       </body>
