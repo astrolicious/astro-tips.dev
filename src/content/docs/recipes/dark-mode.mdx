@@ -17,7 +17,7 @@ Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) exampl
 - Includes an optional [`<select>`](#theme-select-component) component in this recipe and a [`<button>`](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode/src/components/ThemeToggle.astro) in the [example](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode) on GitHub
 - Dispatches a custom `theme-changed` event that can be listened for and gives access to `event.details.theme` and `event.details.systemTheme`
 - Allows for easily setting the default theme with a prop to the component
-- Exposes `theme` global on client for a nice API
+- Exposes `theme` global on client for a nice API:
   - `theme.getTheme()`
   - `theme.setTheme()`
   - `theme.getSystemTheme()`
