@@ -208,23 +208,47 @@ module.exports = {
 }
 ```
 
-## ESLint
+## ESLint and TypeScript
 
-If you're using ESLint there's a good chance you'll run into `'theme' is not defined` due to the [no-undef](https://eslint.org/docs/latest/rules/no-undef) rule. To solve this we can add `theme` as a global:
+If you want to use this `window.theme` API inside a normal `<script>` you'll want to add it as a property of `Window` in `env.d.ts`.
 
-```js title="eslintrc.cjs" ins={3-5}
-/** @type {import("@types/eslint").Linter.Config} */
-module.exports = {
-  globals: {
-    theme: "readonly",
-  },
-  // ...
-};
-```
+If you're using ESLint there's a good chance you'll run into `'theme' is not defined` due to the [no-undef](https://eslint.org/docs/latest/rules/no-undef) rule. To solve this we can add `theme` as a global in `eslintrc.cjs`.
+
+
+<Tabs>
+  <TabItem label="TypeScript">
+    ```ts title="env.d.ts"
+    /// <reference types="astro/client" />
+
+    type Theme = {
+      setTheme: (theme: "auto" | "dark" | "light") => void;
+      getTheme: () => "auto" | "dark" | "light";
+      getSystemTheme: () => "light" | "dark";
+      getDefaultTheme: () => "auto" | "dark" | "light";
+    };
+
+    interface Window {
+      theme: Theme;
+    }
+    ```
+  </TabItem>
+  <TabItem label="ESLint">
+    ```js title="eslintrc.cjs"
+    /** @type {import("@types/eslint").Linter.Config} */
+    module.exports = {
+      globals: {
+        theme: "readonly",
+      },
+      // ...
+    };
+    ```
+  </TabItem>
+</Tabs>
+
 
 ## Usage
 
-```astro title="Layout.astro"
+```astro title="Layout.astro" {10,15,19-26}
 ---
 import ThemeProvider from "./ThemeManager.astro";
 import ThemeSelect from "./ThemeSelect.astro";
