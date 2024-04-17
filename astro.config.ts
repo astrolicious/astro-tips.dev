@@ -4,6 +4,9 @@ import starlight from "@astrojs/starlight";
 // https://astro.build/config
 export default defineConfig({
   site: process.env.DEPLOY_URL ?? "https://astro-tips.dev",
+  redirects: {
+    "/recipes/how-to-add-gsap": "/tips/how-to-add-gsap",
+  },
   integrations: [
     starlight({
       title: "Astro Tips",
@@ -26,13 +29,13 @@ export default defineConfig({
         },
         {
           label: "Tips",
-          autogenerate: { directory: "tips" }
+          autogenerate: { directory: "tips" },
         },
       ],
       components: {
-        PageTitle: './src/components/starlight/PageTitle.astro',
-        MarkdownContent: './src/components/starlight/MarkdownContent.astro'
-      }
+        PageTitle: "./src/components/starlight/PageTitle.astro",
+        MarkdownContent: "./src/components/starlight/MarkdownContent.astro",
+      },
     }),
   ],
 });
