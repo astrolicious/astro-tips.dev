@@ -13,16 +13,18 @@ Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) exampl
 
 ## Key Features
 
-- Compatible with [View Transitions](https://docs.astro.build/en/guides/view-transitions/)
-- Includes an optional [`<select>`](#theme-select-component) component in this recipe and a [`<button>`](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode/src/components/ThemeToggle.astro) in the [example](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode) on GitHub
-- [Progressive Enhancement](https://en.wikipedia.org/wiki/Progressive_enhancement) meaning when JS is disabled it won't display a broken button or disrupt default styles
-- Dispatches a custom `theme-changed` event that can be listened for and gives access to `event.details.theme` and `event.details.systemTheme`
-- Allows for easily setting the default theme with a prop to the component
-- Exposes `theme` global on client for a nice API:
+- View Transitions Compatible
+- Allows for setting a default theme easily with a prop
+- Includes [button](./src/components/ThemeToggle.astro) and [select](./src/components/ThemeToggle.astro) [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) (which aren't necesary to use the script in `ThemeManager.astro`)
+- Exposes `theme` global for a nice API
   - `theme.getTheme()`
   - `theme.setTheme()`
   - `theme.getSystemTheme()`
   - `theme.getDefaultTheme()`
+- Dispatches a custom `theme-changed` event that gives access to:
+  - `event.details.theme`
+  - `event.details.systemTheme`
+  - `event.details.defaultTheme`
 
 ## Theme Manager Component
 
