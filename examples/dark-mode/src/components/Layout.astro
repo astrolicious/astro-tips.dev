@@ -1,0 +1,35 @@
+---
+import ThemeManager from "./ThemeManager.astro";
+import { ViewTransitions } from "astro:transitions";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+    <ThemeManager defaultTheme="dark" />
+    <ViewTransitions />
+  </head>
+  <main>
+    <body>
+      <slot />
+    </body>
+  </main>
+  <style is:global>
+    :root[data-theme="light"] {
+      --background-color: #ffffff;
+      --text-color: #000000;
+    }
+    :root[data-theme="dark"] {
+      --background-color: #333333;
+      --text-color: #ffffff;
+    }
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+  </style>
+</html>

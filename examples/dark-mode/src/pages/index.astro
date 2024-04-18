@@ -1,0 +1,35 @@
+---
+import Layout from "../components/Layout.astro";
+import ThemeSelect from "../components/ThemeSelect.astro";
+import ThemeToggleButton from "../components/ThemeToggleButton.astro";
+---
+
+<Layout>
+  <h1>Hello World</h1>
+  <ThemeSelect />
+  <ThemeToggleButton />
+  <button id="setTheme">theme.setTheme("auto")</button>
+  <p><code>theme.getTheme()</code> returns: <code id="getTheme"></code></p>
+  <script is:inline>
+    document
+      .getElementById("setTheme")
+      .addEventListener("click", () => theme.setTheme("auto"));
+
+    document.getElementById("getTheme").innerHTML = theme.getTheme();
+
+    document.addEventListener("theme-changed", () => {
+      const resultsElem = document.getElementById("getTheme");
+      resultsElem && (resultsElem.innerHTML = theme.getTheme());
+    });
+  </script>
+</Layout>
+
+<style>
+  code {
+    background-color: black;
+    color: white;
+    font-style: italic;
+    border-radius: 5px;
+    padding: 2px;
+  }
+</style>
