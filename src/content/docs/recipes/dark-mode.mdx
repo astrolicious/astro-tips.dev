@@ -247,7 +247,7 @@ If you're using ESLint there's a good chance you'll run into `'theme' is not def
 
 ```astro title="Layout.astro" {10,15,19-26}
 ---
-import ThemeProvider from "./ThemeManager.astro";
+import ThemeManager from "./ThemeManager.astro";
 import ThemeSelect from "./ThemeSelect.astro";
 import { ViewTransitions } from "astro:transitions";
 ---
@@ -255,7 +255,7 @@ import { ViewTransitions } from "astro:transitions";
 <html lang="en">
   <head>
     <!-- ... -->
-    <ThemeProvider default-theme="auto" />
+    <ThemeManager default-theme="auto" />
     <ViewTransitions />
   </head>
   <main>
