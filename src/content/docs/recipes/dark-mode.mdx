@@ -7,14 +7,15 @@ import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
 
 Having light and dark theme is almost neccessary for a website, and there are many ways to handle this. This recipe will cover one method which follows best practices and keeps DX in mind.
 
-This recipe will be for two components, one that managers the themes and creates the API, and one that the client interacts with to manually select the theme of their choosing. We will also go over styling and usage of the components.
+This recipe will have two parts, one that script that handles the theme and provides global methods on available on the window, and one example [web component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) that the client interacts with to manually select the theme. We will also go over styling, usage and tooling.
 
 Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) example of this recipe, and here is an [example repo](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/dark-mode).
 
 ## Key Features
 
-- Compatible with [View Transitions](https://docs.astro.build/en/guides/view-transitions/) and uses [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+- Compatible with [View Transitions](https://docs.astro.build/en/guides/view-transitions/)
 - Includes an optional [`<select>`](#theme-select-component) component in this recipe and a [`<button>`](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode/src/components/ThemeToggle.astro) in the [example](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode) on GitHub
+- [Progressive Enhancement](https://en.wikipedia.org/wiki/Progressive_enhancement) meaning when JS is disabled it won't display a broken button or disrupt default styles
 - Dispatches a custom `theme-changed` event that can be listened for and gives access to `event.details.theme` and `event.details.systemTheme`
 - Allows for easily setting the default theme with a prop to the component
 - Exposes `theme` global on client for a nice API:
@@ -25,99 +26,92 @@ Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) exampl
 
 ## Theme Manager Component
 
-This component will live in the `<head>` of your layout or pages, it is responsible for ensuring there is no [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content) and creating the developer facing `theme` client side API.
+This script will live in the `<head>` of your layout or pages, it is responsible for ensuring there is no [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content), creating the developer facing `window.theme` client side API, and dispatching a custom event `theme-changed` whenever the theme changes.
+
+The script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) which is a good practice because it does not pollute the global scope.
 
 <Steps>
 
-1. This component starts off with an inline script that handles the themes by creating a `window.theme` api. We will put the window.theme definition inside an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE), so that we can avoid polluting the window and have control over what exactly is made global.  
+1. The first part of our script is `window.theme` and this starts off with getting the defaultTheme prop and creating our store. We need to check if `localStorage` is available to us, because it isn't available everywhere, and make sure we degrade gracefully when it isn't.
 
-    ```astro
-    <theme-manager data-default-theme={defaultTheme}></theme-manager>
-    <script is:inline>
-      if (!customElements.get("theme-manager")) {
-        class ThemeManager extends HTMLElement {
-          connectedCallback() {
-            this.initThemeManagement(this.dataset.defaultTheme || "auto");
-          }
-
-          initThemeManagement(defaultTheme) {
-            window.theme = (() => {
-              // ...
-            })();
-
-            theme.setTheme(theme.getTheme());
-          }
-        }
-        customElements.define("theme-manager", ThemeManager);
-      }
-    </script>
-    ```
-2. Now we can get into the first part of `window.theme`, creating our store. We need to check if `localStorage` is available to us, because it isn't available everywhere, and not break when it isn't.
+2. Now we can get into 
     
     ```js
-    window.theme = (() => {
-      const storageKey = "theme";
-      const store =
-        typeof localStorage !== "undefined"
-          ? localStorage
-          : { getItem: () => null, setItem: () => {} };
+    <script is:inline data-default-theme={defaultTheme}>
+      window.theme ??= (() => {
+        const defaultTheme =
+          document.currentScript.getAttribute("data-default-theme");
+        const storageKey = "theme";
+        const store =
+          typeof localStorage !== "undefined"
+            ? localStorage
+            : { getItem: () => null, setItem: () => {} };
 
-      // ...
+        // ...
 
-    })();
+      })();
+      theme.setTheme(theme.getTheme());
+    </script>
     ```
-3. Next let's listen for device setting changes, so when in `auto` mode the theme will respond to clients changing their device settings, and in order to do that we need to also create the `applyTheme` function. 
+2. Next let's listen for device setting changes, so when in `auto` mode the theme will respond to clients changing their device settings, and in order to do that we need to also create the `applyTheme` function. 
     ```js
-    window.theme = (() => {
+    <script is:inline data-default-theme={defaultTheme}>
+      window.theme ??= (() => {
 
-      // ...
+        // ...
 
-      const mediaMatcher = window.matchMedia("(prefers-color-scheme: light)");
-      let systemTheme = mediaMatcher.matches ? "light" : "dark";
-      mediaMatcher.addEventListener("change", (event) => {
-        systemTheme = event.matches ? "light" : "dark";
-        applyTheme(theme.getTheme());
-      });
+        const mediaMatcher = window.matchMedia("(prefers-color-scheme: light)");
+        let systemTheme = mediaMatcher.matches ? "light" : "dark";
+        mediaMatcher.addEventListener("change", (event) => {
+          systemTheme = event.matches ? "light" : "dark";
+          applyTheme(theme.getTheme());
+        });
 
-      function applyTheme(theme) {
-        document.documentElement.dataset.theme =
-          theme === "auto" ? systemTheme : theme;
-        document.dispatchEvent(
-          new CustomEvent("theme-changed", {
-            detail: { theme, systemTheme },
-          })
-        );
-      }
+        function applyTheme(theme) {
+          document.documentElement.dataset.theme =
+            theme === "auto" ? systemTheme : theme;
+          document.dispatchEvent(
+            new CustomEvent("theme-changed", {
+              detail: { theme, systemTheme, defaultTheme },
+            })
+          );
+        }
 
-      // ...
 
-    })();
+        // ...
+
+      })();
+      theme.setTheme(theme.getTheme());
+    </script>
     ```
-4. Now finally let's create the functions that will become our developer facing API, which designed to give optimal DX when working with this theme provider. Any function we return here will be made available client side on the global `theme`, like `theme.anything()`
+4. Now finally let's create the methods that will become our developer facing API, which is designed for improved DX when working with this theme provider. Any function we return here will be made available client side on the global `window.theme`, like `window.theme.getTheme()`. Then finally we set the initial theme. 
     ```js
-    window.theme = (() => {
+    <script is:inline data-default-theme={defaultTheme}>
+      window.theme ??= (() => {
 
-      // ...
+        // ...
 
-      function setTheme(theme = defaultTheme) {
-        store.setItem(storageKey, theme);
-        applyTheme(theme);
-      }
+        function setTheme(theme = defaultTheme) {
+          store.setItem(storageKey, theme);
+          applyTheme(theme);
+        }
 
-      function getTheme() {
-        return store.getItem(storageKey) || defaultTheme;
-      }
+        function getTheme() {
+          return store.getItem(storageKey) || defaultTheme;
+        }
 
-      function getSystemTheme() {
-        return systemTheme;
-      }
+        function getSystemTheme() {
+          return systemTheme;
+        }
 
-      function getDefaultTheme() {
-        return defaultTheme;
-      }
+        function getDefaultTheme() {
+          return defaultTheme;
+        }
 
-      return { setTheme, getTheme, getSystemTheme, getDefaultTheme };
-    })();
+        return { setTheme, getTheme, getSystemTheme, getDefaultTheme };
+      })();
+      theme.setTheme(theme.getTheme());
+    </script>
     ```
 
 </Steps>
@@ -146,29 +140,29 @@ Of course we need a way to allow users to switch between themes, and for this re
 2. Next set up the `connectedCallback` and methods of our component, with the goal of basically just creating a `<select>` component that sets the options correctly based on the current `theme` and to listen for the `theme-changed` event and respond accordingly.
 
     ```js
-    class extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
-          <select>
-            <option value="auto">Auto</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
-          </select>
-        `;
-        this.querySelector("select").onchange = (event) =>
-          theme.setTheme(event.target.value);
-        this.setAttribute("aria-label", "Select Theme");
-        this.updateSelectedTheme();
+      class extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+            <select>
+              <option value="auto">Auto</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          `;
+          this.querySelector("select").onchange = (event) =>
+            theme.setTheme(event.target.value);
+          this.setAttribute("aria-label", "Select Theme");
+          this.updateSelectedTheme();
 
-        document.addEventListener("theme-changed", (event) => {
-          this.updateSelectedTheme(event.detail.theme);
-        });
-      }
+          document.addEventListener("theme-changed", (event) => {
+            this.updateSelectedTheme(event.detail.theme);
+          });
+        }
 
-      updateSelectedTheme(newTheme = theme.getTheme()) {
-        this.querySelector("select").value = newTheme;
+        updateSelectedTheme(newTheme = theme.getTheme()) {
+          this.querySelector("select").value = newTheme;
+        }
       }
-    }
     ```
 
 </Steps>
