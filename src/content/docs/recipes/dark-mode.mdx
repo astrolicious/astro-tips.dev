@@ -16,7 +16,7 @@ Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) exampl
 - View Transitions Compatible
 - Allows for setting a default theme easily with a prop
 - Includes [button](./src/components/ThemeToggle.astro) and [select](./src/components/ThemeToggle.astro) [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) (which aren't necesary to use the script in `ThemeManager.astro`)
-- Exposes `theme` global for a nice API
+- Exposes `window.theme` global for a nice API:
   - `theme.getTheme()`
   - `theme.setTheme()`
   - `theme.getSystemTheme()`
@@ -28,17 +28,15 @@ Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) exampl
 
 ## Theme Manager Component
 
-This script will live in the `<head>` of your layout or pages, it is responsible for ensuring there is no [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content), creating the developer facing `window.theme` client side API, and dispatching a custom event `theme-changed` whenever the theme changes.
+This `.astro` component consists of a `<script>` that accepts the `defaultTheme` prop and will live in the `<head>` of your layout or pages, it is responsible for ensuring there is no [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content), creating the developer facing `window.theme` client side API, and dispatching a custom event `theme-changed` whenever the theme changes.
 
 The script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) which is a good practice because it does not pollute the global scope.
 
 <Steps>
 
-1. The first part of our script is `window.theme` and this starts off with getting the defaultTheme prop and creating our store. We need to check if `localStorage` is available to us, because it isn't available everywhere, and make sure we degrade gracefully when it isn't.
-
-2. Now we can get into 
+1. The first part of our script is passing the `defaultTheme` prop to our `window.theme` IIFE then we create the `store` variable. We need to check if `localStorage` is available to us, because it isn't available everywhere, and make sure we degrade gracefully when it isn't.
     
-    ```js
+    ```astro
     <script is:inline data-default-theme={defaultTheme}>
       window.theme ??= (() => {
         const defaultTheme =
@@ -55,8 +53,10 @@ The script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) 
       theme.setTheme(theme.getTheme());
     </script>
     ```
+
 2. Next let's listen for device setting changes, so when in `auto` mode the theme will respond to clients changing their device settings, and in order to do that we need to also create the `applyTheme` function. 
-    ```js
+   
+    ```astro
     <script is:inline data-default-theme={defaultTheme}>
       window.theme ??= (() => {
 
@@ -86,8 +86,10 @@ The script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) 
       theme.setTheme(theme.getTheme());
     </script>
     ```
+
 4. Now finally let's create the methods that will become our developer facing API, which is designed for improved DX when working with this theme provider. Any function we return here will be made available client side on the global `window.theme`, like `window.theme.getTheme()`. Then finally we set the initial theme. 
-    ```js
+   
+    ```astro
     <script is:inline data-default-theme={defaultTheme}>
       window.theme ??= (() => {
 
@@ -280,79 +282,64 @@ import { ViewTransitions } from "astro:transitions";
 ```astro
 ---
 type Props = {
-  "defaultTheme"?: "auto" | "dark" | "light";
+  defaultTheme?: "auto" | "dark" | "light" | undefined;
 };
 
 const { defaultTheme = "auto" } = Astro.props;
 ---
 
-<theme-manager data-default-theme={defaultTheme}></theme-manager>
-<script is:inline>
-  if (!customElements.get("theme-manager")) {
-    class ThemeManager extends HTMLElement {
-      connectedCallback() {
-        this.initThemeManagement(this.dataset.defaultTheme);
-      }
+<script is:inline data-default-theme={defaultTheme}>
+  window.theme ??= (() => {
+    const defaultTheme =
+      document.currentScript.getAttribute("data-default-theme");
+    const storageKey = "theme";
+    const store =
+      typeof localStorage !== "undefined"
+        ? localStorage
+        : { getItem: () => null, setItem: () => {} };
 
-      initThemeManagement(defaultTheme) {
-        window.theme = (() => {
-          const storageKey = "theme";
-          const store =
-            typeof localStorage !== "undefined"
-              ? localStorage
-              : { getItem: () => null, setItem: () => {} };
+    const mediaMatcher = window.matchMedia("(prefers-color-scheme: light)");
+    let systemTheme = mediaMatcher.matches ? "light" : "dark";
+    mediaMatcher.addEventListener("change", (event) => {
+      systemTheme = event.matches ? "light" : "dark";
+      applyTheme(theme.getTheme());
+    });
 
-          const mediaMatcher = window.matchMedia(
-            "(prefers-color-scheme: light)"
-          );
-          let systemTheme = mediaMatcher.matches ? "light" : "dark";
-          mediaMatcher.addEventListener("change", (event) => {
-            systemTheme = event.matches ? "light" : "dark";
-            applyTheme(theme.getTheme());
-          });
-
-          function applyTheme(theme) {
-            document.documentElement.dataset.theme =
-              theme === "auto" ? systemTheme : theme;
-            document.dispatchEvent(
-              new CustomEvent("theme-changed", {
-                detail: { theme, systemTheme },
-              })
-            );
-          }
-
-          function setTheme(theme = defaultTheme) {
-            store.setItem(storageKey, theme);
-            applyTheme(theme);
-          }
-
-          function getTheme() {
-            return store.getItem(storageKey) || defaultTheme;
-          }
-
-          function getSystemTheme() {
-            return systemTheme;
-          }
-
-          function getDefaultTheme() {
-            return defaultTheme;
-          }
-
-          return { setTheme, getTheme, getSystemTheme, getDefaultTheme };
-        })();
-
-        theme.setTheme(theme.getTheme());
-      }
+    function applyTheme(theme) {
+      document.documentElement.dataset.theme =
+        theme === "auto" ? systemTheme : theme;
+      document.dispatchEvent(
+        new CustomEvent("theme-changed", {
+          detail: { theme, systemTheme, defaultTheme },
+        })
+      );
     }
-    customElements.define("theme-manager", ThemeManager);
-  }
+
+    function setTheme(theme = defaultTheme) {
+      store.setItem(storageKey, theme);
+      applyTheme(theme);
+    }
+
+    function getTheme() {
+      return store.getItem(storageKey) || defaultTheme;
+    }
+
+    function getSystemTheme() {
+      return systemTheme;
+    }
+
+    function getDefaultTheme() {
+      return defaultTheme;
+    }
+
+    return { setTheme, getTheme, getSystemTheme, getDefaultTheme };
+  })();
+  theme.setTheme(theme.getTheme());
 </script>
 ```
   </TabItem>
   <TabItem label="ThemeSelect.astro">
 ```astro
----
----
 <theme-selector></theme-selector>
 <script is:inline>
   if (!customElements.get("theme-selector")) {
@@ -367,8 +354,9 @@ const { defaultTheme = "auto" } = Astro.props;
               <option value="dark">Dark</option>
             </select>
           `;
-          this.onchange= theme.setTheme(this.value);
-          this.ariaLabel="Select Theme";
+          this.querySelector("select").onchange = (event) =>
+            theme.setTheme(event.target.value);
+          this.setAttribute("aria-label", "Select Theme");
           this.updateSelectedTheme();
 
           document.addEventListener("theme-changed", (event) => {
