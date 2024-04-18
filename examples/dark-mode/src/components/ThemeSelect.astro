@@ -12,8 +12,9 @@
               <option value="dark">Dark</option>
             </select>
           `;
-          this.onchange= theme.setTheme(this.value);
-          this.ariaLabel="Select Theme";
+          this.querySelector("select").onchange = (event) =>
+            theme.setTheme(event.target.value);
+          this.setAttribute("aria-label", "Select Theme");
           this.updateSelectedTheme();
 
           document.addEventListener("theme-changed", (event) => {

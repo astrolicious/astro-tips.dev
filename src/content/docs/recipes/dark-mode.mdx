@@ -155,8 +155,9 @@ Of course we need a way to allow users to switch between themes, and for this re
             <option value="dark">Dark</option>
           </select>
         `;
-        this.onchange= theme.setTheme(this.value);
-        this.ariaLabel="select theme";
+        this.querySelector("select").onchange = (event) =>
+          theme.setTheme(event.target.value);
+        this.setAttribute("aria-label", "Select Theme");
         this.updateSelectedTheme();
 
         document.addEventListener("theme-changed", (event) => {
