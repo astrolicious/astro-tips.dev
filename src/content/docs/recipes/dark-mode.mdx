@@ -13,7 +13,7 @@ Check out an example of this recipe on [StackBlitz](https://stackblitz.com/githu
 
 ## Key Features
 
-- View Transitions Compatible
+- [View Transitions](https://docs.astro.build/en/guides/view-transitions/) compatible
 - Allows for setting a default theme easily with a prop
 - Includes minimal [`<select>`](#theme-select-component) based [web component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) (which isn't necesary to use the script in `ThemeManager.astro`)
 - Exposes `window.theme` global for a nice API:
@@ -28,9 +28,9 @@ Check out an example of this recipe on [StackBlitz](https://stackblitz.com/githu
 
 ## Theme Manager Component
 
-This `.astro` component consists of an inline `<script>` that accepts the `defaultTheme` prop and will live in the `<head>` of your layout or pages, it is responsible for ensuring there is no [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content), creating the `window.theme` client side API, and dispatching a custom event `theme-changed` whenever the theme changes.
+This `.astro` component consists of two `<script>`s. The first is an inline `<script>` that accepts the `defaultTheme` prop and will live in the `<head>` of your layout or pages, it is responsible for ensuring there is no [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content), creating the `window.theme` client side API, and dispatching a custom event `theme-changed` whenever the theme changes. The second script is not inline and adds an event listener for `astro:after-swap` in order to make this work with [View Transitions](https://docs.astro.build/en/guides/view-transitions/).
 
-The script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) and it checks if `window.theme` already exists before executing. This prevents the global scope from being polluted, and ensures we don't see any `Identifier has already been declared` errors.
+The first script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) and it checks if `window.theme` already exists before executing. This prevents the global scope from being polluted, and ensures we don't see any `Identifier has already been declared` errors. The second script is specfically not inline, so that we don't have to worry about the potential for redudant event listeners. 
 
 <Steps>
 
@@ -51,6 +51,11 @@ The script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) 
 
       })();
       theme.setTheme(theme.getTheme());
+    </script>
+    <script>
+      document.addEventListener("astro:after-swap", () =>
+        window.theme.setTheme(window.theme.getTheme()),
+      );
     </script>
     ```
 
@@ -85,6 +90,11 @@ The script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) 
       })();
       theme.setTheme(theme.getTheme());
     </script>
+    <script>
+      document.addEventListener("astro:after-swap", () =>
+        window.theme.setTheme(window.theme.getTheme()),
+      );
+    </script>
     ```
 
 4. Now finally let's create the methods that will become our developer facing API, which is designed for improved DX when working with this theme provider. Any function we return here will be made available client side on the global `window.theme`, like `window.theme.getTheme()`. Then finally we set the initial theme. 
@@ -115,6 +125,11 @@ The script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) 
         return { setTheme, getTheme, getSystemTheme, getDefaultTheme };
       })();
       theme.setTheme(theme.getTheme());
+    </script>
+    <script>
+      document.addEventListener("astro:after-swap", () =>
+        window.theme.setTheme(window.theme.getTheme()),
+      );
     </script>
     ```
 
@@ -335,6 +350,11 @@ const { defaultTheme = "auto" } = Astro.props;
     return { setTheme, getTheme, getSystemTheme, getDefaultTheme };
   })();
   theme.setTheme(theme.getTheme());
+</script>
+<script>
+	document.addEventListener("astro:after-swap", () =>
+		window.theme.setTheme(window.theme.getTheme()),
+	);
 </script>
 ```
   </TabItem>
