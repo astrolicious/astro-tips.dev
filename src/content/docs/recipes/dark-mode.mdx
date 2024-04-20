@@ -9,7 +9,7 @@ Having light and dark theme is almost neccessary for a website, and there are ma
 
 This recipe will have two parts, one that script that handles the theme and provides global methods on available on the window, and one example [web component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) that the client interacts with to manually select the theme. We will also go over styling, usage and tooling.
 
-Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) example of this recipe, and here is an [example repo](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/dark-mode).
+Check out an example of this recipe on [StackBlitz](https://stackblitz.com/github/astrolicious/astro-tips.dev/tree/main/examples/dark-mode) or [GitHub](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/dark-mode)
 
 ## Key Features
 
@@ -28,9 +28,9 @@ Here's a [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) exampl
 
 ## Theme Manager Component
 
-This `.astro` component consists of a `<script>` that accepts the `defaultTheme` prop and will live in the `<head>` of your layout or pages, it is responsible for ensuring there is no [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content), creating the developer facing `window.theme` client side API, and dispatching a custom event `theme-changed` whenever the theme changes.
+This `.astro` component consists of an inline `<script>` that accepts the `defaultTheme` prop and will live in the `<head>` of your layout or pages, it is responsible for ensuring there is no [FOUC](https://en.wikipedia.org/wiki/Flash_of_unstyled_content), creating the `window.theme` client side API, and dispatching a custom event `theme-changed` whenever the theme changes.
 
-The script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) which is a good practice because it does not pollute the global scope.
+The script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) and it checks if `window.theme` already exists before executing. This prevents the global scope from being polluted, and ensures we don't see any `Identifier has already been declared` errors.
 
 <Steps>
 
@@ -122,7 +122,7 @@ The script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) 
 
 ## Theme Select Component
 
-Of course we need a way to allow users to switch between themes, and for this recipe we will go over a basic `<select>` based element. A more complex theme toggle button is included in the [examples](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/darkmode) on this repository's GitHub and on the [StackBlitz](https://stackblitz.com/edit/withastro-astro-g1fwa8) included with this recipe.
+Of course we need a way to allow users to switch between themes, and for this recipe we will go over a basic `<select>` based element. A more complex theme toggle button is included in the [example repo](https://github.com/astrolicious/astro-tips.dev/blob/main/examples/dark-mode/src/components/ThemeToggleButton.astro).
 
 <Steps>
 
@@ -255,7 +255,7 @@ import { ViewTransitions } from "astro:transitions";
 <html lang="en">
   <head>
     <!-- ... -->
-    <ThemeManager default-theme="auto" />
+    <ThemeManager defaultTheme="auto" />
     <ViewTransitions />
   </head>
   <main>
