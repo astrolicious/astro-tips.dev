@@ -1,0 +1,11 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "/src/content/resources/**"
+      ],
+      "url": "./.astro/collections/resources.schema.json"
+    }
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+}

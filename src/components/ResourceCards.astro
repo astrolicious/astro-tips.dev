@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+interface Props {
+  category:
+    | "css"
+    | "auth"
+    | "rss"
+    | "images"
+    | "editor"
+    | "markdown"
+    | "performance"
+    | "utilities"
+    | "animation"
+    | "i18n"
+    | "db";
+}
+
+const { category } = Astro.props;
+
+const allResources = await getCollection("resources", ({ data }) => {
+  return data.category === category;
+});
+---
+
+<CardGrid>
+  {
+    allResources.map((r) => (
+      <LinkCard
+        title={r.data.title}
+        description={r.data.description ?? ""}
+        href={r.data.link}
+      />
+    ))
+  }
+</CardGrid>

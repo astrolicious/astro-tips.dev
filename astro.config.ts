@@ -7,6 +7,9 @@ export default defineConfig({
   redirects: {
     "/recipes/how-to-add-gsap": "/tips/how-to-add-gsap",
   },
+  experimental: {
+    contentCollectionJsonSchema: true,
+  },
   integrations: [
     starlight({
       title: "Astro Tips",
@@ -30,6 +33,11 @@ export default defineConfig({
         {
           label: "Tips",
           autogenerate: { directory: "tips" },
+        },
+        {
+          label: 'Resources',
+          badge: 'New',
+          autogenerate: { directory: 'resources' },
         },
       ],
       components: {
