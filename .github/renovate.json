@@ -24,7 +24,7 @@
         "^@astrojs"
       ],
       "schedule": [
-        "before 6am"
+        "at any time"
       ]
     }
   ],
