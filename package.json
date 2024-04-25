@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "pnpm run format:code && pnpm run format:imports",
-    "format:code": "biome format ./ --write",
+    "format:code": "biome format . --write",
     "format:imports": "biome check --apply ."
   },
   "dependencies": {
