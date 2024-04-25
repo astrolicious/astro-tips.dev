@@ -9,8 +9,9 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "pnpm biome lint --write ./src",
-    "format": "pnpm biome format --write  ./src"
+    "format": "pnpm run format:code && pnpm run format:imports",
+    "format:code": "biome format ./ --write",
+    "format:imports": "biome check --apply ."
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
