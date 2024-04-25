@@ -8,7 +8,9 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "pnpm biome lint --write ./src",
+    "format": "pnpm biome format --write  ./src"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
