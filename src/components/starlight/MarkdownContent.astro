@@ -1,25 +1,45 @@
 ---
-import type { Props } from '@astrojs/starlight/props'
-import Default from '@astrojs/starlight/components/MarkdownContent.astro'
-import { Aside } from '@astrojs/starlight/components'
-import { minVersion, outside } from 'semver'
-import pkg from 'package.json'
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/MarkdownContent.astro";
+import { Aside } from "@astrojs/starlight/components";
+import { minVersion, outside } from "semver";
+import pkg from "package.json";
+import { db, Authors } from "astro:db";
 
-const { astroRange } = Astro.props.entry.data
-const astroVersion = minVersion(pkg.dependencies.astro)?.version
+const { astroRange, authors } = Astro.props.entry.data;
+const astroVersion = minVersion(pkg.dependencies.astro)?.version;
 // check if the Astro version is less than the required range.
-const outRange = astroRange && astroVersion && outside(astroVersion, astroRange, '>')
-const semverUrl = `https://semver.otterlord.dev/?package=astro&range=${astroRange}&filter=on`
+const outRange =
+  astroRange && astroVersion && outside(astroVersion, astroRange, ">");
+const semverUrl = `https://semver.otterlord.dev/?package=astro&range=${astroRange}&filter=on`;
 ---
 
 {
-	// only show if the Astro version is less than the required range.
-	outRange && (
-		<Aside type="caution">
-			This guide was written for Astro <a href={semverUrl}>{astroRange}</a> and may not work for versions outside of that range.<br />
-			We always try to keep our tips up to date, but if you see this caution, please open an <a href="https://github.com/astrolicious/astro-tips.dev/issues">issue</a> to let us know.
-		</Aside>
-	)
+  // only show if the Astro version is less than the required range.
+  outRange && (
+    <Aside type="caution">
+      This guide was written for Astro <a href={semverUrl}>{astroRange}</a> and
+      may not work for versions outside of that range.
+      <br />
+      We always try to keep our tips up to date, but if you see this caution,
+      please open an{" "}
+      <a href="https://github.com/astrolicious/astro-tips.dev/issues">
+        issue
+      </a>{" "}
+      to let us know.
+    </Aside>
+  )
 }
 
 <Default {...Astro.props}><slot /></Default>
+
+<div>
+  Authors: {
+    authors &&
+      authors.map(async (a) => {
+        if (typeof a !== "string") return JSON.stringify(a);
+        const author = await db.select().from(Authors);
+        return JSON.stringify(author[0]);
+      })
+  }
+</div>

@@ -16,6 +16,24 @@ const starlightSchema = defineCollection({
 					return astroVersion && !outside(astroVersion, range, '<')
 				}, { message: `'astroRange' must be compatible with the current released Astro version: '${astroVersion}'` })
 				.optional(),
+			authors: z.array(z.union([z.string(), z.object({
+				/**
+				 * The name of the author.
+				 */
+				name: z.string().min(1),
+				/**
+				 * The title of the author.
+				 */
+				title: z.string().optional(),
+				/**
+				 * The URL or path to the author's picture.
+				 */
+				picture: z.string().optional(),
+				/**
+				 * The URL to the author's website.
+				 */
+				url: z.string().url().optional(),
+			})])).optional(),
 		}),
 	}),
 })
