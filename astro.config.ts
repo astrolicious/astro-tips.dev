@@ -1,4 +1,6 @@
 import { defineConfig } from "astro/config";
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import starlight from "@astrojs/starlight";
 
 // https://astro.build/config
@@ -46,4 +48,11 @@ export default defineConfig({
       },
     }),
   ],
+  vite: {
+    resolve: {
+      alias: {
+        '~': resolve(dirname(fileURLToPath(import.meta.url)), './src'),
+      },
+    },
+  }
 });
