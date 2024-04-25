@@ -1,7 +1,7 @@
 import { defineCollection, z } from 'astro:content'
 import { docsSchema } from '@astrojs/starlight/schema'
 import { minVersion, outside, validRange } from 'semver'
-import pkg from 'package.json'
+import pkg from '../../package.json'
 
 const astroVersion = minVersion(pkg.dependencies.astro)?.version
 

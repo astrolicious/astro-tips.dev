@@ -1,4 +1,6 @@
 import { defineConfig } from "astro/config";
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import starlight from "@astrojs/starlight";
 
 import db from "@astrojs/db";
@@ -45,5 +47,12 @@ export default defineConfig({
       PageTitle: "./src/components/starlight/PageTitle.astro",
       MarkdownContent: "./src/components/starlight/MarkdownContent.astro"
     }
-  }), db()]
+  }), db()],
+  vite: {
+    resolve: {
+      alias: {
+        '~': resolve(dirname(fileURLToPath(import.meta.url)), './src'),
+      },
+    },
+  }
 });
