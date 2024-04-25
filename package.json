@@ -10,8 +10,11 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "pnpm run format:code && pnpm run format:imports",
+    "format:ci": "pnpm run format:code:ci && pnpm run format:imports:ci",
     "format:code": "biome format ./ --write",
-    "format:imports": "biome check --apply ."
+    "format:code:ci": "biome format ./",
+    "format:imports": "biome check --apply .",
+    "format:imports:ci": "biome ci ."
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
