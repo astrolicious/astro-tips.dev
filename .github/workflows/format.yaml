@@ -3,8 +3,8 @@ name: Format
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    # branches:
+      # - main
 
 jobs:
   format:
@@ -32,7 +32,7 @@ jobs:
         run: pnpm install
 
       - name: Format code
-        run: pnpm run ${{ inputs.command }}
+        run: pnpm run format
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
