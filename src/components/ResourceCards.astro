@@ -19,14 +19,14 @@ interface Props {
 }
 
 const { category } = Astro.props;
-const allResources = await getCollection("resources", ({ data }: any) => {
+const allResources = await getCollection("resources", ({ data }) => {
   return data.category === category;
 });
 ---
 
 <CardGrid>
   {
-    allResources.map((r: any) => (
+    allResources.map((r) => (
       <LinkCard
         title={r.data.title}
         description={r.data.description ?? ""}

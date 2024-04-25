@@ -6,5 +6,8 @@
         "./src/*"
       ]
     },
-  }
+  },
+  "exclude": [
+    "examples"
+  ]
 }
