@@ -39,6 +39,3 @@ jobs:
         with:
           commit_message: "[ci] format"
           branch: ${{ github.head_ref }}
-          commit_user_name: houstonlicious
-          commit_user_email: houstonlicious@astro.licius
-          commit_author: ${{ github.event.commits[0].author.name }} <${{ github.actor }}@users.noreply.github.com>
