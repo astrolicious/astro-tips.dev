@@ -31,11 +31,11 @@ jobs:
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
 
-      - name: Format code
-        run: pnpm run format
+      - name: Lint code with Biome
+        run: pnpm run lint:fix
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "[ci] format"
+          commit_message: "[ci] lint"
           branch: ${{ github.head_ref }}
