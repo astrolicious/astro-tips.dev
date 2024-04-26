@@ -1,15 +1,15 @@
 ---
-import { Aside } from '@astrojs/starlight/components';
-import Default from '@astrojs/starlight/components/MarkdownContent.astro';
-import type { Props } from '@astrojs/starlight/props';
-import pkg from 'package.json';
-import { minVersion, outside } from 'semver';
+import type { Props } from '@astrojs/starlight/props'
+import Default from '@astrojs/starlight/components/MarkdownContent.astro'
+import { Aside } from '@astrojs/starlight/components'
+import { minVersion, outside } from 'semver'
+import pkg from 'package.json'
 
-const { astroRange } = Astro.props.entry.data;
-const astroVersion = minVersion(pkg.dependencies.astro)?.version;
+const { astroRange } = Astro.props.entry.data
+const astroVersion = minVersion(pkg.dependencies.astro)?.version
 // check if the Astro version is less than the required range.
-const outRange = astroRange && astroVersion && outside(astroVersion, astroRange, '>');
-const semverUrl = `https://semver.otterlord.dev/?package=astro&range=${astroRange}&filter=on`;
+const outRange = astroRange && astroVersion && outside(astroVersion, astroRange, '>')
+const semverUrl = `https://semver.otterlord.dev/?package=astro&range=${astroRange}&filter=on`
 ---
 
 {
