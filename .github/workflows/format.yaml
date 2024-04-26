@@ -8,7 +8,7 @@ on:
 
 jobs:
   format:
-    if: github.repository_owner == 'astrolicious'
+    # if: github.repository_owner == 'astrolicious'
     runs-on: ubuntu-latest
 
     permissions:
