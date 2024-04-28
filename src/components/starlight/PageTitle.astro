@@ -1,10 +1,10 @@
 ---
-import type { Props } from '@astrojs/starlight/props'
-import Default from '@astrojs/starlight/components/PageTitle.astro'
-import { Icon } from '@astrojs/starlight/components'
+import { Icon } from '@astrojs/starlight/components';
+import Default from '@astrojs/starlight/components/PageTitle.astro';
+import type { Props } from '@astrojs/starlight/props';
 
-const { astroRange } = Astro.props.entry.data
-const semverUrl = `https://semver.otterlord.dev/?package=astro&range=${astroRange}&filter=on`
+const { astroRange } = Astro.props.entry.data;
+const semverUrl = `https://semver.otterlord.dev/?package=astro&range=${astroRange}&filter=on`;
 ---
 
 <Default {...Astro.props} />
