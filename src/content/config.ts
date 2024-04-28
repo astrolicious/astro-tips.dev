@@ -1,7 +1,7 @@
-import { defineCollection, z } from 'astro:content'
-import { docsSchema } from '@astrojs/starlight/schema'
-import { minVersion, outside, validRange } from 'semver'
-import pkg from '../../package.json'
+import { defineCollection, z } from 'astro:content';
+import { docsSchema } from '@astrojs/starlight/schema';
+import { minVersion, outside, validRange } from 'semver';
+import pkg from '../../package.json';
 
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
 
@@ -11,30 +11,36 @@ const starlightSchema = defineCollection({
 			astroRange: z
 				.string()
 				.refine(validRange, { message: 'Must be a valid semver range' })
-				.refine((range) => {
-					// check if range is bigger than the current Astro version.
-					return astroVersion && !outside(astroVersion, range, '<')
-				}, { message: `'astroRange' must be compatible with the current released Astro version: '${astroVersion}'` })
+				.refine(
+					(range) => {
+						// check if range is bigger than the current Astro version.
+						return astroVersion && !outside(astroVersion, range, '<');
+					},
+					{
+						message: `'astroRange' must be compatible with the current released Astro version: '${astroVersion}'`,
+					}
+				)
 				.optional(),
 		}),
 	}),
-})
-
+});
 
 const resourcesSchema = defineCollection({
 	type: 'data',
 	schema: z.object({
-		category: z.enum(["css",
-			"auth",
-			"rss",
-			"images",
-			"editor",
-			"markdown",
-			"performance",
-			"utilities",
-			"animation",
-			"i18n",
-			"db"]),
+		category: z.enum([
+			'css',
+			'auth',
+			'rss',
+			'images',
+			'editor',
+			'markdown',
+			'performance',
+			'utilities',
+			'animation',
+			'i18n',
+			'db',
+		]),
 		title: z.string(),
 		link: z.string(),
 		description: z.string().optional(),
@@ -44,4 +50,4 @@ const resourcesSchema = defineCollection({
 export const collections = {
 	docs: starlightSchema,
 	resources: resourcesSchema,
-}
+};
