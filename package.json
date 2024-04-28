@@ -8,7 +8,9 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "biome check .",
+    "lint:fix": "biome check --apply ."
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
@@ -19,6 +21,7 @@
     "typescript": "^5.4.5"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.7.1",
     "@types/semver": "^7.5.8"
   }
 }

@@ -1,0 +1,41 @@
+name: Format
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  format:
+    if: github.repository_owner == 'astrolicious'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Lint code with Biome
+        run: pnpm run lint:fix
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "[ci] lint"
+          branch: ${{ github.head_ref }}
