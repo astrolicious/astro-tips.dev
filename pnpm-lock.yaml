@@ -6,22 +6,22 @@ settings:
 
 dependencies:
   '@astrojs/check':
-    specifier: ^0.5.10
+    specifier: 0.5.10
     version: 0.5.10(typescript@5.4.5)
   '@astrojs/starlight':
-    specifier: ^0.21.5
+    specifier: 0.21.5
     version: 0.21.5(astro@4.6.3)
   astro:
-    specifier: ^4.6.3
+    specifier: 4.6.3
     version: 4.6.3(typescript@5.4.5)
   semver:
-    specifier: ^7.6.0
+    specifier: 7.6.0
     version: 7.6.0
   sharp:
-    specifier: ^0.33.3
+    specifier: 0.33.3
     version: 0.33.3
   typescript:
-    specifier: ^5.4.5
+    specifier: 5.4.5
     version: 5.4.5
 
 devDependencies:
@@ -29,7 +29,7 @@ devDependencies:
     specifier: 1.7.1
     version: 1.7.1
   '@types/semver':
-    specifier: ^7.5.8
+    specifier: 7.5.8
     version: 7.5.8
 
 packages:
@@ -59,10 +59,6 @@ packages:
       - prettier-plugin-astro
     dev: false
 
-  /@astrojs/compiler@2.7.0:
-    resolution: {integrity: sha512-XpC8MAaWjD1ff6/IfkRq/5k1EFj6zhCNqXRd5J43SVJEBj/Bsmizkm8N0xOYscGcDFQkRgEw6/eKnI5x/1l6aA==}
-    dev: false
-
   /@astrojs/compiler@2.7.1:
     resolution: {integrity: sha512-/POejAYuj8WEw7ZI0J8JBvevjfp9jQ9Wmu/Bg52RiNwGXkMV7JnYpsenVfHvvf1G7R5sXHGKlTcxlQWhoUTiGQ==}
     dev: false
@@ -83,7 +79,7 @@ packages:
       prettier-plugin-astro:
         optional: true
     dependencies:
-      '@astrojs/compiler': 2.7.0
+      '@astrojs/compiler': 2.7.1
       '@jridgewell/sourcemap-codec': 1.4.15
       '@volar/kit': 2.1.5(typescript@5.4.5)
       '@volar/language-core': 2.1.5
@@ -106,7 +102,7 @@ packages:
   /@astrojs/markdown-remark@4.3.0:
     resolution: {integrity: sha512-iZOgYj/yNDvBRfKqkGuAvjeONhjQPq8Uk3HjyIgcTK5valq03NiUgSc5Ovq00yUVBeYJ/5EDx23c8xqtkkBlPw==}
     dependencies:
-      '@astrojs/prism': 3.0.0
+      '@astrojs/prism': 3.1.0
       github-slugger: 2.0.0
       hast-util-from-html: 2.0.1
       hast-util-to-text: 4.0.0
@@ -177,13 +173,6 @@ packages:
       vfile: 6.0.1
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /@astrojs/prism@3.0.0:
-    resolution: {integrity: sha512-g61lZupWq1bYbcBnYZqdjndShr/J3l/oFobBKPA3+qMat146zce3nz2kdO4giGbhYDt4gYdhmoBz0vZJ4sIurQ==}
-    engines: {node: '>=18.14.1'}
-    dependencies:
-      prismjs: 1.29.0
     dev: false
 
   /@astrojs/prism@3.1.0:
