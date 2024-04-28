@@ -45,5 +45,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "[ci] lint"
-          commit_user_name: astrolicious[bot]
           branch: ${{ github.head_ref }}
