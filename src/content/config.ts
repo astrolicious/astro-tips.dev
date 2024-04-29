@@ -1,10 +1,13 @@
 import { defineCollection, z } from 'astro:content';
+import { Authors, db } from 'astro:db';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { minVersion, outside, validRange } from 'semver';
 import pkg from '../../package.json';
 
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
-
+const authors = await db.select({ slug: Authors.slug }).from(Authors);
+const authorConsts = authors.map((author) => author.slug) as [string, ...string[]];
+console.log('DEBUG', authorConsts);
 const starlightSchema = defineCollection({
 	schema: docsSchema({
 		extend: z.object({
@@ -19,6 +22,30 @@ const starlightSchema = defineCollection({
 					{
 						message: `'astroRange' must be compatible with the current released Astro version: '${astroVersion}'`,
 					}
+				)
+				.optional(),
+			authors: z
+				.array(
+					z.enum(authorConsts).or(
+						z.object({
+							/**
+							 * The name of the author.
+							 */
+							name: z.string().min(1),
+							/**
+							 * The title of the author.
+							 */
+							title: z.string().optional(),
+							/**
+							 * The URL or path to the author's picture.
+							 */
+							picture: z.string().optional(),
+							/**
+							 * The URL to the author's website.
+							 */
+							url: z.string().url().optional(),
+						})
+					)
 				)
 				.optional(),
 		}),

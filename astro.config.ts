@@ -3,6 +3,8 @@ import { fileURLToPath } from 'node:url';
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
 
+import db from '@astrojs/db';
+
 // https://astro.build/config
 export default defineConfig({
 	site: process.env.DEPLOY_URL ?? 'https://astro-tips.dev',
@@ -30,16 +32,22 @@ export default defineConfig({
 				},
 				{
 					label: 'Recipes',
-					autogenerate: { directory: 'recipes' },
+					autogenerate: {
+						directory: 'recipes',
+					},
 				},
 				{
 					label: 'Tips',
-					autogenerate: { directory: 'tips' },
+					autogenerate: {
+						directory: 'tips',
+					},
 				},
 				{
 					label: 'Resources',
 					badge: 'New',
-					autogenerate: { directory: 'resources' },
+					autogenerate: {
+						directory: 'resources',
+					},
 				},
 			],
 			components: {
@@ -47,6 +55,7 @@ export default defineConfig({
 				MarkdownContent: './src/components/starlight/MarkdownContent.astro',
 			},
 		}),
+		db(),
 	],
 	vite: {
 		resolve: {
