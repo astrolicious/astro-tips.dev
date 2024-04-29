@@ -54,6 +54,7 @@ const starlightSchema = defineCollection({
 		}),
 	}),
 });
+});
 
 const resourcesSchema = defineCollection({
 	type: "data",
@@ -80,4 +81,5 @@ const resourcesSchema = defineCollection({
 export const collections = {
 	docs: starlightSchema,
 	resources: resourcesSchema,
+};
 };

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices", ":pinAllExceptPeerDependencies"],
+  "dependencyDashboard": true,
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "groupName": "all dependencies",
+      "groupSlug": "all",
+      "matchPackagePatterns": ["*"],
+      "schedule": ["before 4am on Monday"]
+    },
+    {
+      "matchPackagePatterns": ["^astro"],
+      "schedule": ["at any time"]
+    },
+    {
+      "matchPackagePatterns": ["^@astrojs"],
+      "schedule": ["at any time"]
+    }
+  ],
+  "prHourlyLimit": 0
+}
