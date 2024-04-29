@@ -13,6 +13,10 @@
       "schedule": ["before 4am on Monday"]
     },
     {
+      "matchPackagePatterns": ["^astro"],
+      "schedule": ["at any time"]
+    },
+    {
       "matchPackagePatterns": ["^@astrojs"],
       "schedule": ["at any time"]
     }
