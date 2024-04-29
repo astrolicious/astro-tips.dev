@@ -1,8 +1,6 @@
-import { db, Authors } from 'astro:db';
+import { Authors, db } from 'astro:db';
 
 // https://astro.build/db/seed
 export default async function seed() {
-	await db.insert(Authors).values([
-		{ slug: "alexanderniebuhr", name: "Alexander Niebuhr", },
-	])
+	await db.insert(Authors).values([{ slug: 'alexanderniebuhr', name: 'Alexander Niebuhr' }]);
 }

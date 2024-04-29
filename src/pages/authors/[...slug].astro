@@ -1,40 +1,40 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection } from 'astro:content';
 
-import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 
 // 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
-  const authors = [];
-  const starlightEntries = await getCollection("docs", ({ data }) => {
-    if (data.authors) return true;
-    return false;
-  });
-  // const resourceEntries = await getCollection("resources");
+	const authors = [];
+	const starlightEntries = await getCollection('docs', ({ data }) => {
+		if (data.authors) return true;
+		return false;
+	});
+	// const resourceEntries = await getCollection("resources");
 
-  starlightEntries.forEach((entry) => {
-    entry.data.authors.forEach((author) => {
-      // FIXME: refactor to set
-      authors.push(author);
-    });
-  });
+	starlightEntries.forEach((entry) => {
+		entry.data.authors.forEach((author) => {
+			// FIXME: refactor to set
+			authors.push(author);
+		});
+	});
 
-  console.log([...authors]);
+	console.log([...authors]);
 
-  return authors.map((author) => {
-    if (typeof author === "string") {
-      return {
-        params: {
-          slug: author,
-        },
-      };
-    }
-    return {
-      params: {
-        slug: author.name,
-      },
-    };
-  });
+	return authors.map((author) => {
+		if (typeof author === 'string') {
+			return {
+				params: {
+					slug: author,
+				},
+			};
+		}
+		return {
+			params: {
+				slug: author.name,
+			},
+		};
+	});
 }
 
 const { slug } = Astro.params;
