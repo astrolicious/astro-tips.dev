@@ -14,14 +14,14 @@
   },
   "dependencies": {
     "@astrojs/check": "0.5.10",
-    "@astrojs/starlight": "0.21.5",
+    "@astrojs/starlight": "0.22.0",
     "semver": "7.6.0",
     "astro": "4.7.0",
     "sharp": "0.33.3",
     "typescript": "5.4.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.7.1",
+    "@biomejs/biome": "1.7.2",
     "@types/semver": "7.5.8"
   }
 }
