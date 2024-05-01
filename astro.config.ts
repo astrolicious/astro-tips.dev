@@ -10,6 +10,12 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Astro Tips',
+			logo: {
+				light: './src/assets/logo-light.svg',
+				dark: './src/assets/logo-dark.svg',
+				replacesTitle: true,
+			},
+			customCss: ['./src/styles/custom.css'],
 			social: {
 				github: 'https://github.com/astrolicious/astro-tips.dev',
 				discord: 'https://chat.astrolicious.dev/',
