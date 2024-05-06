@@ -2,7 +2,7 @@
   "name": "astro-tips",
   "type": "module",
   "version": "0.0.1",
-  "packageManager": "pnpm@9.0.6",
+  "packageManager": "pnpm@9.1.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -14,14 +14,14 @@
   },
   "dependencies": {
     "@astrojs/check": "0.5.10",
-    "@astrojs/starlight": "0.22.1",
+    "@astrojs/starlight": "0.22.2",
     "semver": "7.6.0",
     "astro": "4.7.1",
     "sharp": "0.33.3",
     "typescript": "5.4.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.7.2",
+    "@biomejs/biome": "1.7.3",
     "@types/semver": "7.5.8"
   }
 }
