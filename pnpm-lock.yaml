@@ -13,13 +13,13 @@ importers:
         version: 0.5.10(typescript@5.4.5)
       '@astrojs/cloudflare':
         specifier: 10.2.5
-        version: 10.2.5(astro@4.7.0(@types/node@20.12.8)(typescript@5.4.5))
+        version: 10.2.5(astro@4.7.1(@types/node@20.12.8)(typescript@5.4.5))
       '@astrojs/starlight':
         specifier: 0.22.1
-        version: 0.22.1(astro@4.7.0(@types/node@20.12.8)(typescript@5.4.5))
+        version: 0.22.1(astro@4.7.1(@types/node@20.12.8)(typescript@5.4.5))
       astro:
-        specifier: 4.7.0
-        version: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
+        specifier: 4.7.1
+        version: 4.7.1(@types/node@20.12.8)(typescript@5.4.5)
       semver:
         specifier: 7.6.0
         version: 7.6.0
@@ -81,15 +81,12 @@ packages:
       prettier-plugin-astro:
         optional: true
 
-  '@astrojs/markdown-remark@4.3.0':
-    resolution: {integrity: sha512-iZOgYj/yNDvBRfKqkGuAvjeONhjQPq8Uk3HjyIgcTK5valq03NiUgSc5Ovq00yUVBeYJ/5EDx23c8xqtkkBlPw==}
-
   '@astrojs/markdown-remark@5.1.0':
     resolution: {integrity: sha512-S6Z3K2hOB7MfjeDoHsotnP/q2UsnEDB8NlNAaCjMDsGBZfTUbWxyLW3CaphEWw08f6KLZi2ibK9yC3BaMhh2NQ==}
 
-  '@astrojs/mdx@2.2.0':
-    resolution: {integrity: sha512-EkcCniYdGwsh9k5LknqRrz/UyOnMNXdRk7fgDAw/zUDKnm7zgQAG8hIx0FxG1L2IINxLfu7IcjgZb3f5TFpxKw==}
-    engines: {node: '>=18.14.1'}
+  '@astrojs/mdx@2.3.1':
+    resolution: {integrity: sha512-BOQFKD2Pi9cRntNQJlpF2fh4xV8doNpmVy9NKI95r4jsitrY4X5aTOhAowi+fkQgP/zW1A4HwCyQ6Pdam6z8zQ==}
+    engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
     peerDependencies:
       astro: ^4.0.0
 
@@ -1189,8 +1186,8 @@ packages:
     peerDependencies:
       astro: ^4.0.0-beta || ^3.3.0
 
-  astro@4.7.0:
-    resolution: {integrity: sha512-YC24nK6/UNelVob+4RoJPDgZJdpaJarIU85D/UxCrlsYJlLqrW8hXq7A9T6BXNs+puF9pJrYlqaJNCRO+928XA==}
+  astro@4.7.1:
+    resolution: {integrity: sha512-3o+VmnIPBiCm0QVyyTC/F8humNXny5YpI+MKvBTksviRtKxhnztEA3+GAR2XWLUSOx1+/GVjz7mExq3hJGOeqQ==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -1289,8 +1286,8 @@ packages:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
 
-  clsx@2.1.0:
-    resolution: {integrity: sha512-m3iNNWpd9rl3jvvcBnu70ylMdrXt8Vlq4HYadnU5fwcOtvkSQWPmj7amUcDT2qYI7risszBjI5AUIUox9D16pg==}
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
 
   collapse-white-space@2.1.0:
@@ -2776,12 +2773,12 @@ snapshots:
       - prettier
       - prettier-plugin-astro
 
-  '@astrojs/cloudflare@10.2.5(astro@4.7.0(@types/node@20.12.8)(typescript@5.4.5))':
+  '@astrojs/cloudflare@10.2.5(astro@4.7.1(@types/node@20.12.8)(typescript@5.4.5))':
     dependencies:
       '@astrojs/internal-helpers': 0.3.0
       '@astrojs/underscore-redirects': 0.3.3
       '@cloudflare/workers-types': 4.20240502.0
-      astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
+      astro: 4.7.1(@types/node@20.12.8)(typescript@5.4.5)
       esbuild: 0.19.12
       estree-walker: 3.0.3
       magic-string: 0.30.10
@@ -2820,29 +2817,6 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@astrojs/markdown-remark@4.3.0':
-    dependencies:
-      '@astrojs/prism': 3.1.0
-      github-slugger: 2.0.0
-      hast-util-from-html: 2.0.1
-      hast-util-to-text: 4.0.2
-      import-meta-resolve: 4.1.0
-      mdast-util-definitions: 6.0.0
-      rehype-raw: 7.0.0
-      rehype-stringify: 10.0.0
-      remark-gfm: 4.0.0
-      remark-parse: 11.0.0
-      remark-rehype: 11.1.0
-      remark-smartypants: 2.1.0
-      shiki: 1.4.0
-      unified: 11.0.4
-      unist-util-remove-position: 5.0.0
-      unist-util-visit: 5.0.0
-      unist-util-visit-parents: 6.0.1
-      vfile: 6.0.1
-    transitivePeerDependencies:
-      - supports-color
-
   '@astrojs/markdown-remark@5.1.0':
     dependencies:
       '@astrojs/prism': 3.1.0
@@ -2866,12 +2840,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@2.2.0(astro@4.7.0(@types/node@20.12.8)(typescript@5.4.5))':
+  '@astrojs/mdx@2.3.1(astro@4.7.1(@types/node@20.12.8)(typescript@5.4.5))':
     dependencies:
-      '@astrojs/markdown-remark': 4.3.0
+      '@astrojs/markdown-remark': 5.1.0
       '@mdx-js/mdx': 3.0.1
       acorn: 8.11.3
-      astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
+      astro: 4.7.1(@types/node@20.12.8)(typescript@5.4.5)
       es-module-lexer: 1.5.2
       estree-util-visit: 2.0.0
       github-slugger: 2.0.0
@@ -2896,15 +2870,15 @@ snapshots:
       sitemap: 7.1.1
       zod: 3.23.6
 
-  '@astrojs/starlight@0.22.1(astro@4.7.0(@types/node@20.12.8)(typescript@5.4.5))':
+  '@astrojs/starlight@0.22.1(astro@4.7.1(@types/node@20.12.8)(typescript@5.4.5))':
     dependencies:
-      '@astrojs/mdx': 2.2.0(astro@4.7.0(@types/node@20.12.8)(typescript@5.4.5))
+      '@astrojs/mdx': 2.3.1(astro@4.7.1(@types/node@20.12.8)(typescript@5.4.5))
       '@astrojs/sitemap': 3.1.1
       '@pagefind/default-ui': 1.0.4
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.3
-      astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
-      astro-expressive-code: 0.35.3(astro@4.7.0(@types/node@20.12.8)(typescript@5.4.5))
+      astro: 4.7.1(@types/node@20.12.8)(typescript@5.4.5)
+      astro-expressive-code: 0.35.3(astro@4.7.1(@types/node@20.12.8)(typescript@5.4.5))
       bcp-47: 2.1.0
       hast-util-from-html: 2.0.1
       hast-util-select: 6.0.2
@@ -3789,12 +3763,12 @@ snapshots:
 
   astring@1.8.6: {}
 
-  astro-expressive-code@0.35.3(astro@4.7.0(@types/node@20.12.8)(typescript@5.4.5)):
+  astro-expressive-code@0.35.3(astro@4.7.1(@types/node@20.12.8)(typescript@5.4.5)):
     dependencies:
-      astro: 4.7.0(@types/node@20.12.8)(typescript@5.4.5)
+      astro: 4.7.1(@types/node@20.12.8)(typescript@5.4.5)
       rehype-expressive-code: 0.35.3
 
-  astro@4.7.0(@types/node@20.12.8)(typescript@5.4.5):
+  astro@4.7.1(@types/node@20.12.8)(typescript@5.4.5):
     dependencies:
       '@astrojs/compiler': 2.8.0
       '@astrojs/internal-helpers': 0.4.0
@@ -3814,7 +3788,7 @@ snapshots:
       boxen: 7.1.1
       chokidar: 3.6.0
       ci-info: 4.0.0
-      clsx: 2.1.0
+      clsx: 2.1.1
       common-ancestor-path: 1.0.1
       cookie: 0.6.0
       cssesc: 3.0.0
@@ -3973,7 +3947,7 @@ snapshots:
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
 
-  clsx@2.1.0: {}
+  clsx@2.1.1: {}
 
   collapse-white-space@2.1.0: {}
 
