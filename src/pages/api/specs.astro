@@ -1,8 +1,7 @@
 ---
-const currentPRODURL = "deploy-preview-76--astro-tips-dev.netlify.app";
 const currentURL = import.meta.env.DEV
   ? "http://localhost:4321"
-  : currentPRODURL;
+  : Astro.locals.runtime.env.CF_PAGES_URL;
 ---
 
 <!doctype html>
