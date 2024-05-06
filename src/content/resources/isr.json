@@ -1,5 +1,6 @@
 {
   "category": "performance",
   "title": "How to Implement Incremental Static Regeneration (ISR) in Astro",
-  "link": "https://logsnag.com/blog/implementing-isr-in-astro"
+  "link": "https://logsnag.com/blog/implementing-isr-in-astro",
+  "updated": "2024-05-01"
 }

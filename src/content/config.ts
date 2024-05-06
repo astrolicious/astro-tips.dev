@@ -44,6 +44,7 @@ const resourcesSchema = defineCollection({
 		title: z.string(),
 		link: z.string(),
 		description: z.string().optional(),
+		updated: z.union([z.number(), z.string(), z.date()]).pipe(z.coerce.date()),
 	}),
 });
 

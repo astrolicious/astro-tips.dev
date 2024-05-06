@@ -1,0 +1,119 @@
+---
+const currentPRODURL = "deploy-preview-76--astro-tips-dev.netlify.app";
+const currentURL = import.meta.env.DEV
+  ? "http://localhost:4321"
+  : currentPRODURL;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Specification</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .api-spec {
+        max-width: 800px;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+      }
+
+      h2 {
+        color: #34495e;
+        border-bottom: 2px solid #ecf0f1;
+        padding-bottom: 5px;
+      }
+
+      pre {
+        background: #ecf0f1;
+        padding: 10px;
+        border-radius: 5px;
+        overflow: auto;
+      }
+
+      code {
+        color: #e74c3c;
+        background-color: #ecf0f1;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+
+      .endpoint {
+        color: #3498db;
+        font-weight: bold;
+      }
+
+      .description {
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="api-spec">
+      <h1>API Specification</h1>
+
+      <h2>Get all resources</h2>
+      <div class="description">Use this endpoint to get all resources.</div>
+      <pre><code class="endpoint">{ currentURL}/api/edu</code></pre>
+
+      <h2>Filter by Category</h2>
+      <div class="description">
+        Use this endpoint to filter resources by category. This can't be used
+        together with the search query filter.
+      </div>
+      <pre><code class="endpoint">{ currentURL }/api/edu?category=css</code></pre>
+
+      <h3>Categories</h3>
+      <pre><code>
+css
+auth
+rss
+images
+editor
+markdown
+performance
+utilities
+animation
+i18n
+db
+</code></pre>
+
+      <h2>Search in Title</h2>
+      <div class="description">
+        Use this endpoint to search resources by title. This can't be used
+        together with the category filter.
+      </div>
+      <pre><code class="endpoint">{ currentURL}/api/edu?q=eslint</code></pre>
+
+      <h2>Sort by Newest First</h2>
+      <div class="description">
+        Use this endpoint to sort resources by newest first. This can be used
+        together with the category or search query parameter.
+      </div>
+      <pre><code class="endpoint">{ currentURL}/api/edu?sort=newest</code></pre>
+
+      <h2>Sort by Oldest First</h2>
+      <div class="description">
+        Use this endpoint to sort resources by oldest first. This can be used
+        together with the category or search query parameter.
+      </div>
+      <pre><code class="endpoint">{ currentURL}/api/edu?sort=oldest</code></pre>
+    </div>
+  </body>
+</html>
