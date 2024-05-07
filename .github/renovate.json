@@ -7,18 +7,18 @@
   },
   "packageRules": [
     {
-      "groupName": "all dependencies",
-      "groupSlug": "all",
-      "matchPackagePatterns": ["*"],
-      "schedule": ["before 4am on Monday"]
-    },
-    {
       "matchPackagePatterns": ["^astro"],
       "schedule": ["at any time"]
     },
     {
       "matchPackagePatterns": ["^@astrojs"],
       "schedule": ["at any time"]
+    },
+    {
+      "groupName": "all dependencies",
+      "groupSlug": "all",
+      "matchPackagePatterns": ["*"],
+      "schedule": ["before 4am on Monday"]
     }
   ],
   "prHourlyLimit": 0
