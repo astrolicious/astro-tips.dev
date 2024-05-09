@@ -33,12 +33,21 @@ importers:
       '@biomejs/biome':
         specifier: 1.7.2
         version: 1.7.2
+      '@types/mdast':
+        specifier: ^4.0.3
+        version: 4.0.3
       '@types/node':
         specifier: 20.12.8
         version: 20.12.8
       '@types/semver':
         specifier: 7.5.8
         version: 7.5.8
+      mdast-util-mdx:
+        specifier: 3.0.0
+        version: 3.0.0
+      mdast-util-to-markdown:
+        specifier: 2.1.0
+        version: 2.1.0
       wrangler:
         specifier: 3.53.1
         version: 3.53.1(@cloudflare/workers-types@4.20240502.0)
