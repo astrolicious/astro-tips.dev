@@ -27,6 +27,8 @@ jobs:
       - run: |
           gh repo clone astrolicious/withastro-docs
           cd withastro-docs
+          git config --global user.email "astrolicious@nbhr.de"
+          git config --global user.name "astrolicious[bot]"
           git switch -c astrotips-community-content
           echo "$MAKDOWN" > src/content/docs/en/community-resources/content.mdx
           git add src/content/docs/en/community-resources/content.mdx
