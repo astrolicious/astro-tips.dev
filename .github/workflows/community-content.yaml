@@ -36,14 +36,17 @@ jobs:
           repository: "astrolicious/withastro-docs"
           path: "withastro-docs"
           ref: main
-      - run: cd withastro-docs
       - run: git switch astrotips-${{ github.event.number }} || git switch -c astrotips-${{ github.event.number }}
-      - run: mv ../content.mdx src/content/docs/en/community-resources/content.mdx
+        working-directory: withastro-docs
+      - run: mv content.mdx withastro-docs/src/content/docs/en/community-resources/content.mdx
       - run: |
           git config user.email "168325803+astrolicious[bot]@users.noreply.github.com"
           git config user.name "astrolicious[bot]"
+        working-directory: withastro-docs
       - run: |
           git add src/content/docs/en/community-resources/content.mdx
           git commit -m "[astrotips] update community content"
           git push --set-upstream origin astrotips-${{ github.event.number }}
+        working-directory: withastro-docs
       - run: gh pr create --base withastro/docs:main --head astrolicious/withastro-docs:astrotips-${{ github.event.number }}
+        working-directory: withastro-docs
