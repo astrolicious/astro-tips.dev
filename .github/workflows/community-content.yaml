@@ -69,7 +69,8 @@ jobs:
           git commit -m "[astrotips] update community content"
           git push --set-upstream origin astrotips-${{ github.event.number }}
         working-directory: withastro-docs
-      - run: DEBUG=api gh pr create --head astrolicious/withastro-docs:astrotips-${{ github.event.number }} --title "[astrotips] update community content" --body "This is an automated generated PR to update community content based on https://github.com/astrolicious/astro-tips.dev/pull/${{ github.event.number }}" --repo withastro/docs
+      - run: DEBUG=* gh auth status
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         working-directory: withastro-docs
+#  gh pr create --head astrolicious/withastro-docs:astrotips-${{ github.event.number }} --title "[astrotips] update community content" --body "This is an automated generated PR to update community content based on https://github.com/astrolicious/astro-tips.dev/pull/${{ github.event.number }}" --repo withastro/docs
