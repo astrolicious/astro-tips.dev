@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@astrojs/check": "0.6.0",
-    "@astrojs/cloudflare": "^10.2.5",
+    "@astrojs/cloudflare": "10.2.5",
     "@astrojs/starlight": "0.22.2",
     "astro": "4.8.2",
     "semver": "7.6.0",
@@ -22,8 +22,13 @@
     "typescript": "5.4.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.7.3",
+    "@biomejs/biome": "1.7.2",
     "@types/github-script": "github:actions/github-script",
-    "@types/semver": "7.5.8"
+    "@types/mdast": "4.0.3",
+    "@types/node": "20.12.8",
+    "@types/semver": "7.5.8",
+    "mdast-util-mdx": "3.0.0",
+    "mdast-util-to-markdown": "2.1.0",
+    "wrangler": "3.53.1"
   }
 }
