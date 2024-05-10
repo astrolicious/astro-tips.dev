@@ -38,7 +38,7 @@ jobs:
           ref: main
       - run: |
           cd withastro-docs
-          git push origin --delete astrotips-community-content
+          git push origin --delete astrotips-community-content &>/dev/null
           git switch -c astrotips-community-content
           mv ../content.mdx withastro-docs/src/content/docs/en/community-resources/content.mdx
           git config user.email "168325803+astrolicious[bot]@users.noreply.github.com"
