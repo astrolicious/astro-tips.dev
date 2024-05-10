@@ -33,7 +33,7 @@ jobs:
           echo "$MAKDOWN" > src/content/docs/en/community-resources/content.mdx
           git add src/content/docs/en/community-resources/content.mdx
           git commit -m "[AstroTips] Updates Community Content"
-          cat src/content/docs/en/community-resources/content.mdx
+          git push
         env:
           MARKDOWN: ${{ steps.generator.outputs.markdown }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
