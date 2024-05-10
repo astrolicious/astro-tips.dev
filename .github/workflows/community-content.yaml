@@ -50,4 +50,6 @@ jobs:
           git push --set-upstream origin astrotips-${{ github.event.number }}
         working-directory: withastro-docs
       - run: gh pr create --base withastro/docs:main --head astrolicious/withastro-docs:astrotips-${{ github.event.number }}
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         working-directory: withastro-docs
