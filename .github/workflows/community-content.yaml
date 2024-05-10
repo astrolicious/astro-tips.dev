@@ -45,7 +45,7 @@ jobs:
           git add src/content/docs/en/community-resources/content.mdx
           git commit -m "[astrotips] update community content"
           git push --set-upstream origin astrotips-${{ github.event.number }}
-
+          gh pr create --base withastro/docs:main --head astrolicious/withastro-docs:astrotips-${{ github.event.number }}
       # - uses: dmnemec/copy_file_to_another_repo_action@main
       #   env:
       #     API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
