@@ -38,15 +38,13 @@ jobs:
           ref: main
       - run: |
           cd withastro-docs
-          git switch -c astrotips-$PR_NUMBER
-          mv ../content.mdx withastro-docs/src/content/docs/en/community-resources/content.mdx
+          git switch -c astrotips-${{ github.event.number }}
+          mv ../content.mdx src/content/docs/en/community-resources/content.mdx
           git config user.email "168325803+astrolicious[bot]@users.noreply.github.com"
           git config user.name "astrolicious[bot]"
           git add src/content/docs/en/community-resources/content.mdx
           git commit -m "[astrotips] update community content"
-          git push --set-upstream origin astrotips-$PR_NUMBER
-        env:
-          PR_NUMBER: ${{ github.event.number }}
+          git push --set-upstream origin astrotips-${{ github.event.number }}
 
       # - uses: dmnemec/copy_file_to_another_repo_action@main
       #   env:
