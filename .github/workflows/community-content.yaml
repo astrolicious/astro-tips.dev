@@ -29,6 +29,7 @@ jobs:
         with:
           app-id: ${{ vars.BOT_APPID }}
           private-key: ${{ secrets.BOT_SECRET }}
+          owner: ${{ github.repository_owner }}
       - run: |
           echo "$MAKDOWN" > content.mdx
         env:
