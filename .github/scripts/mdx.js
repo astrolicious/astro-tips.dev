@@ -2,7 +2,7 @@
 
 import { toMarkdown } from 'mdast-util-to-markdown';
 import { mdxToMarkdown } from 'mdast-util-mdx';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 
 /**
  * @param {import('mdast').Heading['depth']} level
@@ -668,5 +668,5 @@ i18nReady: true
  */
 export default async ({ github, context, core }) => {
 	const markdown = toMarkdown(mdast, { extensions: [mdxToMarkdown()] });
-	core.setOutput('markdown', markdown);
+	writeFileSync('content.mdx', markdown);
 };

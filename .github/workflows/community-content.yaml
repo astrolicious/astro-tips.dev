@@ -30,15 +30,12 @@ jobs:
           app-id: ${{ vars.BOT_APPID }}
           private-key: ${{ secrets.BOT_SECRET }}
           owner: ${{ github.repository_owner }}
-      - run: |
-          echo "$MAKDOWN" > content.mdx
-        env:
-          MARKDOWN: ${{ steps.generator.outputs.markdown }}
       - uses: dmnemec/copy_file_to_another_repo_action@main
         env:
           API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
         with:
           source_file: "content.mdx"
+          destination_branch_create: "astrotips-community-content"
           destination_repo: "astrolicious/withastro-docs"
           destination_folder: "src/content/docs/en/community-resources"
           user_email: "astrolicious@nbhr.de"
