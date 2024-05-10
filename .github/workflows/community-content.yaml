@@ -38,6 +38,6 @@ jobs:
           destination_branch_create: "astrotips-community-content"
           destination_repo: "astrolicious/withastro-docs"
           destination_folder: "src/content/docs/en/community-resources"
-          user_email: "astrolicious@nbhr.de"
-          user_name: "astrolicious[bot]"
+          user_email: "168325803+astrolicious-bot[bot]@users.noreply.github.com"
+          user_name: "astrolicious-bot[bot]"
           commit_message: "[astrotips] update community content"
