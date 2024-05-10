@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.2",
+    "@types/github-script": "github:actions/github-script",
     "@types/mdast": "^4.0.3",
     "@types/node": "20.12.8",
     "@types/semver": "7.5.8",

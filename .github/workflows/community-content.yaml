@@ -1,0 +1,27 @@
+name: Create Community Content
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        id: generator
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const { default: script } = await import('${{ github.workspace }}/.github/scripts/mdx.js')
+            await script({github, context, core})
+      - run: |
+          gh repo clone astrolicious/withastro-docs
+          cd withastro-docs
+          git switch -c astrotips-community-content
+          echo "$MAKDOWN" > src/content/docs/en/community-resources/content.mdx
+          git add src/content/docs/en/community-resources/content.mdx
+          git commit -m "[AstroTips] Updates Community Content"
+          cat src/content/docs/en/community-resources/content.mdx
+        env:
+          MARKDOWN: ${{ steps.generator.outputs.markdown }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
