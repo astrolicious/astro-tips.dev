@@ -34,16 +34,16 @@ jobs:
           repository: astrolicious/withastro-docs
           token: ${{ steps.app-token.outputs.token }}
           ref: main
-          path: withastro-docs
+          path: ../withastro-docs
           fetch-depth: 1
       - run: |
-          cd withastro-docs
+          cd ../withastro-docs
           echo "$MAKDOWN" > src/content/docs/en/community-resources/content.mdx
         env:
           MARKDOWN: ${{ steps.generator.outputs.markdown }}
       - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5
         with:
           commit_message: "[astrotips] update community content"
-          repository: withastro-docs
+          repository: ../withastro-docs
           create_branch: true
           branch: astrotips-community-content
