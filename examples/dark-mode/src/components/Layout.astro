@@ -1,6 +1,6 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
-import ThemeManager from './ThemeManager.astro';
+import { ViewTransitions } from "astro:transitions";
+import ThemeManager from "./ThemeManager.astro";
 ---
 
 <html lang="en">
@@ -19,14 +19,20 @@ import ThemeManager from './ThemeManager.astro';
     </body>
   </main>
   <style is:global>
+    :root,
     :root[data-theme="light"] {
       --background-color: #ffffff;
       --text-color: #000000;
+      color-scheme: light;
     }
-    :root[data-theme="dark"] {
-      --background-color: #333333;
-      --text-color: #ffffff;
+    @media (prefers-color-scheme: dark), :root[data-theme="dark"] {
+      :root {
+        --background-color: #333333;
+        --text-color: #ffffff;
+        color-scheme: dark;
+      }
     }
+
     body {
       background-color: var(--background-color);
       color: var(--text-color);
