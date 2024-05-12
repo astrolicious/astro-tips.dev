@@ -1,9 +1,9 @@
 ---
 type Props = {
-	defaultTheme?: 'auto' | 'dark' | 'light' | undefined;
+  defaultTheme?: "auto" | "dark" | "light" | undefined;
 };
 
-const { defaultTheme = 'auto' } = Astro.props;
+const { defaultTheme = "auto" } = Astro.props;
 ---
 
 <script is:inline data-default-theme={defaultTheme}>
@@ -25,6 +25,8 @@ const { defaultTheme = 'auto' } = Astro.props;
 
     function applyTheme(theme) {
       document.documentElement.dataset.theme =
+        theme === "auto" ? systemTheme : theme;
+      document.documentElement.style.colorScheme =
         theme === "auto" ? systemTheme : theme;
       document.dispatchEvent(
         new CustomEvent("theme-changed", {

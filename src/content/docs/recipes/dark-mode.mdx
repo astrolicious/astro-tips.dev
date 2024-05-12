@@ -14,6 +14,8 @@ Check out an example of this recipe on [StackBlitz](https://stackblitz.com/githu
 ## Key Features
 
 - [View Transitions](https://docs.astro.build/en/guides/view-transitions/) compatible
+- Uses [color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme) CSS property to match [user-agent stylesheet](https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade#user-agent_stylesheets) with theme
+- Respects user preferences and updates when user changes their preferences when Javascript is disabled
 - Allows for setting a default theme easily with a prop
 - Includes minimal [`<select>`](#theme-select-component) based [web component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) (which isn't necessary to use the script in `ThemeManager.astro`)
 - Exposes `window.theme` global for a nice API:
@@ -76,6 +78,8 @@ The first script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/
 
         function applyTheme(theme) {
           document.documentElement.dataset.theme =
+            theme === "auto" ? systemTheme : theme;
+          document.documentElement.style.colorScheme =
             theme === "auto" ? systemTheme : theme;
           document.dispatchEvent(
             new CustomEvent("theme-changed", {
@@ -189,24 +193,35 @@ Of course we need a way to allow users to switch between themes, and for this re
 
 ## Styles
 
-So, obviously, our theme solution wouldn't be complete without styling the different themes! This can be done many ways, of course, but in essence, we will be setting up CSS variables according to the `data-theme`. Here's a basic example of how this would be done:
+So, obviously, our theme solution wouldn't be complete without styling the different themes! This can be done many ways, of course, but in essence, we will be setting up CSS variables according to the `data-theme`. 
+
+One important consideration is what happens when Javascript is disabled. There are two options here: chose a default theme or respect the users system theme. To ship a default theme remove the media query and set the variables for `:root` to the theme you want as a default.
+
+:::note[Accessibility]
+Do not rely on `color-scheme` for accessibility, for example Chrome does not style the placeholder text with proper contrast in dark mode by default.
+:::
 
 ```astro
 <style is:global>
-  :root[data-theme="light"] {
-    --background-color: #ffffff;
-    --text-color: #000000;
-  }
+	:root,
+	:root[data-theme="light"] {
+	--background-color: #ffffff;
+	--text-color: #000000;
+	color-scheme: light;
+	}
 
-  :root[data-theme="dark"] {
-    --background-color: #333333;
-    --text-color: #ffffff;
-  }
+	@media (prefers-color-scheme: dark), :root[data-theme="dark"] {
+	:root {
+		--background-color: #333333;
+		--text-color: #ffffff;
+		color-scheme: dark;
+	}
+	}
 
-  body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-  }
+	body {
+	background-color: var(--background-color);
+	color: var(--text-color);
+	}
 </style>
 ```
 
@@ -322,6 +337,8 @@ const { defaultTheme = "auto" } = Astro.props;
 
     function applyTheme(theme) {
       document.documentElement.dataset.theme =
+        theme === "auto" ? systemTheme : theme;
+      document.documentElement.style.colorScheme =
         theme === "auto" ? systemTheme : theme;
       document.dispatchEvent(
         new CustomEvent("theme-changed", {
