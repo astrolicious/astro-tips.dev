@@ -24,10 +24,9 @@ const { defaultTheme = "auto" } = Astro.props;
     });
 
     function applyTheme(theme) {
-      document.documentElement.dataset.theme =
-        theme === "auto" ? systemTheme : theme;
-      document.documentElement.style.colorScheme =
-        theme === "auto" ? systemTheme : theme;
+      const resolvedTheme = theme === "auto" ? systemTheme : theme;
+      document.documentElement.dataset.theme = resolvedTheme;
+      document.documentElement.style.colorScheme = resolvedTheme;
       document.dispatchEvent(
         new CustomEvent("theme-changed", {
           detail: { theme, systemTheme, defaultTheme },

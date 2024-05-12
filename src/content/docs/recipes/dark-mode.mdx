@@ -198,16 +198,16 @@ So, obviously, our theme solution wouldn't be complete without styling the diffe
 One important consideration is what happens when Javascript is disabled. There are two options here: chose a default theme or respect the users system theme. To ship a default theme remove the media query and set the variables for `:root` to the theme you want as a default.
 
 :::note[Accessibility]
-Do not rely on `color-scheme` for accessibility, for example Chrome does not style the placeholder text with proper contrast in dark mode by default.
+Do not rely on `color-scheme` for accessibility, for example Chrome does not style the placeholder text for `<input>` elements with proper contrast in dark mode by default.
 :::
 
 ```astro
 <style is:global>
 	:root,
 	:root[data-theme="light"] {
-	--background-color: #ffffff;
-	--text-color: #000000;
-	color-scheme: light;
+    --background-color: #ffffff;
+    --text-color: #000000;
+    color-scheme: light;
 	}
 
 	@media (prefers-color-scheme: dark), :root[data-theme="dark"] {
@@ -219,8 +219,8 @@ Do not rely on `color-scheme` for accessibility, for example Chrome does not sty
 	}
 
 	body {
-	background-color: var(--background-color);
-	color: var(--text-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
 	}
 </style>
 ```
