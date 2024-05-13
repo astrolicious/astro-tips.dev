@@ -243,7 +243,7 @@ If you want to use this `window.theme` API inside a normal `<script>`, you might
 If you're using ESLint, there's a good chance you'll run into `'theme' is not defined` due to the [no-undef](https://eslint.org/docs/latest/rules/no-undef) rule. We can add `theme` as a global in `eslintrc.cjs` to solve this.
 
 
-<Tabs syncKey="darkMode">
+<Tabs>
   <TabItem label="TypeScript">
     ```ts title="src/env.d.ts" ins={3-10}
     /// <reference types="astro/client" />
