@@ -31,12 +31,22 @@ jobs:
           script: |
             const { default: script } = await import('${{ github.workspace }}/.github/scripts/mdx.js')
             await script({github, context, core})
-      - uses: actions/create-github-app-token@a0de6af83968303c8c955486bf9739a57d23c7f1 # v1.10.0
-        id: app-token
+      - uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
-          app-id: ${{ vars.BOT_APPID }}
-          private-key: ${{ secrets.BOT_SECRET }}
-      - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5
-        with:
-          commit_message: "[ci] update community content"
-          branch: ${{ github.head_ref }}
+          name: community-content
+          path: .tmp/content.mdx
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0
+          overwrite: true
+      # - uses: actions/create-github-app-token@a0de6af83968303c8c955486bf9739a57d23c7f1 # v1.10.0
+      #   id: app-token
+      #   with:
+      #     app-id: ${{ vars.BOT_APPID }}
+      #     private-key: ${{ secrets.BOT_SECRET }}
+      # - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 # v5
+      #   with:
+      #     commit_user_email: 168325803+astrolicious[bot]@users.noreply.github.com
+      #     commit_user_name: astrolicious[bot]
+      #     commit_message: "[ci] update community content"
+      #     branch: ${{ github.head_ref }}
