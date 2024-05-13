@@ -2,7 +2,7 @@
 
 import { toMarkdown } from 'mdast-util-to-markdown';
 import { mdxToMarkdown } from 'mdast-util-mdx';
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 
 /**
  * @param {import('mdast').Heading['depth']} level
@@ -100,14 +100,19 @@ const mdast = {
 		{
 			type: 'html',
 			value: `---
+# NOTE: This file is auto-generated from 'scripts/astrolicious.mjs'
+# Do not make edits to it directly, they will be overwritten.
+# Instead, edit these files: https://github.com/astrolicious/astro-tips.dev/tree/main/src/content/resources
+# Translators, please remove this note and the <DontEditWarning/> component. 
+
 title: Community Educational Content
 description: Discover community-produced tutorials, guides, articles and videos to help you learn and build with Astro!
 i18nReady: true
----`,
-		},
-		{
-			type: 'mdxjsEsm',
-			value: "import Badge from '~/components/Badge.astro';",
+---
+
+import DontEditWarning from '~/components/DontEditWarning.astro'
+
+<DontEditWarning />`,
 		},
 		paragraph(
 			text(
@@ -668,5 +673,6 @@ i18nReady: true
  */
 export default async ({ github, context, core }) => {
 	const markdown = toMarkdown(mdast, { extensions: [mdxToMarkdown()] });
-	writeFileSync('content.mdx', markdown);
+	mkdirSync('.tmp', { recursive: true });
+	writeFileSync('.tmp/content.mdx', markdown);
 };
