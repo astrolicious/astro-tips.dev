@@ -1,11 +1,16 @@
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import cloudflare from '@astrojs/cloudflare';
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
 export default defineConfig({
 	site: process.env.DEPLOY_URL ?? 'https://astro-tips.dev',
 	redirects: {
 		'/recipes/how-to-add-gsap': '/tips/how-to-add-gsap',
+	},
+	experimental: {
+		contentCollectionJsonSchema: true,
 	},
 	integrations: [
 		starlight({
@@ -31,11 +36,22 @@ export default defineConfig({
 				},
 				{
 					label: 'Recipes',
-					autogenerate: { directory: 'recipes' },
+					autogenerate: {
+						directory: 'recipes',
+					},
 				},
 				{
 					label: 'Tips',
-					autogenerate: { directory: 'tips' },
+					autogenerate: {
+						directory: 'tips',
+					},
+				},
+				{
+					label: 'Resources',
+					badge: 'New',
+					autogenerate: {
+						directory: 'resources',
+					},
 				},
 			],
 			components: {
@@ -44,4 +60,17 @@ export default defineConfig({
 			},
 		}),
 	],
+	vite: {
+		resolve: {
+			alias: {
+				'~': resolve(dirname(fileURLToPath(import.meta.url)), './src'),
+			},
+		},
+		ssr: {
+			// This should be removed once Starlight's SSR support is released
+			external: ['node:url', 'node:path', 'node:child_process', 'node:fs'],
+		},
+	},
+	output: 'hybrid',
+	adapter: cloudflare(),
 });
