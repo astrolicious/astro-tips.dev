@@ -5,14 +5,5 @@
       "url": "./.astro/collections/resources.schema.json"
     }
   ],
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  }
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,8 +1,8 @@
 // @ts-check
 
-import { toMarkdown } from 'mdast-util-to-markdown';
-import { mdxToMarkdown } from 'mdast-util-mdx';
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { mdxToMarkdown } from 'mdast-util-mdx';
+import { toMarkdown } from 'mdast-util-to-markdown';
 
 /**
  * @param {import('mdast').Heading['depth']} level
