@@ -17,7 +17,7 @@
     "@astrojs/cloudflare": "10.2.5",
     "@astrojs/starlight": "0.22.4",
     "semver": "7.6.2",
-    "astro": "4.8.4",
+    "astro": "4.8.5",
     "sharp": "0.33.3",
     "typescript": "5.4.5"
   },
