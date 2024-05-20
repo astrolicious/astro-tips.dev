@@ -39,7 +39,7 @@ The alpha does not have all the features implemented yet, most notably dark mode
 
 2. Add the plugin to Astro config and enable Lightning CSS
 
-    ```ts title="astro.config.mjs" {tailwindcss()} ins={2} ins={7-10}
+    ```ts title="astro.config.mjs" {tailwindcss()} ins={2} ins={7}
     import { defineConfig } from 'astro/config';
     import tailwindcss from '@tailwindcss/vite';
 
@@ -47,9 +47,6 @@ The alpha does not have all the features implemented yet, most notably dark mode
     export default defineConfig({
       vite: {
         plugins: [tailwindcss()],
-        css: {
-          transformer: 'lightningcss'
-        }
       }
     });
     ```
