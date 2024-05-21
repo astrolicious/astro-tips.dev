@@ -1,0 +1,67 @@
+---
+title: Dynamic imports in module scripts
+description: Quick set up for trying out Tailwind v4 alpha using the vite plugin
+astroRange: ^4.0.0
+---
+import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
+
+Astro bundles and processes `<script>` tags into [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) for us automatically, which makes scripts execute similiar to [`defer`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#defer) by default. This is great for a balance performance and time to interactivity / hydration. 
+
+With [Interaction to Next Paint](https://web.dev/blog/inp-cwv-launch)(INP) officially replacing [First Input Delay](https://web.dev/articles/fid)(FID) it might seem absurd to suggest replacing a static import inside a module script to a dynamic one, but let us cook.
+
+## Granular control
+
+So the question is, why and when would you want a dynamic import? The answer is when you want fine grained control over when your module is imported (downloaded). Let's start with why a static import is the default in Astro. 
+
+A static import ensure that your code is hydrated and ready to run as soon as possible, without affecting [First Contentful Paint](https://web.dev/articles/fcp)(FCP) or [Largest Contentful Paint](https://web.dev/articles/lcp)(LCP). This is important for INP, because it means that any interactive elements are ready to react to interaction immediately.
+
+Because static imports will all be fetched, parsed and evaluated at the beginning of a module script's execution, this means that if we import two expensive modules into the same module script tag the second will delay the execution of functions that might only depend on the first. Well why not just have them in different module scripts? Because module scripts are fetched in parallel.
+
+Here's where the tip comes into play, if you want to ensure that some of your modules receieve top priority, for example ones that will have a role in ensuring your snappy INP score, then you can dynamically import the second after the first is done processing.
+
+Here's how that might look: 
+
+```astro
+<script>
+  import expensiveModule1 from '...';
+  const expensiveModule2  = await import('...');
+
+  (() => expensiveModule1())();
+  (() => expensiveModule2();)();
+</script>
+```
+
+Or if we only want to fetch when a button is clicked:
+
+```JavaScript
+import expensiveModule1 from '...';
+
+(() => expensiveModule1())();
+
+(async () => {
+  const expensiveModule2  = await import('...');
+  expensiveModule2();
+})();
+```
+
+
+
+## Example
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/astrolicious/astro-tips.dev/tree/main/examples/script-tag-dynamic-imports)
+
+[GitHub](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/script-tag-dynamic-imports)
+
+## Use Cases
+
+1. A button that might be rarely clicked, and when it is the module needed to hydrate it is small enough you don't need to pre-hydrate it
+
+2. Ensuring your site is functional for users with very slow internet connection
+
+3. Opt in features that a standard user might not ever need
+
+4. ...
+
+## Warning
+
+INP was made an official Core Web Vital for a reason, when a user clicks a button they want it to react as soon as possible. If you dynamically import heavy code that hydrates something a user might click on you might ruin their experience. 

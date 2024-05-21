@@ -1,0 +1,46 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Dynamic fetch order control</title>
+  </head>
+  <script>
+    const { default: JSConfetti } = await import("js-confetti");
+    import { confetti } from "@tsparticles/confetti";
+
+    const loadConfettiButton = document.getElementById("confetti");
+    if (loadConfettiButton) {
+      loadConfettiButton.addEventListener("click", async () => {
+        confetti({ particleCount: 100 });
+      });
+    }
+
+    const jsConfetti = new JSConfetti();
+    const loadConfettiButton2 = document.getElementById("confetti2");
+
+    if (loadConfettiButton2) {
+      loadConfettiButton2.addEventListener("click", async () => {
+        jsConfetti.addConfetti();
+      });
+    }
+  </script>
+  <body>
+    <h1>Dynamic import fetched on click</h1>
+    <button id="confetti">Confetti 🎉 38kb .js</button>
+    <button id="confetti2">Confetti 2 🎉 2.8kb .js</button>
+
+    <div>
+      <a href="/">Dynamic import on click</a>
+      <a href="/static">Static import</a>
+    </div>
+    <p>
+      Notice that the 38kb .js file is downloaded before the 2.8kb .js file.
+    </p>
+  </body>
+</html>
