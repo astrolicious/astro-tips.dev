@@ -63,12 +63,13 @@ If you want to see a more interactive example that might help explain or let you
 
 1. __Granular Control__: Ensuring that modules critical for snappy INP scores receive top priority by dynamically importing less critical modules after the critical ones are processed.
 
-2. __Rarely Clicked Buttons__: A button that might be rarely clicked, and when it is, the module needed to hydrate it is small enough that pre-hydration is unnecessary.
+2. __Recreate [Client Directives](https://docs.astro.build/en/reference/directives-reference/#client-directives) in `<script>`s__: Effects similiar to [`client:visible`](https://docs.astro.build/en/reference/directives-reference/#clientvisible), [`client:media`](https://docs.astro.build/en/reference/directives-reference/#clientmedia) and [`client:idle`](https://docs.astro.build/en/reference/directives-reference/#clientidle) can all be achieved with this technique.
 
 3. __Feature Flags__: Dynamically importing modules based on feature flags. For example, loading a specific feature only for users who have opted in or who meet certain criteria.
 
 4. __Device-Specific Code__: Importing desktop-specific code that doesn't need to be downloaded on mobile devices.
 
+2. __Rarely Clicked Buttons__: A button that might be rarely clicked, and when it is, the module needed to hydrate it is small enough that pre-hydration is unnecessary.
 
 ## Warning
 
