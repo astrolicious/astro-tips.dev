@@ -4,28 +4,9 @@ description: How dynamic imports offer granular control over fetch and execution
 astroRange: ^4.0.0
 ---
 
-Scripts with no attributes in Astro are automatically processed as [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and bundled, which allows for importing and optimal performance. For more details, refer to the [official documentation](https://docs.astro.build/en/guides/client-side-scripts/#script-processing).
+Scripts with no attributes in Astro are automatically processed into [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and all bundled into one `.js` file with static imports. For more details, refer to the [official documentation](https://docs.astro.build/en/guides/client-side-scripts/#script-processing). It is possible to break code out of that `.js` file and defer what would otherwise be loaded up front by taking advantage of [Dynamic module loading](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#dynamic_module_loading).
 
-With [Interaction to Next Paint](https://web.dev/blog/inp-cwv-launch) (INP) officially replacing [First Input Delay](https://web.dev/articles/fid) (FID), it might seem counterintuitive to suggest replacing a static import inside a module script with a dynamic one. However, this approach can be advantageous in certain scenarios, such as when you need to ensure that a module is executed before initiating the download of another. See MDN's [Dynamic module loading](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#dynamic_module_loading) documentation for more details.
-
-## Granular control
-
-### Static Imports
-
-Static imports ensure that your code is hydrated and ready to run as soon as possible, without affecting [First Contentful Paint](https://web.dev/articles/fcp) (FCP) or [Largest Contentful Paint](https://web.dev/articles/lcp) (LCP). This is important for INP because it ensures that any interactive elements are ready to react to interaction immediately.
-
-### Dynamic module loading
-
-Dynamic imports used in a `type="module"` script, also called dynamic module loading, provide fine-grained control over when your module is imported (downloaded). Since static imports will all be fetched, parsed, and evaluated at the beginning of a module script's execution, importing two expensive modules in the same module script tag can cause delays in the execution of code that only depends on the first module. Dynamic imports allow you to either import a module only when it is needed, or dictate the order of imports allowing for manual optimization of network requests.
-
-### Controlling Network Requests
-
-Dynamic imports also allow you to control the sequence of network requests. Instead of fetching all modules in parallel, which is the default behavior when using multiple static imports or separate module scripts, dynamic imports enable you to ensure that one module is downloaded first before initiating the fetch for the next module. This can be particularly useful when you have modules that are critical for immediate user interaction and others that are less critical or if you are supporting users with very low bandwidth.
-
-## Example
-
-Here's a basic example:
-
+## Examples
 
 ```astro
 <script>
@@ -36,8 +17,6 @@ Here's a basic example:
   module2();
 </script>
 ```
-
-or
 
 ```astro
 <script>
@@ -134,6 +113,8 @@ A button that might be rarely clicked, and when it is, the module needed to hydr
 ```
 
 
-## Warning
+## Considerations before using this technique
 
-INP was made an official Core Web Vital for a reason, when a user clicks a button they expect it to react instantly. If you dynamically import heavy code that hydrates a button only when it is clicked that could create a delay between interaction and next paint. Also if you are using this technique to control network requests you are opting out of parallel fetching, which is a feature of `type="module"` so this should only be implemented in special circumstances.
+When a user clicks a button they expect it to react instantly. If you dynamically import heavy code that hydrates a button only when it is clicked that could create a delay between interaction and next paint. 
+
+One benefit of bundling is being able to take more advantage of compression (i.e. gzip or brotli), because as a rule, the larger the file, the better it compresses. That means prematurely splitting a bundle with dynamic imports can lead to bigger download sizes potentially.
