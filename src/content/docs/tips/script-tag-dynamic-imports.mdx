@@ -4,9 +4,9 @@ description: How dynamic imports offer granular control over fetch and execution
 astroRange: ^4.0.0
 ---
 
-Astro bundles and processes `<script>` tags into [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) for us automatically, which makes scripts execute similiar to [`defer`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#defer) by default. This is great for a balance of performance and time to interactivity/hydration. 
+Bundled scripts in Astro are automatically processed as [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and bundled, which allows for importing and optimal performance. For more details, refer to the [official documentation](https://docs.astro.build/en/guides/client-side-scripts/#script-processing).
 
-With [Interaction to Next Paint](https://web.dev/blog/inp-cwv-launch) (INP) officially replacing [First Input Delay](https://web.dev/articles/fid) (FID) it might seem absurd to suggest replacing a static import inside a module script to a dynamic one, but if done correctly it can be useful sometimes.
+With [Interaction to Next Paint](https://web.dev/blog/inp-cwv-launch) (INP) officially replacing [First Input Delay](https://web.dev/articles/fid) (FID), it might seem counterintuitive to suggest replacing a static import inside a module script with a dynamic one. However, this approach can be advantageous in certain scenarios, such as when you need to ensure that a module is executed before initiating the download of another. See MDN's [Dynamic module loading](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#dynamic_module_loading) documentation for more details.
 
 ## Granular control
 
@@ -14,9 +14,9 @@ With [Interaction to Next Paint](https://web.dev/blog/inp-cwv-launch) (INP) offi
 
 Static imports ensure that your code is hydrated and ready to run as soon as possible, without affecting [First Contentful Paint](https://web.dev/articles/fcp) (FCP) or [Largest Contentful Paint](https://web.dev/articles/lcp) (LCP). This is important for INP because it ensures that any interactive elements are ready to react to interaction immediately.
 
-### Dynamic Imports
+### Dynamic module loading
 
-Dynamic imports provide fine-grained control over when your module is imported (downloaded). Since static imports will all be fetched, parsed, and evaluated at the beginning of a module script's execution, importing two expensive modules in the same module script tag can cause delays in the execution of code that only depends on the first module. Dynamic imports allow you to either import a module only when it is needed, or dictate the order of imports allowing for manual optimization of network requests.
+Dynamic imports used in a `type="module"` script, also called dynamic module loading, provide fine-grained control over when your module is imported (downloaded). Since static imports will all be fetched, parsed, and evaluated at the beginning of a module script's execution, importing two expensive modules in the same module script tag can cause delays in the execution of code that only depends on the first module. Dynamic imports allow you to either import a module only when it is needed, or dictate the order of imports allowing for manual optimization of network requests.
 
 ### Controlling Network Requests
 
@@ -61,15 +61,78 @@ If you want to see a more interactive example that might help explain or let you
 
 ## Use Cases
 
-1. __Granular Control__: Prioritize critical modules for fast INP scores by importing less critical modules only after the critical ones are processed.
 
-2. __Recreate [Client Directives](https://docs.astro.build/en/reference/directives-reference/#client-directives) in `<script>`s__: Effects similiar to [`client:visible`](https://docs.astro.build/en/reference/directives-reference/#clientvisible), [`client:media`](https://docs.astro.build/en/reference/directives-reference/#clientmedia) and [`client:idle`](https://docs.astro.build/en/reference/directives-reference/#clientidle) can all be achieved with this technique.
+### Granular Control
+Prioritize critical modules by importing less critical modules only after the critical ones are processed.
 
-3. __Feature Flags__: Dynamically importing modules based on feature flags. For example, loading a specific feature only for users who have opted in or who meet certain criteria.
+```astro
+<script>
+  import criticalModule from '...';
+  criticalModule();
 
-4. __Device-Specific Code__: Importing desktop-specific code that doesn't need to be downloaded on mobile devices.
+  const lessCriticalModule = await import('...');
+  lessCriticalModule();
+</script>
+```
 
-2. __Rarely Clicked Buttons__: A button that might be rarely clicked, and when it is, the module needed to hydrate it is small enough that pre-hydration is unnecessary.
+### Recreate Client Directives in `<script>`s
+Effects similar to [`client:visible`](https://docs.astro.build/en/reference/directives-reference/#clientvisible), [`client:media`](https://docs.astro.build/en/reference/directives-reference/#clientmedia), and [`client:idle`](https://docs.astro.build/en/reference/directives-reference/#clientidle) can all be achieved with this technique.
+
+```astro
+<script>
+  const observer = new IntersectionObserver(async (entries, observer) => {
+    entries.forEach(async entry => {
+      if (entry.isIntersecting) {
+        const { module } = await import('...');
+        module();
+        observer.disconnect();
+      }
+    });
+  });
+
+  observer.observe(document.querySelector('#targetElement'));
+</script>
+
+```
+
+### Feature Flags
+Dynamically import modules based on feature flags. For example, loading a specific feature only for users who have opted in or who meet certain criteria.
+
+```astro
+<script>
+  if (featureFlag) {
+    const { featureModule } = await import('...');
+    featureModule();
+  }
+</script>
+```
+
+### Device-Specific Code
+Import desktop-specific code that doesn't need to be downloaded on mobile devices.
+
+```astro
+<script>
+  (async () => {
+    if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+      const { desktopModule } = await import('...');
+      desktopModule();
+    }
+  })();
+</script>
+```
+
+### Rarely Clicked Buttons
+A button that might be rarely clicked, and when it is, the module needed to hydrate it is small enough that pre-hydration is unnecessary.
+
+```astro
+<script>
+  document.querySelector('#rareButton').addEventListener('click', async () => {
+    const { buttonModule } = await import('...');
+    buttonModule();
+  });
+</script>
+```
+
 
 ## Warning
 
