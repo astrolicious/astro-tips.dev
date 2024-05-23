@@ -4,7 +4,7 @@ description: How dynamic imports offer granular control over fetch and execution
 astroRange: ^4.0.0
 ---
 
-Bundled scripts in Astro are automatically processed as [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and bundled, which allows for importing and optimal performance. For more details, refer to the [official documentation](https://docs.astro.build/en/guides/client-side-scripts/#script-processing).
+Scripts with no attributes in Astro are automatically processed as [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and bundled, which allows for importing and optimal performance. For more details, refer to the [official documentation](https://docs.astro.build/en/guides/client-side-scripts/#script-processing).
 
 With [Interaction to Next Paint](https://web.dev/blog/inp-cwv-launch) (INP) officially replacing [First Input Delay](https://web.dev/articles/fid) (FID), it might seem counterintuitive to suggest replacing a static import inside a module script with a dynamic one. However, this approach can be advantageous in certain scenarios, such as when you need to ensure that a module is executed before initiating the download of another. See MDN's [Dynamic module loading](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#dynamic_module_loading) documentation for more details.
 
