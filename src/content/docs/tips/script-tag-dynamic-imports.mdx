@@ -4,7 +4,7 @@ description: How dynamic imports offer granular control over fetch and execution
 astroRange: ^4.0.0
 ---
 
-Astro bundles and processes `<script>` tags into [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) for us automatically, which makes scripts execute similiar to [`defer`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#defer) by default. This is great for a balance performance and time to interactivity/hydration. 
+Astro bundles and processes `<script>` tags into [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) for us automatically, which makes scripts execute similiar to [`defer`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#defer) by default. This is great for a balance of performance and time to interactivity/hydration. 
 
 With [Interaction to Next Paint](https://web.dev/blog/inp-cwv-launch) (INP) officially replacing [First Input Delay](https://web.dev/articles/fid) (FID) it might seem absurd to suggest replacing a static import inside a module script to a dynamic one, but if done correctly it can be useful sometimes.
 
@@ -16,7 +16,7 @@ Static imports ensure that your code is hydrated and ready to run as soon as pos
 
 ### Dynamic Imports
 
-Dynamic imports provide fine-grained control over when your module is imported (downloaded). Since static imports will all be fetched, parsed, and evaluated at the beginning of a module script's execution, importing two expensive modules in the same module script tag can cause delays in the execution of code that only depends on the first module. Dynamic imports allow you to either import a module only when it is needed, or dictate the order of imports allowing for manually optimization of network requests.
+Dynamic imports provide fine-grained control over when your module is imported (downloaded). Since static imports will all be fetched, parsed, and evaluated at the beginning of a module script's execution, importing two expensive modules in the same module script tag can cause delays in the execution of code that only depends on the first module. Dynamic imports allow you to either import a module only when it is needed, or dictate the order of imports allowing for manual optimization of network requests.
 
 ### Controlling Network Requests
 
@@ -61,7 +61,7 @@ If you want to see a more interactive example that might help explain or let you
 
 ## Use Cases
 
-1. __Granular Control__: Ensuring that modules critical for snappy INP scores receive top priority by dynamically importing less critical modules after the critical ones are processed.
+1. __Granular Control__: Prioritize critical modules for fast INP scores by importing less critical modules only after the critical ones are processed.
 
 2. __Recreate [Client Directives](https://docs.astro.build/en/reference/directives-reference/#client-directives) in `<script>`s__: Effects similiar to [`client:visible`](https://docs.astro.build/en/reference/directives-reference/#clientvisible), [`client:media`](https://docs.astro.build/en/reference/directives-reference/#clientmedia) and [`client:idle`](https://docs.astro.build/en/reference/directives-reference/#clientidle) can all be achieved with this technique.
 
@@ -73,4 +73,4 @@ If you want to see a more interactive example that might help explain or let you
 
 ## Warning
 
-INP was made an official Core Web Vital for a reason, when a user clicks a button they expect it to react instantly. If you dynamically import heavy code that hydrates a button only when it is clicked you that could create a delay between interaction and next paint. Also if you are using this technique to control network requests you are opting out of parallel fetching, which is a feature of `type="module"` so this should only be implemented in special circumstances.
+INP was made an official Core Web Vital for a reason, when a user clicks a button they expect it to react instantly. If you dynamically import heavy code that hydrates a button only when it is clicked that could create a delay between interaction and next paint. Also if you are using this technique to control network requests you are opting out of parallel fetching, which is a feature of `type="module"` so this should only be implemented in special circumstances.
