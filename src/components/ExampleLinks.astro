@@ -1,0 +1,26 @@
+---
+type Props = {
+  stackblitzLink: URL;
+  githubLink: URL;
+};
+const { stackblitzLink, githubLink } = Astro.props;
+---
+
+<div>
+  <a href={stackblitzLink}>
+    <img
+      src="https://developer.stackblitz.com/img/open_in_stackblitz.svg"
+      alt="Open in StackBlitz"
+    />
+  </a>
+  <a href={githubLink}>
+    <img src="/view-on-github.svg" alt="View on GitHub" />
+  </a>
+</div>
+<style>
+  div {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+  }
+</style>

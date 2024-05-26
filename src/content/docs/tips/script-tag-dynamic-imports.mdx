@@ -4,52 +4,32 @@ description: How dynamic imports offer granular control over fetch and execution
 astroRange: ^4.0.0
 ---
 
-Scripts with no attributes in Astro are automatically processed into [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and all bundled into one `.js` file with static imports. For more details, refer to the [official documentation](https://docs.astro.build/en/guides/client-side-scripts/#script-processing). It is possible to break code out of that `.js` file and defer what would otherwise be loaded up front by taking advantage of [Dynamic module loading](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#dynamic_module_loading).
+import ExampleLinks from '~/components/ExampleLinks.astro'
+
+
+Scripts with no attributes in Astro are automatically processed into [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and all hoisted into one `.js` file that has static imports to other `.js` files with the imported code. It is possible to use [Dynamic module loading](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#dynamic_module_loading) instead of the default static imports, in order to gain more granular control over if/when the imported code is actually imported (downloaded).
+
+For more details on Astro's script processing, refer to the [official documentation](https://docs.astro.build/en/guides/client-side-scripts/#script-processing).
 
 ## Examples
 
-```astro
-<script>
-  import module1 from '...';
-  module1();
-
-  const module2  = await import('...');
-  module2();
-</script>
-```
-
-```astro
-<script>
-  import module1 from '...';
-  module1();
-
-  document.addEventListener('some-event', async () => {
-    const module2 = await import('...');
-    module2();
-  });
-</script>
-```
 
 If you want to see a more interactive example that might help explain or let you test things out better you can: 
 
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/astrolicious/astro-tips.dev/tree/main/examples/script-tag-dynamic-imports)
-
-[![View on GitHub](/view-on-github.svg)](https://github.com/astrolicious/astro-tips.dev/tree/main/examples/script-tag-dynamic-imports)
-
-
-## Use Cases
-
+<ExampleLinks 
+  stackblitzLink="https://stackblitz.com/github/astrolicious/astro-tips.dev/tree/main/examples/script-tag-dynamic-imports"
+  githubLink="https://github.com/astrolicious/astro-tips.dev/tree/main/examples/script-tag-dynamic-imports"
+/>
 
 ### Granular Control
 Prioritize critical modules by importing less critical modules only after the critical ones are processed.
 
 ```astro
 <script>
-  import criticalModule from '...';
+  import criticalModule from 'criticalModule';
   criticalModule();
 
-  const lessCriticalModule = await import('...');
+  const lessCriticalModule = await import('lessCriticalModule');
   lessCriticalModule();
 </script>
 ```
@@ -62,7 +42,7 @@ Effects similar to [`client:visible`](https://docs.astro.build/en/reference/dire
   const observer = new IntersectionObserver(async (entries, observer) => {
     entries.forEach(async entry => {
       if (entry.isIntersecting) {
-        const { module } = await import('...');
+        const { module } = await import('module');
         module();
         observer.disconnect();
       }
@@ -80,7 +60,7 @@ Dynamically import modules based on feature flags. For example, loading a specif
 ```astro
 <script>
   if (featureFlag) {
-    const { featureModule } = await import('...');
+    const { featureModule } = await import('featureModule');
     featureModule();
   }
 </script>
@@ -93,7 +73,7 @@ Import desktop-specific code that doesn't need to be downloaded on mobile device
 <script>
   (async () => {
     if (!('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
-      const { desktopModule } = await import('...');
+      const { desktopModule } = await import('desktopModule');
       desktopModule();
     }
   })();
@@ -106,7 +86,7 @@ A button that might be rarely clicked, and when it is, the module needed to hydr
 ```astro
 <script>
   document.querySelector('#rareButton').addEventListener('click', async () => {
-    const { buttonModule } = await import('...');
+    const { buttonModule } = await import('buttonModule');
     buttonModule();
   });
 </script>
