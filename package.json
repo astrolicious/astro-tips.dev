@@ -13,11 +13,11 @@
     "lint:fix": "biome check --apply ."
   },
   "dependencies": {
-    "@astrojs/check": "0.6.0",
+    "@astrojs/check": "0.7.0",
     "@astrojs/cloudflare": "10.2.5",
-    "@astrojs/starlight": "0.22.2",
+    "@astrojs/starlight": "0.23.1",
     "semver": "7.6.2",
-    "astro": "4.8.2",
+    "astro": "4.9.1",
     "sharp": "0.33.3",
     "typescript": "5.4.5"
   },

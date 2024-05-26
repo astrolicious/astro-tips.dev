@@ -54,7 +54,7 @@ from our script. It has a default value of the fallback date of step 1.
 3. In our script we can get the `<span>` element by its id and update its content to the current year.
 The code differs depending on your Astro version, and whether you're using View Transitions.
 
-    <Tabs>
+    <Tabs syncKey="footer">
       <TabItem label="MPA">
       ```astro "is:inline"
       <script is:inline>
@@ -87,7 +87,7 @@ The code differs depending on your Astro version, and whether you're using View 
 
 ## Full code
 
-<Tabs>
+<Tabs syncKey="footer">
   <TabItem label="MPA">
   ```astro "{year}" "is:inline" {2}
   ---
