@@ -8,7 +8,7 @@ export default defineConfig({
 	site: process.env.DEPLOY_URL ?? 'https://astro-tips.dev',
 	redirects: {
 		'/recipes/how-to-add-gsap': '/tips/how-to-add-gsap',
-		'/contributing': '/#want-to-get-involved'
+		'/contributing': '/#want-to-get-involved',
 	},
 	experimental: {
 		contentCollectionJsonSchema: true,
