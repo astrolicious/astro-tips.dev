@@ -3,16 +3,13 @@ title: Dynamic imports in module scripts
 description: How dynamic imports offer granular control over fetch and execution order
 astroRange: ^4.0.0
 ---
-
 import ExampleLinks from '~/components/ExampleLinks.astro'
-
 
 Scripts with no attributes in Astro are automatically processed into [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and all hoisted into one `.js` file that has static imports to other `.js` files with the imported code. It is possible to use [dynamic module loading](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#dynamic_module_loading) instead of the default static imports, in order to gain more granular control over if/when the imported code is actually imported (downloaded).
 
 For more details on Astro's script processing, refer to the [official documentation](https://docs.astro.build/en/guides/client-side-scripts/#script-processing).
 
 ## Examples
-
 
 If you want to see a more interactive example that might help explain or let you test things out better you can: 
 
@@ -22,6 +19,7 @@ If you want to see a more interactive example that might help explain or let you
 />
 
 ### Granular Control
+
 Prioritize critical modules by importing less critical modules only after the critical ones are processed.
 
 ```astro
@@ -35,6 +33,7 @@ Prioritize critical modules by importing less critical modules only after the cr
 ```
 
 ### Recreate Client Directives in `<script>`s
+
 Effects similar to [`client:visible`](https://docs.astro.build/en/reference/directives-reference/#clientvisible), [`client:media`](https://docs.astro.build/en/reference/directives-reference/#clientmedia), and [`client:idle`](https://docs.astro.build/en/reference/directives-reference/#clientidle) can all be achieved with this technique.
 
 ```astro
@@ -55,6 +54,7 @@ Effects similar to [`client:visible`](https://docs.astro.build/en/reference/dire
 ```
 
 ### Feature Flags
+
 Dynamically import modules based on feature flags. For example, loading a specific feature only for users who have opted in or who meet certain criteria.
 
 ```astro
@@ -67,6 +67,7 @@ Dynamically import modules based on feature flags. For example, loading a specif
 ```
 
 ### Device-Specific Code
+
 Import desktop-specific code that doesn't need to be downloaded on mobile devices.
 
 ```astro
@@ -81,6 +82,7 @@ Import desktop-specific code that doesn't need to be downloaded on mobile device
 ```
 
 ### Rarely Clicked Buttons
+
 A button that might be rarely clicked, and when it is, the module needed to hydrate it is small enough that pre-hydration is unnecessary.
 
 ```astro
@@ -92,9 +94,6 @@ A button that might be rarely clicked, and when it is, the module needed to hydr
 </script>
 ```
 
-
 ## Considerations before using this technique
 
-When a user clicks a button they expect it to react instantly. If you dynamically import heavy code that hydrates a button only when it is clicked that could create a delay between interaction and next paint. 
-
-One benefit of bundling is being able to take more advantage of compression (i.e. gzip or brotli), because as a rule, the larger the file, the better it compresses. That means prematurely splitting a bundle with dynamic imports can lead to bigger download sizes potentially.
+When a user clicks a button they expect it to react instantly. If you dynamically import heavy code that hydrates a button only when it is clicked that could create a delay between interaction and next paint. As a general rule any code that hydrates interactivity shouldn't be delayed.
