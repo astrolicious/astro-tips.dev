@@ -1,0 +1,51 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Static import</title>
+  </head>
+  <script>
+    import { confetti } from "@tsparticles/confetti";
+
+    const loadConfettiButton = document.getElementById("confetti");
+
+    if (loadConfettiButton) {
+      loadConfettiButton.addEventListener("click", async () => {
+        confetti({ particleCount: 100 });
+      });
+    }
+  </script>
+  <script>
+    import JSConfetti from "js-confetti";
+
+    const jsConfetti = new JSConfetti();
+    const loadConfettiButton2 = document.getElementById("confetti2");
+
+    if (loadConfettiButton2) {
+      loadConfettiButton2.addEventListener("click", async () => {
+        jsConfetti.addConfetti();
+      });
+    }
+  </script>
+  <body>
+    <h1>Static import</h1>
+    <button id="confetti">Confetti 🎉 38kb .js</button>
+    <button id="confetti2">Confetti 2 🎉 2.8kb .js</button>
+    <div>
+      <a href="/">Dynamic import on click</a>
+      <a href="/dynamic-fetch-order-control"
+        >Dynamic import fetch order control</a
+      >
+    </div>
+
+    <p>
+      Notice that Confetti 2 appears before Conffeti in the network tab.
+    </p>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Dynamic fetched on click</title>
+  </head>
+  <script>
+    const loadConfettiButton = document.getElementById("confetti");
+
+    if (loadConfettiButton) {
+      loadConfettiButton.addEventListener("click", async () => {
+        const { confetti } = await import("@tsparticles/confetti");
+
+        confetti({ particleCount: 100 });
+      });
+    }
+  </script>
+  <script>
+    const loadConfettiButton = document.getElementById("confetti2");
+
+    if (loadConfettiButton) {
+      loadConfettiButton.addEventListener("click", async () => {
+        const { default: JSConfetti } = await import("js-confetti");
+        const jsConfetti = new JSConfetti();
+        jsConfetti.addConfetti();
+      });
+    }
+  </script>
+  <body>
+    <h1>Dynamic import fetched on click</h1>
+    <button id="confetti">Confetti 🎉</button>
+    <button id="confetti2">Confetti 2 🎉</button>
+
+    <div>
+      <a href="/static">Static import</a>
+      <a href="/dynamic-fetch-order-control"
+        >Dynamic import fetch order control</a
+      >
+    </div>
+  </body>
+</html>
