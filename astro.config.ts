@@ -63,6 +63,7 @@ export default defineConfig({
 				PageTitle: './src/components/starlight/PageTitle.astro',
 				MarkdownContent: './src/components/starlight/MarkdownContent.astro',
 			},
+			credits: true,
 		}),
 	],
 	vite: {
