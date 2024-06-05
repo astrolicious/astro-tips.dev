@@ -5,6 +5,8 @@ import Default from "@astrojs/starlight/components/Head.astro";
 
 <Default {...Astro.props}><slot /></Default>
 <script>
+  // https://posthog.com/tutorials/cookieless-tracking
+  // https://github.com/fingerprintjs/fingerprintjs/blob/master/docs/api.md#webpackrollupnpmyarn
   import FingerprintJS from "@fingerprintjs/fingerprintjs";
   import posthog from "posthog-js";
 
