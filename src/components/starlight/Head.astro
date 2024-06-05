@@ -4,6 +4,10 @@ import Default from "@astrojs/starlight/components/Head.astro";
 ---
 
 <Default {...Astro.props}><slot /></Default>
+<script
+  defer
+  src="https://cloud.umami.is/script.js"
+  data-website-id="3c868d1b-5f9f-4de1-93c4-a21d4944e596"></script>
 <script>
   // https://posthog.com/tutorials/cookieless-tracking
   // https://github.com/fingerprintjs/fingerprintjs/blob/master/docs/api.md#webpackrollupnpmyarn
@@ -11,14 +15,14 @@ import Default from "@astrojs/starlight/components/Head.astro";
   import posthog from "posthog-js";
 
   FingerprintJS.load().then((fp) => {
-    fp.get().then((result) => {
+    fp.get().then((_result) => {
       posthog.init("phc_S9YMyBFAOplEOzpXnlxNVYaAFuQ4ZmcZ43JXhtsW8Kr", {
         api_host: "https://eu.i.posthog.com",
         persistence: "memory",
         person_profiles: "identified_only",
-        bootstrap: {
-          distinctID: result.visitorId,
-        },
+        // bootstrap: {
+        //   distinctID: result.visitorId,
+        // },
       });
     });
   });
