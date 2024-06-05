@@ -17,9 +17,9 @@
     "@astrojs/cloudflare": "10.2.5",
     "@astrojs/starlight": "0.23.3",
     "@fingerprintjs/fingerprintjs": "4.4.1",
-    "astro": "4.9.2",
     "posthog-js": "1.136.8",
     "semver": "7.6.2",
+    "astro": "4.9.3",
     "sharp": "0.33.4",
     "typescript": "5.4.5"
   },
