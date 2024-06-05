@@ -1,0 +1,22 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/Head.astro";
+---
+
+<Default {...Astro.props}><slot /></Default>
+<script>
+  import FingerprintJS from "@fingerprintjs/fingerprintjs";
+  import posthog from "posthog-js";
+
+  FingerprintJS.load().then((fp) => {
+    fp.get().then((result) => {
+      posthog.init("phc_S9YMyBFAOplEOzpXnlxNVYaAFuQ4ZmcZ43JXhtsW8Kr", {
+        api_host: "https://eu.i.posthog.com",
+        persistence: "memory",
+        bootstrap: {
+          distinctID: result.visitorId,
+        },
+      });
+    });
+  });
+</script>

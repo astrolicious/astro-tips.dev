@@ -5,5 +5,5 @@
       "~/*": ["./src/*"]
     }
   },
-  "exclude": ["examples"]
+  "exclude": ["examples", "dist", ".wrangler"]
 }
