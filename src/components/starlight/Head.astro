@@ -15,6 +15,7 @@ import Default from "@astrojs/starlight/components/Head.astro";
       posthog.init("phc_S9YMyBFAOplEOzpXnlxNVYaAFuQ4ZmcZ43JXhtsW8Kr", {
         api_host: "https://eu.i.posthog.com",
         persistence: "memory",
+        person_profiles: "identified_only",
         bootstrap: {
           distinctID: result.visitorId,
         },
