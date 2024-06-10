@@ -12,8 +12,8 @@ importers:
         specifier: 0.7.0
         version: 0.7.0(typescript@5.4.5)
       '@astrojs/cloudflare':
-        specifier: 10.2.5
-        version: 10.2.5(astro@4.10.1(@types/node@20.14.2)(typescript@5.4.5))
+        specifier: 10.4.0
+        version: 10.4.0(astro@4.10.1(@types/node@20.14.2)(typescript@5.4.5))
       '@astrojs/starlight':
         specifier: 0.24.1
         version: 0.24.1(astro@4.10.1(@types/node@20.14.2)(typescript@5.4.5))
@@ -85,8 +85,8 @@ packages:
     peerDependencies:
       typescript: ^5.0.0
 
-  '@astrojs/cloudflare@10.2.5':
-    resolution: {integrity: sha512-5tKPU5m/zYwz2CU9vCSKo4tgWsdD7xwpUlDkVbKPwgSkfVB6ZuXb8ffLYnahtUc1Gvh7HgaBSaagPVHGCp73WQ==}
+  '@astrojs/cloudflare@10.4.0':
+    resolution: {integrity: sha512-OTBpdcDdv2aj10526g/LUkd/3tv1BFNQGRs1ELYEYcEJ5DKNQwoFFQHajIsxyS01RERFzTTmHJ0XvmTP32t+2A==}
     peerDependencies:
       astro: ^4.2.0
 
@@ -3039,6 +3039,7 @@ packages:
   wrangler@3.60.0:
     resolution: {integrity: sha512-8lW4E7VAhCVXy7AV7Vom2BsyjekIt15Aa8jnBLsfE2CxalzWQzx49BK25hOYhjHQT4GqBXeoNOZ43FrMQ+SUUA==}
     engines: {node: '>=16.17.0'}
+    deprecated: bug affecting usage of `wrangler pages deploy` with > 1000 assets in wrangler@3.60.0, fixed in wrangler@3.60.1
     hasBin: true
     peerDependencies:
       '@cloudflare/workers-types': ^4.20240605.0
@@ -3156,7 +3157,7 @@ snapshots:
       - prettier
       - prettier-plugin-astro
 
-  '@astrojs/cloudflare@10.2.5(astro@4.10.1(@types/node@20.14.2)(typescript@5.4.5))':
+  '@astrojs/cloudflare@10.4.0(astro@4.10.1(@types/node@20.14.2)(typescript@5.4.5))':
     dependencies:
       '@astrojs/internal-helpers': 0.3.0
       '@astrojs/underscore-redirects': 0.3.3

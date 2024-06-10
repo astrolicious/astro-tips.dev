@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@astrojs/check": "0.7.0",
-    "@astrojs/cloudflare": "10.2.5",
+    "@astrojs/cloudflare": "10.4.0",
     "@astrojs/starlight": "0.24.1",
     "semver": "7.6.2",
     "astro": "4.10.1",
