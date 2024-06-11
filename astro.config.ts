@@ -28,9 +28,9 @@ export default defineConfig({
 					tag: 'script',
 					attrs: {
 						defer: true,
-						src: "https://cloud.umami.is/script.js",
-						"data-website-id": "3c868d1b-5f9f-4de1-93c4-a21d4944e596"
-					}
+						src: 'https://cloud.umami.is/script.js',
+						'data-website-id': '3c868d1b-5f9f-4de1-93c4-a21d4944e596',
+					},
 				},
 			],
 			social: {
