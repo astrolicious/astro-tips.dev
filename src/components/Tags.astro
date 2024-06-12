@@ -1,0 +1,40 @@
+---
+import {getCollection} from 'astro:content';
+
+interface Props {
+	tags?: string[];
+}
+
+// Fetch the entire collection and extract tags from each item's data
+const allResources = await getCollection('resources');
+const allTags = allResources.flatMap((resource) => resource.data.tags ?? []);
+
+const {tags} = Astro.props;
+
+// Determine which tags to display
+const filteredTags =
+	tags && tags.length > 0
+		? allTags.filter((tag) => tags.includes(tag))
+		: allTags;
+---
+
+<style>
+	.tag {
+		display: inline-block;
+		background-color: #f0f0f0;
+		color: #333;
+		padding: 0.5em 1em;
+		margin: 0.5em;
+		border-radius: 0.25em;
+		font-size: 0.875em;
+		text-transform: capitalize;
+	}
+	.tags-container {
+		display: flex;
+		flex-wrap: wrap;
+	}
+</style>
+
+<div class="tags-container">
+	{filteredTags.map((tag) => <span class="tag">{tag}</span>)}
+</div>
