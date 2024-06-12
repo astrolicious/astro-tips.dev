@@ -45,6 +45,7 @@ const resourcesSchema = defineCollection({
 			'3rd-party',
 			'migration',
 		]),
+		tags: z.array(z.string()).optional(),
 		title: z.string(),
 		link: z.string(),
 		description: z.string().optional(),
