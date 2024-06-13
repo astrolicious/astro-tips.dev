@@ -1,5 +1,6 @@
 {
   "category": "db",
+  "tags": ["astro", "postgres", "analytics"],
   "title": "Astro DB: Migrating my analytics data from Vercel Postgres",
   "link": "https://www.thomasledoux.be/blog/astro-db-migrating-analytics-postgres",
   "updated": "2024-03-29"
