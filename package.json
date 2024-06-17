@@ -9,6 +9,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "format": "biome check --write ./ && prettier -w \"**/*\" --ignore-unknown --cache",
     "lint": "biome check .",
     "lint:fix": "biome check --apply ."
   },
@@ -16,8 +17,8 @@
     "@astrojs/check": "0.7.0",
     "@astrojs/cloudflare": "10.2.5",
     "@astrojs/starlight": "0.24.2",
+    "astro": "4.10.1",
     "semver": "7.6.2",
-    "astro": "4.10.2",
     "sharp": "0.33.4",
     "typescript": "5.4.5"
   },
@@ -29,6 +30,8 @@
     "@types/semver": "7.5.8",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.0",
+    "prettier": "3.3.2",
+    "prettier-plugin-astro": "0.14.0",
     "wrangler": "3.60.3"
   }
 }
