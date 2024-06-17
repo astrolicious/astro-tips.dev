@@ -1,29 +1,29 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
 interface Props {
-	category:
-		| 'css'
-		| 'auth'
-		| 'rss'
-		| 'images'
-		| 'editor'
-		| 'markdown'
-		| 'performance'
-		| 'utilities'
-		| 'animation'
-		| 'i18n'
-		| 'db'
-		| 'deploy'
-		| 'view-transitions'
-		| '3rd-party';
+  category:
+    | "css"
+    | "auth"
+    | "rss"
+    | "images"
+    | "editor"
+    | "markdown"
+    | "performance"
+    | "utilities"
+    | "animation"
+    | "i18n"
+    | "db"
+    | "deploy"
+    | "view-transitions"
+    | "3rd-party";
 }
 
 const { category } = Astro.props;
-const allResources = await getCollection('resources', ({ data }) => {
-	return data.category === category;
+const allResources = await getCollection("resources", ({ data }) => {
+  return data.category === category;
 });
 ---
 

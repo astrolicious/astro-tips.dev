@@ -1,7 +1,7 @@
 ---
-import { Icon } from '@astrojs/starlight/components';
-import Default from '@astrojs/starlight/components/PageTitle.astro';
-import type { Props } from '@astrojs/starlight/props';
+import { Icon } from "@astrojs/starlight/components";
+import Default from "@astrojs/starlight/components/PageTitle.astro";
+import type { Props } from "@astrojs/starlight/props";
 
 const { astroRange } = Astro.props.entry.data;
 const semverUrl = `https://semver.otterlord.dev/?package=astro&range=${astroRange}&filter=on`;
@@ -15,28 +15,33 @@ const semverUrl = `https://semver.otterlord.dev/?package=astro&range=${astroRang
       <p>
         <span class="sr-only">Astro</span>
         <Icon name="astro" />
-        <a href={semverUrl} title={`Compatible with Astro version ${astroRange}`}>{astroRange}</a>
+        <a
+          href={semverUrl}
+          title={`Compatible with Astro version ${astroRange}`}
+        >
+          {astroRange}
+        </a>
       </p>
     </div>
   )
 }
 
 <style>
-	p {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-	}
+  p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-	div {
-		margin-top: 0.5rem !important;
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.5rem 1rem;
-		font-size: var(--sl-text-xs);
-	}
-	a {
-		color: var(--sl-color-text-accent);
-	}
+  div {
+    margin-top: 0.5rem !important;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    font-size: var(--sl-text-xs);
+  }
+  a {
+    color: var(--sl-color-text-accent);
+  }
 </style>

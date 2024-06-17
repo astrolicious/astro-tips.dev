@@ -10,10 +10,10 @@
  */
 
 type Props = {
-	themeIconRelationship?: 'match' | 'opposite' | undefined;
+  themeIconRelationship?: "match" | "opposite" | undefined;
 };
 
-const { themeIconRelationship = 'opposite' } = Astro.props;
+const { themeIconRelationship = "opposite" } = Astro.props;
 ---
 
 <theme-toggle-button></theme-toggle-button>
@@ -21,7 +21,7 @@ const { themeIconRelationship = 'opposite' } = Astro.props;
 <script is:inline data-theme-icon-relationship={themeIconRelationship}>
   if (!customElements.get("theme-toggle-button")) {
     const themeIconRelationship = document.currentScript.getAttribute(
-      "data-theme-icon-relationship"
+      "data-theme-icon-relationship",
     );
     class ThemeToggleButton extends HTMLElement {
       constructor() {
@@ -42,7 +42,7 @@ const { themeIconRelationship = 'opposite' } = Astro.props;
         this.removeEventListener("click", this.toggleTheme);
         document.removeEventListener(
           "theme-changed",
-          this.updateThemeIconAndAriaLabel
+          this.updateThemeIconAndAriaLabel,
         );
       }
 
@@ -84,8 +84,8 @@ const { themeIconRelationship = 'opposite' } = Astro.props;
         document.addEventListener("theme-changed", (e) =>
           this.updateThemeIconAndAriaLabel(
             e.detail.currentTheme,
-            e.detail.systemTheme
-          )
+            e.detail.systemTheme,
+          ),
         );
       }
 
@@ -121,7 +121,7 @@ const { themeIconRelationship = 'opposite' } = Astro.props;
 
       updateThemeIconAndAriaLabel(
         currentTheme = theme.getTheme(),
-        systemTheme = theme.getSystemTheme()
+        systemTheme = theme.getSystemTheme(),
       ) {
         const sunIcon =
           themeIconRelationship === "opposite"
@@ -151,7 +151,7 @@ const { themeIconRelationship = 'opposite' } = Astro.props;
           .querySelector("button")
           .setAttribute(
             "aria-label",
-            `Theme toggle button: click to activate ${newMode} mode`
+            `Theme toggle button: click to activate ${newMode} mode`,
           );
       }
     }
