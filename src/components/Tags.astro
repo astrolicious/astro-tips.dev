@@ -1,41 +1,79 @@
 ---
-import {getCollection} from 'astro:content';
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+import { getCollection } from "astro:content";
 
 interface Props {
-	tags?: string[];
+  tags?: string[];
 }
-const allResources = await getCollection('resources');
+const allResources = await getCollection("resources");
 
 // Set is used to remove duplicates
 const allTags = Array.from(
-	new Set(allResources.flatMap((resource) => resource.data.tags ?? []))
+  new Set(allResources.flatMap((resource) => resource.data.tags ?? []))
 );
-const {tags} = Astro.props;
+const { tags } = Astro.props;
 
 // Determine which tags to display
 const filteredTags =
-	tags && tags.length > 0
-		? allTags.filter((tag) => tags.includes(tag))
-		: allTags;
+  tags && tags.length > 0
+    ? allTags.filter((tag) => tags.includes(tag))
+    : allTags;
 ---
 
 <style>
-	.tag {
-		display: inline-block;
-		background-color: #f0f0f0;
-		color: #333;
-		padding: 0.5em 1em;
-		margin: 0.5em;
-		border-radius: 0.25em;
-		font-size: 0.875em;
-		text-transform: capitalize;
-	}
-	.tags-container {
-		display: flex;
-		flex-wrap: wrap;
-	}
+  .tag {
+    display: inline-block;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 0.5em 1em;
+    margin: 0.5em;
+    border-radius: 0.25em;
+    font-size: 0.875em;
+    text-transform: capitalize;
+  }
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
 </style>
 
 <div class="tags-container">
-	{filteredTags.map((tag) => <span class="tag">{tag}</span>)}
+  {
+    filteredTags.map((tag) => (
+      <a href={`?tags=${tag}`} class="tag">
+        {tag}
+      </a>
+    ))
+  }
 </div>
+
+<CardGrid>
+  {
+    allResources.map((r) => (
+      <LinkCard
+        title={r.data.title}
+        description={r.data.description ?? ""}
+        href={r.data.link}
+      />
+    ))
+  }
+</CardGrid>
+
+<script is:inline>
+  (async () => {
+    // TODO: see if we can block rerndering
+    const params = new URLSearchParams(window.location.search);
+    const currentTags = params.getAll("tags");
+    if (currentTags.length === 0) {
+      return;
+    }
+    const tags = new URLSearchParams();
+    tags.set("tags", currentTags.join(","));
+
+    const html = await fetch(`/api/tags/?${tags.toString()}`).then((res) =>
+      res.text()
+    );
+
+    document.querySelector(".card-grid").innerHTML = html;
+  })();
+</script>

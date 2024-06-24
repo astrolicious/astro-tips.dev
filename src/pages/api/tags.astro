@@ -1,0 +1,27 @@
+---
+import { getCollection } from "astro:content";
+import { LinkCard } from "@astrojs/starlight/components";
+
+export const prerender = false;
+export const partial = true;
+
+const tags = (Astro.url.searchParams.get("tags") ?? "").split(",");
+
+const resources = await getCollection("resources", ({ data }) => {
+  if (!data.tags) {
+    return false;
+  }
+
+  return data.tags.some((tag) => tags.includes(tag));
+});
+---
+
+{
+  resources.map((r) => (
+    <LinkCard
+      title={r.data.title}
+      description={r.data.description ?? ""}
+      href={r.data.link}
+    />
+  ))
+}
