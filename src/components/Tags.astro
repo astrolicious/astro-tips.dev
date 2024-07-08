@@ -18,6 +18,16 @@ const filteredTags =
   tags && tags.length > 0
     ? allTags.filter((tag) => tags.includes(tag))
     : allTags;
+
+const style = allTags
+  .map(
+    (
+      tag
+    ) => `.sl-markdown-content:has([data-tag=${JSON.stringify(tag)}]:checked) .card-wrapper[data-tags*=${JSON.stringify(tag)}] {
+    display: block;
+  }`
+  )
+  .join("\n");
 ---
 
 <style>
@@ -35,21 +45,33 @@ const filteredTags =
     display: flex;
     flex-wrap: wrap;
   }
+
   .card-wrapper {
-    display: contents;
+    display: none;
   }
 </style>
+<style set:html={style}></style>
 
-<div class="tags-container not-content">
+<form class="tags-container not-content">
   {
     filteredTags.map((tag) => (
       <div>
-        <input type="checkbox" id={tag} class="tag" />
+        <input
+          type="checkbox"
+          id={tag}
+          class="tag"
+          // Handle server side
+          name={`tags.${JSON.stringify(tag)}`}
+          data-tag={tag}
+          // Fill from server
+          checked
+        />
         <label for={tag}>{tag}</label>
       </div>
     ))
   }
-</div>
+  <button>Update</button>
+</form>
 
 <CardGrid>
   {
