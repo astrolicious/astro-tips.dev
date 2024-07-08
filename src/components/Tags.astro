@@ -7,6 +7,12 @@ interface Props {
 }
 const allResources = await getCollection("resources");
 
+const tagsParams = Object.keys(
+  Object.fromEntries(Astro.url.searchParams.entries())
+)
+  .filter((key) => key.startsWith("tags."))
+  .map((tag) => JSON.parse(tag.slice(5)));
+
 // Set is used to remove duplicates
 const allTags = Array.from(
   new Set(allResources.flatMap((resource) => resource.data.tags ?? []))
@@ -23,7 +29,7 @@ const style = allTags
   .map(
     (
       tag
-    ) => `.sl-markdown-content:has([data-tag=${JSON.stringify(tag)}]:checked) .card-wrapper[data-tags*=${JSON.stringify(tag)}] {
+    ) => `.sl-markdown-content:has([data-tag=${JSON.stringify(tag)}:checked) .card-wrapper[data-tags*=${JSON.stringify(tag)}] {
     display: block;
   }`
   )
@@ -60,11 +66,9 @@ const style = allTags
           type="checkbox"
           id={tag}
           class="tag"
-          // Handle server side
           name={`tags.${JSON.stringify(tag)}`}
           data-tag={tag}
-          // Fill from server
-          checked
+          checked={tagsParams.length === 0 ? true : tagsParams.includes(tag)}
         />
         <label for={tag}>{tag}</label>
       </div>
