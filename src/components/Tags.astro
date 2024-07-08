@@ -35,6 +35,9 @@ const filteredTags =
     display: flex;
     flex-wrap: wrap;
   }
+  .card-wrapper {
+    display: contents;
+  }
 </style>
 
 <div class="tags-container not-content">
@@ -48,46 +51,16 @@ const filteredTags =
   }
 </div>
 
-<CardGrid />
-
-<script is:inline type="module">
-  async function fetchPartial(tags) {
-    if (tags.length === 0)
-      return await fetch("/api/tags").then((res) => res.text());
-    const params = new URLSearchParams();
-    params.set("tags", tags.join(","));
-    return await fetch(`/api/tags?${params.toString()}`).then((res) =>
-      res.text()
-    );
+<CardGrid>
+  {
+    allResources.map((r) => (
+      <div class="card-wrapper" data-tags={r.data.tags}>
+        <LinkCard
+          title={r.data.title}
+          description={r.data.description ?? ""}
+          href={r.data.link}
+        />
+      </div>
+    ))
   }
-
-  document
-    .querySelector(".tags-container")
-    .addEventListener("change", async (event) => {
-      const tags = Array.from(
-        document.querySelectorAll(".tag:checked"),
-        (checkbox) => checkbox.id
-      );
-      document.querySelector(".card-grid").innerHTML = await fetchPartial(tags);
-      const params = new URLSearchParams(window.location.search);
-      params.set("tags", tags.join(","));
-      // window.location.search = params.toString();
-      window.history.pushState({}, "", `?${params.toString()}`);
-    });
-
-  const params = new URLSearchParams(window.location.search);
-  const currentTags = params.get("tags");
-  if (currentTags === null) {
-    document.querySelector(".card-grid").innerHTML = await fetchPartial([]);
-  }
-
-  if (currentTags.length !== 0) {
-    let splittedTags = currentTags.split(",");
-    document.querySelector(".card-grid").innerHTML = "";
-    splittedTags.forEach((tag) => {
-      document.getElementById(tag).checked = true;
-    });
-    document.querySelector(".card-grid").innerHTML =
-      await fetchPartial(splittedTags);
-  }
-</script>
+</CardGrid>
