@@ -5,15 +5,21 @@ import { LinkCard } from "@astrojs/starlight/components";
 export const prerender = false;
 export const partial = true;
 
-const tags = (Astro.url.searchParams.get("tags") ?? "").split(",");
+const tagsParam = Astro.url.searchParams.get("tags");
 
-const resources = await getCollection("resources", ({ data }) => {
-  if (!data.tags) {
-    return false;
-  }
+let resources = [];
+if (tagsParam) {
+  const tags = tagsParam.split(",");
+  resources = await getCollection("resources", ({ data }) => {
+    if (!data.tags) {
+      return false;
+    }
 
-  return data.tags.some((tag) => tags.includes(tag));
-});
+    return data.tags.some((tag) => tags.includes(tag));
+  });
+} else {
+  resources = await getCollection("resources");
+}
 ---
 
 {
