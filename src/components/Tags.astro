@@ -29,7 +29,7 @@ const style = allTags
   .map(
     (
       tag
-    ) => `.sl-markdown-content:has([data-tag=${JSON.stringify(tag)}:checked) .card-wrapper[data-tags*=${JSON.stringify(tag)}] {
+    ) => `.sl-markdown-content:has([data-tag=${JSON.stringify(tag)}]:checked) .card-wrapper[data-tags*=${JSON.stringify(tag)}] {
     display: block;
   }`
   )
@@ -69,7 +69,7 @@ const style = allTags
           name={`tags.${JSON.stringify(tag)}`}
           data-tag={tag}
           checked={tagsParams.length === 0 ? true : tagsParams.includes(tag)}
-        />
+          />
         <label for={tag}>{tag}</label>
       </div>
     ))
