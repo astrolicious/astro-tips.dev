@@ -1,6 +1,6 @@
-import {defineCollection, z} from 'astro:content';
-import {docsSchema} from '@astrojs/starlight/schema';
-import {minVersion, outside, validRange} from 'semver';
+import { defineCollection, z } from 'astro:content';
+import { docsSchema } from '@astrojs/starlight/schema';
+import { minVersion, outside, validRange } from 'semver';
 import pkg from '../../package.json';
 
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
@@ -10,7 +10,7 @@ const starlightSchema = defineCollection({
 		extend: z.object({
 			astroRange: z
 				.string()
-				.refine(validRange, {message: 'Must be a valid semver range'})
+				.refine(validRange, { message: 'Must be a valid semver range' })
 				.refine(
 					(range) => {
 						// check if range is bigger than the current Astro version.
@@ -45,7 +45,7 @@ const resourcesSchema = defineCollection({
 			'3rd-party',
 			'migration',
 		]),
-		tags: z.array(z.string()).optional(),
+		tags: z.array(z.string()),
 		title: z.string(),
 		link: z.string(),
 		description: z.string().optional(),
