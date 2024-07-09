@@ -2,33 +2,36 @@
   "name": "astro-tips",
   "type": "module",
   "version": "0.0.1",
-  "packageManager": "pnpm@9.2.0",
+  "packageManager": "pnpm@9.5.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "format": "biome check --write ./ && prettier -w \"**/*\" --ignore-unknown --cache",
     "lint": "biome check .",
     "lint:fix": "biome check --apply ."
   },
   "dependencies": {
-    "@astrojs/check": "0.7.0",
-    "@astrojs/cloudflare": "10.2.5",
-    "@astrojs/starlight": "0.24.1",
+    "@astrojs/check": "0.8.0",
+    "@astrojs/cloudflare": "11.0.1",
+    "@astrojs/starlight": "0.25.0",
+    "astro": "4.11.5",
     "semver": "7.6.2",
-    "astro": "4.10.2",
     "sharp": "0.33.4",
-    "typescript": "5.4.5"
+    "typescript": "5.5.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.0",
+    "@biomejs/biome": "1.8.3",
     "@types/github-script": "github:actions/github-script",
     "@types/mdast": "4.0.4",
-    "@types/node": "20.14.2",
+    "@types/node": "20.14.10",
     "@types/semver": "7.5.8",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.0",
-    "wrangler": "3.60.0"
+    "prettier": "3.3.2",
+    "prettier-plugin-astro": "0.14.0",
+    "wrangler": "3.63.1"
   }
 }

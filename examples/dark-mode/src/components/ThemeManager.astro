@@ -1,9 +1,9 @@
 ---
 type Props = {
-	defaultTheme?: 'auto' | 'dark' | 'light' | undefined;
+  defaultTheme?: "auto" | "dark" | "light" | undefined;
 };
 
-const { defaultTheme = 'auto' } = Astro.props;
+const { defaultTheme = "auto" } = Astro.props;
 ---
 
 <script is:inline data-default-theme={defaultTheme}>
@@ -30,7 +30,7 @@ const { defaultTheme = 'auto' } = Astro.props;
       document.dispatchEvent(
         new CustomEvent("theme-changed", {
           detail: { theme, systemTheme, defaultTheme },
-        })
+        }),
       );
     }
 
@@ -57,6 +57,6 @@ const { defaultTheme = 'auto' } = Astro.props;
 </script>
 <script>
   document.addEventListener("astro:after-swap", () =>
-    window.theme.setTheme(window.theme.getTheme())
+    window.theme.setTheme(window.theme.getTheme()),
   );
 </script>
