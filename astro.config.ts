@@ -57,9 +57,10 @@ export default defineConfig({
 				{
 					label: 'Resources',
 					badge: 'New',
-					autogenerate: {
-						directory: 'resources',
-					},
+					items: [
+						{ slug: 'resources/educational' },
+						{ label: 'Tags', link: '/resources/tags' },
+					]
 				},
 			],
 			components: {

@@ -1,41 +1,78 @@
 ---
-import {getCollection} from 'astro:content';
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+import { getCollection } from "astro:content";
 
 interface Props {
-	tags?: string[];
+  tags?: string[];
 }
-const allResources = await getCollection('resources');
+const allResources = await getCollection("resources");
+
+const tagsParams = Astro.url.searchParams.getAll("tag");
 
 // Set is used to remove duplicates
 const allTags = Array.from(
-	new Set(allResources.flatMap((resource) => resource.data.tags ?? []))
+  new Set(allResources.flatMap((resource) => resource.data.tags ?? []))
 );
-const {tags} = Astro.props;
+const { tags } = Astro.props;
 
 // Determine which tags to display
 const filteredTags =
-	tags && tags.length > 0
-		? allTags.filter((tag) => tags.includes(tag))
-		: allTags;
+  tags && tags.length > 0
+    ? allTags.filter((tag) => tags.includes(tag))
+    : allTags;
+
+const style = allTags
+  .map(
+    (tag) =>
+      `.sl-markdown-content:has([data-tag=${JSON.stringify(tag)}]:checked) .card-wrapper[data-tags*=${JSON.stringify(tag)}] { display: block; }`
+  )
+  .join("\n");
 ---
 
 <style>
-	.tag {
-		display: inline-block;
-		background-color: #f0f0f0;
-		color: #333;
-		padding: 0.5em 1em;
-		margin: 0.5em;
-		border-radius: 0.25em;
-		font-size: 0.875em;
-		text-transform: capitalize;
-	}
-	.tags-container {
-		display: flex;
-		flex-wrap: wrap;
-	}
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .card-wrapper {
+    display: none;
+  }
 </style>
 
-<div class="tags-container">
-	{filteredTags.map((tag) => <span class="tag">{tag}</span>)}
-</div>
+<!-- Non-scope inline style tag, which shouldn't leak because it's only availabe on this page -->
+<style is:inline set:html={style}></style>
+
+<form class="tags-container not-content">
+  {
+    filteredTags.map((tag) => (
+      <div>
+        <input
+          type="checkbox"
+          id={tag}
+          class="tag"
+          name="tag"
+          value={tag}
+          data-tag={tag}
+          checked={tagsParams.length === 0 ? true : tagsParams.includes(tag)}
+        />
+        <label for={tag}>{tag}</label>
+      </div>
+    ))
+  }
+  <button>Update</button>
+</form>
+
+<CardGrid>
+  {
+    allResources.map((r) => (
+      <div class="card-wrapper" data-tags={r.data.tags}>
+        <LinkCard
+          title={r.data.title}
+          description={r.data.description ?? ""}
+          href={r.data.link}
+        />
+      </div>
+    ))
+  }
+</CardGrid>
