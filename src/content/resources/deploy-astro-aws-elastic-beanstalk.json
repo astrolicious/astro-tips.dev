@@ -1,5 +1,6 @@
 {
   "category": "deploy",
+  "tags": ["deploy"],
   "title": "Deploy Astro to AWS Elasic Beanstalk: A Step-by-Step Guide",
   "link": "https://www.launchfa.st/blog/deploy-astro-aws-elastic-beanstalk",
   "updated": "2024-04-08"

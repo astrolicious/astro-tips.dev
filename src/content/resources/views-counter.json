@@ -1,5 +1,6 @@
 {
   "category": "db",
+  "tags": ["db"],
   "title": "How to Build a Views Counter with Astro DB",
   "link": "https://www.vorillaz.com/astro-views",
   "updated": "2024-03-24"
