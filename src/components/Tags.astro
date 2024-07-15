@@ -33,34 +33,64 @@ const style = allTags
   .tags-container {
     display: flex;
     flex-wrap: wrap;
+    gap: 0.25rem;
   }
 
   .card-wrapper {
     display: none;
+  }
+
+  .tag-container {
+    padding-inline: 0.75rem;
+    background-color: var(--sl-color-gray-5);
+    border-radius: 9999px;
+  }
+
+  .tag-container label {
+  }
+
+  form button {
+    gap: 0.5em;
+    align-items: center;
+    border-radius: 999rem;
+    padding: 0.5rem 1.125rem;
+    line-height: 1.1875;
+    text-decoration: none;
+    font-size: var(--sl-text-sm);
+    background: var(--sl-color-text-accent);
+    color: var(--sl-color-black);
+    border-width: 0;
+    font-weight: 600;
+    margin-top: 1rem;
+    width: 100%;
+    cursor: pointer;
   }
 </style>
 
 <!-- Non-scope inline style tag, which shouldn't leak because it's only availabe on this page -->
 <style is:inline set:html={style}></style>
 
-<form class="tags-container not-content">
-  {
-    filteredTags.map((tag) => (
-      <div>
-        <input
-          type="checkbox"
-          id={tag}
-          class="tag"
-          name="tag"
-          value={tag}
-          data-tag={tag}
-          checked={tagsParams.length === 0 ? true : tagsParams.includes(tag)}
-        />
-        <label for={tag}>{tag}</label>
-      </div>
-    ))
-  }
-  <button>Update</button>
+<hr />
+
+<form id="tags" class="not-content">
+  <div class="tags-container">
+    {
+      filteredTags.map((tag) => (
+        <div class="tag-container">
+          <input
+            type="checkbox"
+            name="tag"
+            id={tag}
+            value={tag}
+            data-tag={tag}
+            checked={tagsParams.length === 0 ? true : tagsParams.includes(tag)}
+          />
+          <label for={tag}>{tag}</label>
+        </div>
+      ))
+    }
+  </div>
+  <button type="submit">Save & copy</button>
 </form>
 
 <CardGrid>
@@ -76,3 +106,11 @@ const style = allTags
     ))
   }
 </CardGrid>
+
+<script is:inline>
+  const form = document.getElementById("tags");
+  form.addEventListener("submit", (e) => {
+    const url = `${window.location.origin}${window.location.pathname}?${new URLSearchParams(new FormData(form)).toString()}`;
+    window.navigator.clipboard.writeText(url);
+  });
+</script>
