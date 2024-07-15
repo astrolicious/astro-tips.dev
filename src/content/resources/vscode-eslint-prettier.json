@@ -1,5 +1,5 @@
 {
-  "category": "editor",
+  "tags": ["editor"],
   "title": "Get VSCode, ESLint & Prettier working with Astro",
   "link": "https://patheticgeek.dev/blog/astro-prettier-eslint-vscode",
   "updated": "2023-02-11"
