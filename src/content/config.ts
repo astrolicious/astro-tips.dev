@@ -52,7 +52,15 @@ const resourcesSchema = defineCollection({
 	}),
 });
 
+export const tagsSchema = defineCollection({
+	type: 'data',
+	schema: z.object({
+		title: z.string()
+	})
+})
+
 export const collections = {
 	docs: starlightSchema,
 	resources: resourcesSchema,
+	tags: tagsSchema
 };
