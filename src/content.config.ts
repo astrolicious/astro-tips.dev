@@ -1,4 +1,4 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection, reference } from 'astro:content';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { file } from 'astro/loaders';
@@ -33,7 +33,7 @@ const resourcesSchema = defineCollection({
 	loader: file('src/content/resources.json'),
 	schema: z.object({
 		slug: z.string(),
-		tags: z.array(z.string()),
+		tags: z.array(reference('tags')),
 		title: z.string(),
 		link: z.string(),
 		description: z.string().optional(),
