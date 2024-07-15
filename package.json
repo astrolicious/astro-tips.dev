@@ -14,9 +14,9 @@
     "lint:fix": "biome check --apply ."
   },
   "dependencies": {
-    "@astrojs/check": "0.8.0",
+    "@astrojs/check": "0.8.1",
     "@astrojs/cloudflare": "11.0.1",
-    "@astrojs/starlight": "0.25.0",
+    "@astrojs/starlight": "0.25.1",
     "astro": "4.11.5",
     "semver": "7.6.2",
     "sharp": "0.33.4",
@@ -30,8 +30,8 @@
     "@types/semver": "7.5.8",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.0",
-    "prettier": "3.3.2",
+    "prettier": "3.3.3",
     "prettier-plugin-astro": "0.14.0",
-    "wrangler": "3.63.1"
+    "wrangler": "3.64.0"
   }
 }
