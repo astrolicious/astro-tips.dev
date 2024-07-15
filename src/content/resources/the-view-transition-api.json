@@ -1,5 +1,5 @@
 {
-  "tags": ["view-transitions"],
+  "category": "view-transitions",
   "title": "The View Transitions API",
   "link": "https://frontendmasters.com/blog/the-view-transition-api/",
   "updated": "2024-04-03"

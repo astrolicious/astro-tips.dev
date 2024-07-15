@@ -9,7 +9,6 @@ export default defineConfig({
 	redirects: {
 		'/recipes/how-to-add-gsap': '/tips/how-to-add-gsap',
 		'/contributing': '/#want-to-get-involved',
-		'/resources/educational': '/external-resources',
 	},
 	experimental: {
 		contentCollectionJsonSchema: true,
@@ -56,9 +55,11 @@ export default defineConfig({
 					},
 				},
 				{
-					label: 'External resources',
-					badge: 'Updated',
-					link: '/external-resources',
+					label: 'Resources',
+					badge: 'New',
+					autogenerate: {
+						directory: 'resources',
+					},
 				},
 			],
 			components: {

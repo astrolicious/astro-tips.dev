@@ -1,5 +1,5 @@
 {
-  "tags": ["i18n"],
+  "category": "i18n",
   "title": "Translate routes in Astro for content collections and subpages",
   "link": "https://www.webdesign-sopelnik.de/en/blog/translate-routes-for-astro-content-collections-or-subpages-with-trailingslash-and-base-support/",
   "updated": "2023-10-18"
