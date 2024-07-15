@@ -1,4 +1,4 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, reference, z } from 'astro:content';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { minVersion, outside, validRange } from 'semver';
 import pkg from '../../package.json';
@@ -28,7 +28,7 @@ const starlightSchema = defineCollection({
 const resourcesSchema = defineCollection({
 	type: 'data',
 	schema: z.object({
-		tags: z.array(z.string()),
+		tags: z.array(reference('tags')),
 		title: z.string(),
 		link: z.string(),
 		description: z.string().optional(),
