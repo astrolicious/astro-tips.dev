@@ -1,5 +1,5 @@
 {
-  "category": "animation",
+  "tags": ["animation"],
   "title": "Using GreenSock Animation Platform (GSAP) in Astro",
   "link": "https://www.launchfa.st/blog/gsap-astro",
   "updated": "2024-04-16"
