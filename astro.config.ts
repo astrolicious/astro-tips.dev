@@ -58,7 +58,7 @@ export default defineConfig({
 				{
 					label: 'External resources',
 					badge: 'Updated',
-					link: '/external-resources'
+					link: '/external-resources',
 				},
 			],
 			components: {
