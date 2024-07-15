@@ -1,5 +1,4 @@
 {
-  "category": "auth",
   "tags": ["auth"],
   "title": "Authenticating users in Astro with Clerk and React",
   "link": "https://www.launchfa.st/blog/react-astro-clerk",

@@ -28,23 +28,6 @@ const starlightSchema = defineCollection({
 const resourcesSchema = defineCollection({
 	type: 'data',
 	schema: z.object({
-		category: z.enum([
-			'css',
-			'auth',
-			'rss',
-			'images',
-			'editor',
-			'markdown',
-			'performance',
-			'utilities',
-			'animation',
-			'i18n',
-			'db',
-			'deploy',
-			'view-transitions',
-			'3rd-party',
-			'migration',
-		]),
 		tags: z.array(z.string()),
 		title: z.string(),
 		link: z.string(),

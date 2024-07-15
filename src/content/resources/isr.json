@@ -1,5 +1,4 @@
 {
-  "category": "performance",
   "tags": ["performance"],
   "title": "How to Implement Incremental Static Regeneration (ISR) in Astro",
   "link": "https://logsnag.com/blog/implementing-isr-in-astro",

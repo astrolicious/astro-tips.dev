@@ -58,7 +58,6 @@ export default defineConfig({
 					label: 'Resources',
 					badge: 'New',
 					items: [
-						{ slug: 'resources/educational' },
 						{ label: 'Tags', link: '/resources/tags' },
 					]
 				},
