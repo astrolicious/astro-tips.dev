@@ -1,5 +1,5 @@
 {
-  "tags": ["utilities"],
+  "category": "utilities",
   "title": "Generate localized sitemaps for your Astro and Storyblok project",
   "link": "https://straffesites.com/en/blog/localized-sitemap-astro-storyblok",
   "updated": "2023-06-14"
