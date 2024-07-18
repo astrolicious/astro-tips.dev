@@ -8,7 +8,6 @@ interface Props {
 const allResources = await getCollection("resources");
 
 const tagsParams = Astro.url.searchParams.getAll("tag");
-
 // Set is used to remove duplicates
 const allTags = Array.from(
   new Set(allResources.flatMap((resource) => resource.data.tags ?? []))

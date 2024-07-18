@@ -1,4 +1,4 @@
-export const prerender = false;
+export const prerender = true;
 
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import AstroTags from "~/components/Tags.astro";
@@ -14,5 +14,5 @@ import AstroTags from "~/components/Tags.astro";
   {/* :::tip[Add your own!]
   Have you written a recipe for Astro? [Edit this page](https://github.com/withastro/docs/edit/main/src/content/docs/en/community-resources/content.mdx) and add your link in the appropriate section!
   ::: */}
-  <AstroTags />
+  <AstroTags server:defer />
 </StarlightPage>

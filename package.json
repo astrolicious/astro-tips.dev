@@ -17,7 +17,7 @@
     "@astrojs/check": "0.8.1",
     "@astrojs/cloudflare": "11.0.1",
     "@astrojs/starlight": "0.25.1",
-    "astro": "4.11.5",
+    "astro": "4.12.0",
     "semver": "7.6.2",
     "sharp": "0.33.4",
     "typescript": "5.5.3"

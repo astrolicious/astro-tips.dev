@@ -13,6 +13,7 @@ export default defineConfig({
 	},
 	experimental: {
 		contentCollectionJsonSchema: true,
+		serverIslands: true,
 	},
 	integrations: [
 		starlight({
@@ -58,7 +59,7 @@ export default defineConfig({
 				{
 					label: 'External resources',
 					badge: 'Updated',
-					link: '/external-resources'
+					link: '/external-resources',
 				},
 			],
 			components: {
@@ -80,5 +81,7 @@ export default defineConfig({
 		},
 	},
 	output: 'hybrid',
-	adapter: cloudflare(),
+	adapter: cloudflare({
+		imageService: 'passthrough',
+	}),
 });
