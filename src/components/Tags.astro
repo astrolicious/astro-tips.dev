@@ -7,7 +7,8 @@ interface Props {
 }
 const allResources = await getCollection("resources");
 
-const tagsParams = Astro.url.searchParams.getAll("tag");
+const referer = Astro.request.headers.get("referer");
+const tagsParams = referer && new URL(referer).searchParams.getAll("tag");
 // Set is used to remove duplicates
 const allTags = Array.from(
   new Set(allResources.flatMap((resource) => resource.data.tags ?? []))
@@ -70,7 +71,7 @@ const style = allTags
 <style is:inline set:html={style}></style>
 
 <hr />
-
+{Astro.request.referrer}
 <form id="tags" class="not-content">
   <div class="tags-container">
     {
