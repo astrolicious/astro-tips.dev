@@ -71,8 +71,6 @@ const style = allTags
 <!-- Non-scope inline style tag, which shouldn't leak because it's only availabe on this page -->
 <style is:inline set:html={style}></style>
 
-<hr />
-{Astro.request.referrer}
 <form id="tags" class="not-content">
   <div class="tags-container">
     {
