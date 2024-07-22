@@ -9,9 +9,11 @@ export default defineConfig({
 	redirects: {
 		'/recipes/how-to-add-gsap': '/tips/how-to-add-gsap',
 		'/contributing': '/#want-to-get-involved',
+		'/resources/educational': '/external-resources',
 	},
 	experimental: {
 		contentCollectionJsonSchema: true,
+		serverIslands: true,
 	},
 	integrations: [
 		starlight({
@@ -55,11 +57,9 @@ export default defineConfig({
 					},
 				},
 				{
-					label: 'Resources',
-					badge: 'New',
-					autogenerate: {
-						directory: 'resources',
-					},
+					label: 'External resources',
+					badge: 'Updated',
+					link: '/external-resources',
 				},
 			],
 			components: {
@@ -81,5 +81,7 @@ export default defineConfig({
 		},
 	},
 	output: 'hybrid',
-	adapter: cloudflare(),
+	adapter: cloudflare({
+		imageService: 'passthrough',
+	}),
 });
