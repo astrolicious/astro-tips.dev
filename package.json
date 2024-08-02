@@ -14,9 +14,9 @@
     "lint:fix": "biome check --apply ."
   },
   "dependencies": {
-    "@astrojs/check": "0.8.3",
+    "@astrojs/check": "0.9.1",
     "@astrojs/cloudflare": "11.0.1",
-    "@astrojs/starlight": "0.25.2",
+    "@astrojs/starlight": "0.25.3",
     "astro": "4.13.0",
     "semver": "7.6.3",
     "sharp": "0.33.4",
