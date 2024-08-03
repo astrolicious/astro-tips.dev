@@ -12,7 +12,6 @@ export default defineConfig({
 		'/resources/educational': '/external-resources',
 	},
 	experimental: {
-		contentCollectionJsonSchema: true,
 		serverIslands: true,
 	},
 	integrations: [
