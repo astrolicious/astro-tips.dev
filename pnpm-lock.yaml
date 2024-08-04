@@ -12,8 +12,8 @@ importers:
         specifier: 0.9.1
         version: 0.9.1(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.5.4)
       '@astrojs/cloudflare':
-        specifier: 11.0.3
-        version: 11.0.3(astro@4.13.1(@types/node@20.14.13)(typescript@5.5.4))
+        specifier: 11.0.4
+        version: 11.0.4(astro@4.13.1(@types/node@20.14.13)(typescript@5.5.4))
       '@astrojs/starlight':
         specifier: 0.25.3
         version: 0.25.3(astro@4.13.1(@types/node@20.14.13)(typescript@5.5.4))
@@ -91,8 +91,8 @@ packages:
     peerDependencies:
       typescript: ^5.0.0
 
-  '@astrojs/cloudflare@11.0.3':
-    resolution: {integrity: sha512-6gSdBpGV9N9JP2WNOBibeQqWHTi9nrHo571KCubxbrp6eGGtioHA4fh0qkLINwDOCF3oEJO66ZHiYC0cIWU4dg==}
+  '@astrojs/cloudflare@11.0.4':
+    resolution: {integrity: sha512-OHQ1MVgIeh0uXISwqg6AR0ETSHjcY1k1lv5nbZS7Rt9MxmThUP1DGAO5XKHdnmk4+xVq+A8QsQhT6SXw1L1BXg==}
     peerDependencies:
       astro: ^4.10.3
 
@@ -911,10 +911,10 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@inox-tools/astro-when@0.2.0':
-    resolution: {integrity: sha512-E5e4dEE7XC+UBhBIDyQ+0oZcPaGxzuZXcoUVvae1CP5a9onNpq7r3UmOewLTOFVa/eZbz4NPrBSItKGhxs1AgA==}
+  '@inox-tools/astro-when@0.2.1':
+    resolution: {integrity: sha512-jQSiHcbCtCziM6u6UnUJhbKsvoj3xBEc7kc4NhVewPuL1Zjf/xnptzxgAq48qiujOkIGegwBYYnZxlnWaM22Cw==}
     peerDependencies:
-      astro: ^4.12.2
+      astro: ^4
 
   '@jridgewell/gen-mapping@0.3.5':
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
@@ -2968,12 +2968,12 @@ snapshots:
       - prettier
       - prettier-plugin-astro
 
-  '@astrojs/cloudflare@11.0.3(astro@4.13.1(@types/node@20.14.13)(typescript@5.5.4))':
+  '@astrojs/cloudflare@11.0.4(astro@4.13.1(@types/node@20.14.13)(typescript@5.5.4))':
     dependencies:
       '@astrojs/internal-helpers': 0.4.1
       '@astrojs/underscore-redirects': 0.3.4
       '@cloudflare/workers-types': 4.20240725.0
-      '@inox-tools/astro-when': 0.2.0(astro@4.13.1(@types/node@20.14.13)(typescript@5.5.4))
+      '@inox-tools/astro-when': 0.2.1(astro@4.13.1(@types/node@20.14.13)(typescript@5.5.4))
       astro: 4.13.1(@types/node@20.14.13)(typescript@5.5.4)
       esbuild: 0.22.0
       estree-walker: 3.0.3
@@ -3655,7 +3655,7 @@ snapshots:
   '@img/sharp-win32-x64@0.33.4':
     optional: true
 
-  '@inox-tools/astro-when@0.2.0(astro@4.13.1(@types/node@20.14.13)(typescript@5.5.4))':
+  '@inox-tools/astro-when@0.2.1(astro@4.13.1(@types/node@20.14.13)(typescript@5.5.4))':
     dependencies:
       astro: 4.13.1(@types/node@20.14.13)(typescript@5.5.4)
       astro-integration-kit: 0.16.0(astro@4.13.1(@types/node@20.14.13)(typescript@5.5.4))
