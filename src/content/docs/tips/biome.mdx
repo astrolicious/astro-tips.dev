@@ -69,8 +69,18 @@ With `v1.6` Biome provides partial support for Astro. Linting and Formatting is 
 
 3. Provide the overrides property inside biome config to support `.astro` files:
 
-    ```js
+    ```json title="biome.json" ins={12-24} 
     {
+      "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+      "organizeImports": {
+        "enabled": true
+      },
+      "linter": {
+        "enabled": true,
+        "rules": {
+          "recommended": true
+        }
+      },
       "overrides": [
         {
           "include": ["*.astro"],
@@ -81,7 +91,7 @@ With `v1.6` Biome provides partial support for Astro. Linting and Formatting is 
                 "useImportType": "off"
               }
             }
-           }
+          }
         }
       ]
     }
@@ -119,18 +129,17 @@ With `v1.6` Biome provides partial support for Astro. Linting and Formatting is 
 </Steps>
 
 <Aside>
-In case of an existing configuration for ESLint and Prettier, you might want to read Biome's guide for [Migrate from ESLint and Prettier](<https://biomejs.dev/guides/migrate-eslint-prettier/>)
+In case of an existing configuration for ESLint and Prettier, you might want to read Biome's guide for [Migrate from ESLint and Prettier](https://biomejs.dev/guides/migrate-eslint-prettier/)
 </Aside>
 
 
-## Adding an npm script
+## Adding package.json script
 
 You can use Biome CLI with your preferred package manager by adding following scripts in `package.json` of your project's directory:
 
 ```json title="package.json" ins={3-5}
 {
   "scripts": {
-    "format": "biome format --write .",
     "lint": "biome lint --write .",
     "lint:fix": "biome check --write ." // lints, formats and organizes imports
   }
