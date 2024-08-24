@@ -1,0 +1,147 @@
+---
+title: Setting up Biome
+description: Quickly configure Biome for your Astro project
+---
+
+import { Tabs, TabItem, Aside, Steps } from "@astrojs/starlight/components";
+
+Quickly configure Biome for your Astro project
+
+<Aside>
+With `v1.6` Biome provides partial support for Astro. Linting and Formatting is available for the [component script](https://docs.astro.build/en/basics/astro-components/#the-component-script) of any `.astro` file. To achieve formatting over component template, you might want to resort to a tool like [Prettier](/tips/prettier).
+</Aside>
+
+<Steps>
+
+1. Install biome using your preferred package manager:
+    <Tabs syncKey="biome">
+      <TabItem label="npm" icon="seti:npm">
+        ```sh
+        npm install --save-dev --save-exact @biomejs/biome
+        ```
+      </TabItem>
+      <TabItem label="pnpm" icon="pnpm">
+        ```sh
+        pnpm add --save-dev --save-exact @biomejs/biome
+        ```
+      </TabItem>
+      <TabItem label="yarn" icon="seti:yarn">
+        ```sh
+        yarn add --dev --exact @biomejs/biome
+        ```
+      </TabItem>
+      <TabItem label="bun" icon="bun">
+        ```sh
+        bun add --dev --exact @biomejs/biome
+        ```
+      </TabItem>
+    </Tabs>
+
+2. Next create the biome configuration:
+
+    <Tabs syncKey="biome">
+      <TabItem label="npm" icon="seti:npm">
+        ```sh
+        npx @biomejs/biome init
+        ```
+      </TabItem>
+      <TabItem label="pnpm" icon="pnpm">
+        ```sh
+        pnpm biome init
+        ```
+      </TabItem>
+      <TabItem label="yarn" icon="seti:yarn">
+        ```sh
+        yarn biome init
+        ```
+      </TabItem>
+      <TabItem label="bun" icon="bun">
+        ```sh
+        bunx biome init
+        ```
+      </TabItem>
+      <TabItem label="deno" icon="deno">
+        ```sh
+        deno run -A npm:@biomejs/biome init
+        ```
+      </TabItem>
+    </Tabs>
+
+3. Provide the overrides property inside biome config to support `.astro` files:
+
+    ```json title="biome.json" ins={12-24} 
+    {
+      "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+      "organizeImports": {
+        "enabled": true
+      },
+      "linter": {
+        "enabled": true,
+        "rules": {
+          "recommended": true
+        }
+      },
+      "overrides": [
+        {
+          "include": ["*.astro"],
+          "linter": {
+            "rules": {
+              "style": {
+                "useConst": "off",
+                "useImportType": "off"
+              }
+            }
+          }
+        }
+      ]
+    }
+    ```
+
+4. Run Biome's CLI to lint & format your project's files:
+  
+    <Tabs syncKey="biome">
+        <TabItem label="npm" icon="seti:npm">
+          ```sh
+          npx @biomejs/biome check --write .
+          ```
+        </TabItem>
+        <TabItem label="pnpm" icon="pnpm">
+          ```sh
+          pnpm biome check --write .
+          ```
+        </TabItem>
+        <TabItem label="yarn" icon="seti:yarn">
+          ```sh
+          yarn biome check --write .
+          ```
+        </TabItem>
+        <TabItem label="bun" icon="bun">
+          ```sh
+          bunx biome check --write .
+          ```
+        </TabItem>
+        <TabItem label="deno" icon="deno">
+          ```sh
+          deno run -A npm:@biomejs/biome check --write .
+          ```
+        </TabItem>
+      </Tabs>
+</Steps>
+
+<Aside>
+In case of an existing configuration for ESLint and Prettier, you might want to read Biome's guide for [Migrate from ESLint and Prettier](https://biomejs.dev/guides/migrate-eslint-prettier/)
+</Aside>
+
+
+## Adding package.json script
+
+You can use Biome CLI with your preferred package manager by adding following scripts in `package.json` of your project's directory:
+
+```json title="package.json" ins={3-4}
+{
+  "scripts": {
+    "lint": "biome lint --write .",
+    "lint:fix": "biome check --write ." // lints, formats and organizes imports
+  }
+}
+```
