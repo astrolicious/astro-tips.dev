@@ -6,6 +6,8 @@ interface Props {
   tags?: string[];
 }
 const allResources = await getCollection("resources");
+const allExtracted = await getCollection("automatedresources");
+console.log(allExtracted);
 
 const referer = Astro.request.headers.get("referer");
 const tagsParams =

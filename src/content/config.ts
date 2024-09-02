@@ -2,6 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { minVersion, outside, validRange } from 'semver';
 import pkg from '../../package.json';
+import { astroMonthlyBlogResourceLoader } from '@alexanderniebuhr/astro-monthly-blog-resource-loader';
 
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
 
@@ -36,7 +37,27 @@ const resourcesSchema = defineCollection({
 	}),
 });
 
+const automatedresources = defineCollection({
+	loader: astroMonthlyBlogResourceLoader({
+		urls: [
+			'https://raw.githubusercontent.com/withastro/astro.build/main/src/content/blog/whats-new-june-2024.mdx',
+			'https://raw.githubusercontent.com/withastro/astro.build/main/src/content/blog/whats-new-july-2024.mdx',
+			'https://raw.githubusercontent.com/withastro/astro.build/main/src/content/blog/whats-new-august-2024.mdx',
+		],
+		exclude: [
+			/github.com/,
+			/astro.build/,
+			/x.com/,
+			/2023.stateofjs.com/,
+			/astrolicious.dev/,
+			/astro-tips.dev/,
+			/reddit.com\/r\/withastro\/$/,
+		],
+	}),
+});
+
 export const collections = {
 	docs: starlightSchema,
 	resources: resourcesSchema,
+	automatedresources: automatedresources,
 };
