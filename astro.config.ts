@@ -74,10 +74,6 @@ export default defineConfig({
 				'~': resolve(dirname(fileURLToPath(import.meta.url)), './src'),
 			},
 		},
-		ssr: {
-			// This should be removed once Starlight's SSR support is released
-			external: ['node:url', 'node:path', 'node:child_process', 'node:fs'],
-		},
 	},
 	output: 'hybrid',
 	adapter: cloudflare({
