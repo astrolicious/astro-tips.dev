@@ -30,9 +30,6 @@ importers:
         specifier: 5.5.4
         version: 5.5.4
     devDependencies:
-      '@alexanderniebuhr/astro-monthly-blog-resource-loader':
-        specifier: file:/Users/alexanderniebuhr/Developer/Projects/craftlions/md-loader/alexanderniebuhr-astro-monthly-blog-resource-loader-0.0.1.tgz
-        version: file:../../craftlions/md-loader/alexanderniebuhr-astro-monthly-blog-resource-loader-0.0.1.tgz(astro@4.15.1(@types/node@20.16.3)(rollup@4.21.2)(typescript@5.5.4))
       '@biomejs/biome':
         specifier: 1.8.3
         version: 1.8.3
@@ -48,18 +45,27 @@ importers:
       '@types/semver':
         specifier: 7.5.8
         version: 7.5.8
+      mdast-util-from-markdown:
+        specifier: ^2.0.1
+        version: 2.0.1
       mdast-util-mdx:
         specifier: 3.0.0
         version: 3.0.0
       mdast-util-to-markdown:
         specifier: 2.1.0
         version: 2.1.0
+      micromark-extension-mdxjs:
+        specifier: ^3.0.0
+        version: 3.0.0
       prettier:
         specifier: 3.3.3
         version: 3.3.3
       prettier-plugin-astro:
         specifier: 0.14.1
         version: 0.14.1
+      unist-util-select:
+        specifier: ^5.1.0
+        version: 5.1.0
       wrangler:
         specifier: 3.73.0
         version: 3.73.0(@cloudflare/workers-types@4.20240821.1)
@@ -83,12 +89,6 @@ packages:
 
   '@actions/io@1.1.3':
     resolution: {integrity: sha512-wi9JjgKLYS7U/z8PPbco+PvTb/nRWjeoFlJ1Qer83k/3C5PHQi28hiVdeE2kHXmIL99mQFawx8qt/JPjZilJ8Q==}
-
-  '@alexanderniebuhr/astro-monthly-blog-resource-loader@file:../../craftlions/md-loader/alexanderniebuhr-astro-monthly-blog-resource-loader-0.0.1.tgz':
-    resolution: {integrity: sha512-VqN3WoeRKDZWrPRATFx69hCg3l4TDV3XGKPinOWw/fjjRVnXKxDaNRz6vmo4SKHXg0QRqGDuvaeEYBPMLofnAg==, tarball: file:../../craftlions/md-loader/alexanderniebuhr-astro-monthly-blog-resource-loader-0.0.1.tgz}
-    version: 0.0.1
-    peerDependencies:
-      astro: ^4.14.0
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -2648,14 +2648,8 @@ packages:
   unified@11.0.5:
     resolution: {integrity: sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA==}
 
-  unist-util-filter@5.0.1:
-    resolution: {integrity: sha512-pHx7D4Zt6+TsfwylH9+lYhBhzyhEnCXs/lbq/Hstxno5z4gVdyc2WEW0asfjGKPyG4pEKrnBv5hdkO6+aRnQJw==}
-
   unist-util-find-after@5.0.0:
     resolution: {integrity: sha512-amQa0Ep2m6hE2g72AugUItjbuM8X8cGQnFoHk0pGfrFeT9GZhzN5SW8nRsiGKK7Aif4CrACPENkA6P/Lw6fHGQ==}
-
-  unist-util-inspect@8.1.0:
-    resolution: {integrity: sha512-mOlg8Mp33pR0eeFpo5d2902ojqFFOKMMG2hF8bmH7ZlhnmjFgh0NI3/ZDwdaBJNbvrS7LZFVrBVtIE9KZ9s7vQ==}
 
   unist-util-is@6.0.0:
     resolution: {integrity: sha512-2qCTHimwdxLfz+YzdGfkqNlH0tLi9xjTnHddPmJwtIG9MGsdbutfTc4P+haPD7l7Cjxf/WZj+we5qfVPvvxfYw==}
@@ -2997,20 +2991,6 @@ snapshots:
       undici: 5.28.4
 
   '@actions/io@1.1.3': {}
-
-  '@alexanderniebuhr/astro-monthly-blog-resource-loader@file:../../craftlions/md-loader/alexanderniebuhr-astro-monthly-blog-resource-loader-0.0.1.tgz(astro@4.15.1(@types/node@20.16.3)(rollup@4.21.2)(typescript@5.5.4))':
-    dependencies:
-      acorn: 8.12.1
-      astro: 4.15.1(@types/node@20.16.3)(rollup@4.21.2)(typescript@5.5.4)
-      mdast-util-from-markdown: 2.0.1
-      mdast-util-mdx: 3.0.0
-      micromark-extension-mdxjs: 3.0.0
-      unist-util-filter: 5.0.1
-      unist-util-inspect: 8.1.0
-      unist-util-select: 5.1.0
-      unist-util-visit: 5.0.0
-    transitivePeerDependencies:
-      - supports-color
 
   '@ampproject/remapping@2.3.0':
     dependencies:
@@ -6058,20 +6038,10 @@ snapshots:
       trough: 2.2.0
       vfile: 6.0.3
 
-  unist-util-filter@5.0.1:
-    dependencies:
-      '@types/unist': 3.0.3
-      unist-util-is: 6.0.0
-      unist-util-visit-parents: 6.0.1
-
   unist-util-find-after@5.0.0:
     dependencies:
       '@types/unist': 3.0.3
       unist-util-is: 6.0.0
-
-  unist-util-inspect@8.1.0:
-    dependencies:
-      '@types/unist': 3.0.3
 
   unist-util-is@6.0.0:
     dependencies:

@@ -14,6 +14,7 @@ export default defineConfig({
 	experimental: {
 		serverIslands: true,
 		contentLayer: true,
+		contentIntellisense: true,
 	},
 	integrations: [
 		starlight({

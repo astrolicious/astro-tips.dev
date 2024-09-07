@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { minVersion, outside, validRange } from 'semver';
 import pkg from '../../package.json';
-import { astroMonthlyBlogResourceLoader } from '@alexanderniebuhr/astro-monthly-blog-resource-loader';
+import { astroMonthlyBlogResourceLoader } from '../utils/index.js';
 
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
 
