@@ -45,18 +45,27 @@ importers:
       '@types/semver':
         specifier: 7.5.8
         version: 7.5.8
+      mdast-util-from-markdown:
+        specifier: ^2.0.1
+        version: 2.0.1
       mdast-util-mdx:
         specifier: 3.0.0
         version: 3.0.0
       mdast-util-to-markdown:
         specifier: 2.1.0
         version: 2.1.0
+      micromark-extension-mdxjs:
+        specifier: ^3.0.0
+        version: 3.0.0
       prettier:
         specifier: 3.3.3
         version: 3.3.3
       prettier-plugin-astro:
         specifier: 0.14.1
         version: 0.14.1
+      unist-util-select:
+        specifier: ^5.1.0
+        version: 5.1.0
       wrangler:
         specifier: 3.73.0
         version: 3.73.0(@cloudflare/workers-types@4.20240821.1)
@@ -2049,8 +2058,8 @@ packages:
   micromark-extension-mdx-expression@3.0.0:
     resolution: {integrity: sha512-sI0nwhUDz97xyzqJAbHQhp5TfaxEvZZZ2JDqUo+7NvyIYG6BZ5CPPqj2ogUoPJlmXHBnyZUzISg9+oUmU6tUjQ==}
 
-  micromark-extension-mdx-jsx@3.0.0:
-    resolution: {integrity: sha512-uvhhss8OGuzR4/N17L1JwvmJIpPhAd8oByMawEKx6NVdBCbesjH4t+vjEp3ZXft9DwvlKSD07fCeI44/N0Vf2w==}
+  micromark-extension-mdx-jsx@3.0.1:
+    resolution: {integrity: sha512-vNuFb9czP8QCtAQcEJn0UJQJZA8Dk6DXKBqx+bg/w0WGuSxDxNr7hErW89tHUY31dUW4NqEOWwmEUNhjTFmHkg==}
 
   micromark-extension-mdx-md@2.0.0:
     resolution: {integrity: sha512-EpAiszsB3blw4Rpba7xTOUptcFeBFi+6PY8VnJ2hhimH+vCQDirWgsMpz7w1XcZE7LVrSAUGb9VJpG9ghlYvYQ==}
@@ -2067,8 +2076,8 @@ packages:
   micromark-factory-label@2.0.0:
     resolution: {integrity: sha512-RR3i96ohZGde//4WSe/dJsxOX6vxIg9TimLAS3i4EhBAFx8Sm5SmqVfR8E87DPSR31nEAjZfbt91OMZWcNgdZw==}
 
-  micromark-factory-mdx-expression@2.0.1:
-    resolution: {integrity: sha512-F0ccWIUHRLRrYp5TC9ZYXmZo+p2AM13ggbsW4T0b5CRKP8KHVRB8t4pwtBgTxtjRmwrK0Irwm7vs2JOZabHZfg==}
+  micromark-factory-mdx-expression@2.0.2:
+    resolution: {integrity: sha512-5E5I2pFzJyg2CtemqAbcyCktpHXuJbABnsb32wX2U8IQKhhVFBqkcZR5LRm1WVoFqa4kTueZK4abep7wdo9nrw==}
 
   micromark-factory-space@2.0.0:
     resolution: {integrity: sha512-TKr+LIDX2pkBJXFLzpyPyljzYK3MtmllMUMODTQJIUfDGncESaqB90db9IAUcz4AZAJFdd8U9zOp9ty1458rxg==}
@@ -2286,8 +2295,8 @@ packages:
     resolution: {integrity: sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==}
     engines: {node: '>=4'}
 
-  postcss@8.4.43:
-    resolution: {integrity: sha512-gJAQVYbh5R3gYm33FijzCZj7CHyQ3hWMgJMprLUlIYqCwTeZhBQ19wp0e9mA25BUbEvY5+EXuuaAjqQsrBxQBQ==}
+  postcss@8.4.44:
+    resolution: {integrity: sha512-Aweb9unOEpQ3ezu4Q00DPvvM2ZTUitJdNKeP/+uQgr1IBIqu574IaZoURId7BKtWMREwzKa9OgzPzezWGPWFQw==}
     engines: {node: ^10 || ^12 || >=14}
 
   preferred-pm@4.0.0:
@@ -2656,6 +2665,9 @@ packages:
 
   unist-util-remove-position@5.0.0:
     resolution: {integrity: sha512-Hp5Kh3wLxv0PHj9m2yZhhLt58KzPtEYKQQ4yxfYFEO7EvHwzyDYnduhHnY1mDxoqr7VUwVuHXk9RXKIiYS1N8Q==}
+
+  unist-util-select@5.1.0:
+    resolution: {integrity: sha512-4A5mfokSHG/rNQ4g7gSbdEs+H586xyd24sdJqF1IWamqrLHvYb+DH48fzxowyOhOfK7YSqX+XlCojAyuuyyT2A==}
 
   unist-util-stringify-position@4.0.0:
     resolution: {integrity: sha512-0ASV06AAoKCDkS2+xw5RXJywruurpbC4JZSm7nr7MOt1ojAzvyyaO+UxZf18j8FCF6kmzCZKcAgN/yu2gm2XgQ==}
@@ -3594,8 +3606,8 @@ snapshots:
       hast-util-to-html: 9.0.2
       hast-util-to-text: 4.0.2
       hastscript: 9.0.0
-      postcss: 8.4.43
-      postcss-nested: 6.2.0(postcss@8.4.43)
+      postcss: 8.4.44
+      postcss-nested: 6.2.0(postcss@8.4.44)
       unist-util-visit: 5.0.0
       unist-util-visit-parents: 6.0.1
 
@@ -5222,22 +5234,23 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.5
       devlop: 1.1.0
-      micromark-factory-mdx-expression: 2.0.1
+      micromark-factory-mdx-expression: 2.0.2
       micromark-factory-space: 2.0.0
       micromark-util-character: 2.1.0
       micromark-util-events-to-acorn: 2.0.2
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
 
-  micromark-extension-mdx-jsx@3.0.0:
+  micromark-extension-mdx-jsx@3.0.1:
     dependencies:
       '@types/acorn': 4.0.6
       '@types/estree': 1.0.5
       devlop: 1.1.0
       estree-util-is-identifier-name: 3.0.0
-      micromark-factory-mdx-expression: 2.0.1
+      micromark-factory-mdx-expression: 2.0.2
       micromark-factory-space: 2.0.0
       micromark-util-character: 2.1.0
+      micromark-util-events-to-acorn: 2.0.2
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
       vfile-message: 4.0.2
@@ -5263,7 +5276,7 @@ snapshots:
       acorn: 8.12.1
       acorn-jsx: 5.3.2(acorn@8.12.1)
       micromark-extension-mdx-expression: 3.0.0
-      micromark-extension-mdx-jsx: 3.0.0
+      micromark-extension-mdx-jsx: 3.0.1
       micromark-extension-mdx-md: 2.0.0
       micromark-extension-mdxjs-esm: 3.0.0
       micromark-util-combine-extensions: 2.0.0
@@ -5282,10 +5295,11 @@ snapshots:
       micromark-util-symbol: 2.0.0
       micromark-util-types: 2.0.0
 
-  micromark-factory-mdx-expression@2.0.1:
+  micromark-factory-mdx-expression@2.0.2:
     dependencies:
       '@types/estree': 1.0.5
       devlop: 1.1.0
+      micromark-factory-space: 2.0.0
       micromark-util-character: 2.1.0
       micromark-util-events-to-acorn: 2.0.2
       micromark-util-symbol: 2.0.0
@@ -5566,9 +5580,9 @@ snapshots:
     dependencies:
       find-up: 4.1.0
 
-  postcss-nested@6.2.0(postcss@8.4.43):
+  postcss-nested@6.2.0(postcss@8.4.44):
     dependencies:
-      postcss: 8.4.43
+      postcss: 8.4.44
       postcss-selector-parser: 6.1.2
 
   postcss-selector-parser@6.1.2:
@@ -5576,7 +5590,7 @@ snapshots:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
 
-  postcss@8.4.43:
+  postcss@8.4.44:
     dependencies:
       nanoid: 3.3.7
       picocolors: 1.0.1
@@ -6051,6 +6065,14 @@ snapshots:
       '@types/unist': 3.0.3
       unist-util-visit: 5.0.0
 
+  unist-util-select@5.1.0:
+    dependencies:
+      '@types/unist': 3.0.3
+      css-selector-parser: 3.0.5
+      devlop: 1.1.0
+      nth-check: 2.1.1
+      zwitch: 2.0.4
+
   unist-util-stringify-position@4.0.0:
     dependencies:
       '@types/unist': 3.0.3
@@ -6100,7 +6122,7 @@ snapshots:
   vite@5.4.2(@types/node@20.16.3):
     dependencies:
       esbuild: 0.21.5
-      postcss: 8.4.43
+      postcss: 8.4.44
       rollup: 4.21.2
     optionalDependencies:
       '@types/node': 20.16.3

@@ -28,10 +28,13 @@
     "@types/mdast": "4.0.4",
     "@types/node": "20.16.3",
     "@types/semver": "7.5.8",
+    "mdast-util-from-markdown": "^2.0.1",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.0",
+    "micromark-extension-mdxjs": "^3.0.0",
     "prettier": "3.3.3",
     "prettier-plugin-astro": "0.14.1",
+    "unist-util-select": "^5.1.0",
     "wrangler": "3.73.0"
   }
 }
