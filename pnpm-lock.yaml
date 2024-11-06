@@ -13,13 +13,13 @@ importers:
         version: 0.9.4(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.6.3)
       '@astrojs/cloudflare':
         specifier: 11.2.0
-        version: 11.2.0(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
+        version: 11.2.0(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
       '@astrojs/starlight':
         specifier: 0.28.6
-        version: 0.28.6(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
+        version: 0.28.6(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
       astro:
-        specifier: 4.16.9
-        version: 4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
+        specifier: 4.16.10
+        version: 4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
       semver:
         specifier: 7.6.3
         version: 7.6.3
@@ -35,7 +35,7 @@ importers:
         version: 1.9.4
       '@types/github-script':
         specifier: github:actions/github-script
-        version: github-script@https://codeload.github.com/actions/github-script/tar.gz/660ec11d825b714d112a6bb9727086bc2cc500b2
+        version: github-script@https://codeload.github.com/actions/github-script/tar.gz/4020e461acd7a80762cdfff123a1fde368246fa4
       '@types/mdast':
         specifier: 4.0.4
         version: 4.0.4
@@ -1174,8 +1174,8 @@ packages:
     peerDependencies:
       astro: ^4.12.0
 
-  astro@4.16.9:
-    resolution: {integrity: sha512-DFYzPZooVArKSGu969BBByUV44tJMVDPGKxgqWNFBaIrkvGljdVUqQSVwD+/iPYACoSkI8BRYvDMEBDkathIUQ==}
+  astro@4.16.10:
+    resolution: {integrity: sha512-a+nB4bZE50NXHLzVXUHtx/lYct2Aa8kbqZnWNrWqkU97RuhBuWJ5H5/LQbKRnBWGvqChKfJBiMWJe53TY9ieYQ==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -1540,8 +1540,8 @@ packages:
   get-source@2.0.12:
     resolution: {integrity: sha512-X5+4+iD+HoSeEED+uwrQ07BOQr0kEDFMVqqpBuI+RaZBpBpHCuXxo70bjar6f0b0u/DQJsJ7ssurpP0V60Az+w==}
 
-  github-script@https://codeload.github.com/actions/github-script/tar.gz/660ec11d825b714d112a6bb9727086bc2cc500b2:
-    resolution: {tarball: https://codeload.github.com/actions/github-script/tar.gz/660ec11d825b714d112a6bb9727086bc2cc500b2}
+  github-script@https://codeload.github.com/actions/github-script/tar.gz/4020e461acd7a80762cdfff123a1fde368246fa4:
+    resolution: {tarball: https://codeload.github.com/actions/github-script/tar.gz/4020e461acd7a80762cdfff123a1fde368246fa4}
     version: 7.0.1
     engines: {node: '>=20.0.0 <21.0.0'}
 
@@ -2860,13 +2860,13 @@ snapshots:
       - prettier
       - prettier-plugin-astro
 
-  '@astrojs/cloudflare@11.2.0(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))':
+  '@astrojs/cloudflare@11.2.0(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))':
     dependencies:
       '@astrojs/internal-helpers': 0.4.1
       '@astrojs/underscore-redirects': 0.3.4
       '@cloudflare/workers-types': 4.20241022.0
-      '@inox-tools/astro-when': 0.2.4(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
-      astro: 4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
+      '@inox-tools/astro-when': 0.2.4(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
+      astro: 4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
       esbuild: 0.21.5
       estree-walker: 3.0.3
       magic-string: 0.30.12
@@ -2931,12 +2931,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@3.1.9(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))':
+  '@astrojs/mdx@3.1.9(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))':
     dependencies:
       '@astrojs/markdown-remark': 5.3.0
       '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
       acorn: 8.14.0
-      astro: 4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
+      astro: 4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
       es-module-lexer: 1.5.4
       estree-util-visit: 2.0.0
       gray-matter: 4.0.3
@@ -2961,15 +2961,15 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.23.8
 
-  '@astrojs/starlight@0.28.6(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))':
+  '@astrojs/starlight@0.28.6(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))':
     dependencies:
-      '@astrojs/mdx': 3.1.9(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
+      '@astrojs/mdx': 3.1.9(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
       '@astrojs/sitemap': 3.2.1
       '@pagefind/default-ui': 1.1.1
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
-      astro: 4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
-      astro-expressive-code: 0.35.6(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
+      astro: 4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
+      astro-expressive-code: 0.35.6(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
       bcp-47: 2.1.0
       hast-util-from-html: 2.0.3
       hast-util-select: 6.0.3
@@ -3474,10 +3474,10 @@ snapshots:
   '@img/sharp-win32-x64@0.33.5':
     optional: true
 
-  '@inox-tools/astro-when@0.2.4(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))':
+  '@inox-tools/astro-when@0.2.4(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))':
     dependencies:
-      astro: 4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
-      astro-integration-kit: 0.16.1(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
+      astro: 4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
+      astro-integration-kit: 0.16.1(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
       debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
@@ -3906,18 +3906,18 @@ snapshots:
 
   astring@1.9.0: {}
 
-  astro-expressive-code@0.35.6(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)):
+  astro-expressive-code@0.35.6(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)):
     dependencies:
-      astro: 4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
+      astro: 4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
       rehype-expressive-code: 0.35.6
 
-  astro-integration-kit@0.16.1(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)):
+  astro-integration-kit@0.16.1(astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)):
     dependencies:
-      astro: 4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
+      astro: 4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
       pathe: 1.1.2
       recast: 0.23.9
 
-  astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3):
+  astro@4.16.10(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3):
     dependencies:
       '@astrojs/compiler': 2.10.3
       '@astrojs/internal-helpers': 0.4.1
@@ -4368,7 +4368,7 @@ snapshots:
       data-uri-to-buffer: 2.0.2
       source-map: 0.6.1
 
-  github-script@https://codeload.github.com/actions/github-script/tar.gz/660ec11d825b714d112a6bb9727086bc2cc500b2:
+  github-script@https://codeload.github.com/actions/github-script/tar.gz/4020e461acd7a80762cdfff123a1fde368246fa4:
     dependencies:
       '@actions/core': 1.11.1
       '@actions/exec': 1.1.1
