@@ -3,7 +3,8 @@ title: Tailwind v4 alpha
 description: Quick set up for trying out Tailwind v4 alpha using the vite plugin
 astroRange: ^4.0.0
 ---
-import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
+import { Steps } from "@astrojs/starlight/components";
+import AllPackageManagers from '../../../components/AllPackageManagers.astro'
 
 Tailwind 4.0 plans to introduce some big changes, including a new Vite plugin, which will improve accuracy and performance. 
 
@@ -19,23 +20,7 @@ The alpha does not have all the features implemented yet, most notably dark mode
 
 1. Install Tailwind's official Vite plugin
 
-    <Tabs>
-        <TabItem label="npm">
-            ```sh
-            npm install --save-dev tailwindcss@next @tailwindcss/vite@next
-            ```
-        </TabItem>
-        <TabItem label="pnpm">
-            ```sh
-            pnpm add -D tailwindcss@next @tailwindcss/vite@next
-            ```
-        </TabItem>
-        <TabItem label="yarn">
-            ```sh
-            yarn add --dev tailwindcss@next @tailwindcss/vite@next
-            ```
-        </TabItem>
-    </Tabs>
+    <AllPackageManagers pkg=" npm install --save-dev tailwindcss@next @tailwindcss/vite@next"/>
 
 2. Add the plugin to Astro config and enable Lightning CSS
 
