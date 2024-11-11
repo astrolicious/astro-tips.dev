@@ -29,9 +29,9 @@
     "@types/node": "20.17.6",
     "@types/semver": "7.5.8",
     "mdast-util-mdx": "3.0.0",
-    "mdast-util-to-markdown": "2.1.1",
+    "mdast-util-to-markdown": "2.1.2",
     "prettier": "3.3.3",
     "prettier-plugin-astro": "0.14.1",
-    "wrangler": "3.84.1"
+    "wrangler": "3.86.0"
   }
 }
