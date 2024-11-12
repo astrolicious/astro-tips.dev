@@ -6,7 +6,7 @@ import { Steps, LinkCard } from "@astrojs/starlight/components";
 import AllPackageManagers from '../../../components/AllPackageManagers.astro'
 import ExampleLinks from '~/components/ExampleLinks.astro'
 
-When working with Astro and ShadCN UI in a project that involves islands architecture, where interactive components in React need to be wrapped individually in `.tsx` files. This is necessary because, with Astro's islands architecture, React context (or state) is not shared across different islands. Each "island" (or separate component) runs in its own isolated environment, so to manage state or context across interactive components, you need to ensure they are self-contained.
+When using Shadcn UI within an Astro project, there is a common mistake that prevents Shadcn UI from working properly. With Astro's [islands architecture](https://docs.astro.build/en/concepts/islands/), React [context is not shared](https://github.com/withastro/roadmap/discussions/742) between islands. That means that calling Shacdn UI components directly in a `.astro` file will fail because islands are not able to communicate together. This can be easily solved by moving those components calls to a `.jsx/tsx` file and importing this one instead.
 
 
 ## Examples
