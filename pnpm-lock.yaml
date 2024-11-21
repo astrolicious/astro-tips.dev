@@ -26,9 +26,6 @@ importers:
       sharp:
         specifier: 0.33.5
         version: 0.33.5
-      starlight-package-managers:
-        specifier: ^0.8.0
-        version: 0.8.0(@astrojs/starlight@0.28.6(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)))(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
       typescript:
         specifier: 5.6.3
         version: 5.6.3
@@ -2376,13 +2373,6 @@ packages:
 
   stacktracey@2.1.8:
     resolution: {integrity: sha512-Kpij9riA+UNg7TnphqjH7/CzctQ/owJGNbFkfEeve4Z4uxT5+JapVLFXcsurIfN34gnTWZNJ/f7NMG0E8JDzTw==}
-
-  starlight-package-managers@0.8.0:
-    resolution: {integrity: sha512-FietpigUue9fViKumtt4978F41QPYkbywk5ysZR3242pzBb0+RLfF/IHA9xjNEEYw5/ZMrcBfXRVt+yoVA1SDA==}
-    engines: {node: '>=18.14.1'}
-    peerDependencies:
-      '@astrojs/starlight': '>=0.22.0'
-      astro: '>=4.2.7'
 
   stdin-discarder@0.2.2:
     resolution: {integrity: sha512-UhDfHmA92YAlNnCfhmq0VeNL5bDbiZGg7sZ2IvPsXubGkiNa9EC+tUTsjBRsYUAz87btI6/1wf4XoVvQ3uRnmQ==}
@@ -5707,11 +5697,6 @@ snapshots:
     dependencies:
       as-table: 1.0.55
       get-source: 2.0.12
-
-  starlight-package-managers@0.8.0(@astrojs/starlight@0.28.6(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)))(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)):
-    dependencies:
-      '@astrojs/starlight': 0.28.6(astro@4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3))
-      astro: 4.16.9(@types/node@20.17.6)(rollup@4.24.3)(typescript@5.6.3)
 
   stdin-discarder@0.2.2: {}
 
