@@ -3,8 +3,7 @@ title: Setting up Biome
 description: Quickly configure Biome for your Astro project
 ---
 
-import { Aside, Steps } from "@astrojs/starlight/components";
-import AllPackageManagers from '../../../components/AllPackageManagers.astro'
+import { Tabs, TabItem, Aside, Steps } from "@astrojs/starlight/components";
 
 Quickly configure Biome for your Astro project
 
@@ -15,13 +14,58 @@ With `v1.6` Biome provides partial support for Astro. Linting and Formatting is 
 <Steps>
 
 1. Install biome using your preferred package manager:
-
-    <AllPackageManagers pkg="--save-dev --save-exact @biomejs/biome" />
-
+    <Tabs syncKey="biome">
+      <TabItem label="npm" icon="seti:npm">
+        ```sh
+        npm install --save-dev --save-exact @biomejs/biome
+        ```
+      </TabItem>
+      <TabItem label="pnpm" icon="pnpm">
+        ```sh
+        pnpm add --save-dev --save-exact @biomejs/biome
+        ```
+      </TabItem>
+      <TabItem label="yarn" icon="seti:yarn">
+        ```sh
+        yarn add --dev --exact @biomejs/biome
+        ```
+      </TabItem>
+      <TabItem label="bun" icon="bun">
+        ```sh
+        bun add --dev --exact @biomejs/biome
+        ```
+      </TabItem>
+    </Tabs>
 
 2. Next create the biome configuration:
 
-    <AllPackageManagers pkg=" npx @biomejs/biome init" />
+    <Tabs syncKey="biome">
+      <TabItem label="npm" icon="seti:npm">
+        ```sh
+        npx @biomejs/biome init
+        ```
+      </TabItem>
+      <TabItem label="pnpm" icon="pnpm">
+        ```sh
+        pnpm biome init
+        ```
+      </TabItem>
+      <TabItem label="yarn" icon="seti:yarn">
+        ```sh
+        yarn biome init
+        ```
+      </TabItem>
+      <TabItem label="bun" icon="bun">
+        ```sh
+        bunx biome init
+        ```
+      </TabItem>
+      <TabItem label="deno" icon="deno">
+        ```sh
+        deno run -A npm:@biomejs/biome init
+        ```
+      </TabItem>
+    </Tabs>
 
 3. Provide the overrides property inside biome config to support `.astro` files:
 
@@ -54,7 +98,34 @@ With `v1.6` Biome provides partial support for Astro. Linting and Formatting is 
     ```
 
 4. Run Biome's CLI to lint & format your project's files:
-    <AllPackageManagers pkg="npx @biomejs/biome check --write ." />
+  
+    <Tabs syncKey="biome">
+        <TabItem label="npm" icon="seti:npm">
+          ```sh
+          npx @biomejs/biome check --write .
+          ```
+        </TabItem>
+        <TabItem label="pnpm" icon="pnpm">
+          ```sh
+          pnpm biome check --write .
+          ```
+        </TabItem>
+        <TabItem label="yarn" icon="seti:yarn">
+          ```sh
+          yarn biome check --write .
+          ```
+        </TabItem>
+        <TabItem label="bun" icon="bun">
+          ```sh
+          bunx biome check --write .
+          ```
+        </TabItem>
+        <TabItem label="deno" icon="deno">
+          ```sh
+          deno run -A npm:@biomejs/biome check --write .
+          ```
+        </TabItem>
+      </Tabs>
 </Steps>
 
 <Aside>

@@ -2,8 +2,7 @@
 title: Setting up Prettier
 description: Quickly configure Prettier for your Astro project
 ---
-import { LinkCard } from "@astrojs/starlight/components";
-import AllPackageManagers from '../../../components/AllPackageManagers.astro'
+import { Tabs, TabItem, LinkCard } from "@astrojs/starlight/components";
 
 Quickly configure Prettier for your Astro project!
 
@@ -11,7 +10,23 @@ Quickly configure Prettier for your Astro project!
 
 Start by installing `prettier` & `prettier-plugin-astro` using your preferred package manager:
 
-<AllPackageManagers pkg="npm install --save-dev prettier prettier-plugin-astro"/>
+<Tabs syncKey="prettier">
+    <TabItem label="npm">
+        ```sh
+        npm install --save-dev prettier prettier-plugin-astro
+        ```
+    </TabItem>
+    <TabItem label="pnpm">
+        ```sh
+        pnpm add -D prettier prettier-plugin-astro
+        ```
+    </TabItem>
+    <TabItem label="yarn">
+        ```sh
+        yarn add --dev prettier prettier-plugin-astro
+        ```
+    </TabItem>
+</Tabs>
 
 Next, update your [Prettier config](https://prettier.io/docs/en/configuration) in the project's root to include `prettier-plugin-astro` plugin. This example will use `.prettierrc.json`:
 
@@ -62,7 +77,24 @@ You can use Prettier CLI with your preferred package manager by adding following
 When using the Tailwind CSS integration, there is another dev dependency for automated class sorting: [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss).
 
 Start by installing `prettier-plugin-tailwindcss` using your preferred package manager:
-<AllPackageManagers pkg="npm install --save-dev prettier-plugin-tailwindcss"/>
+
+<Tabs syncKey="prettier">
+    <TabItem label="npm">
+        ```sh
+        npm install --save-dev prettier-plugin-tailwindcss
+        ```
+    </TabItem>
+    <TabItem label="pnpm">
+        ```sh
+        pnpm add -D prettier-plugin-tailwindcss
+        ```
+    </TabItem>
+    <TabItem label="yarn">
+        ```sh
+        yarn add --dev prettier-plugin-tailwindcss
+        ```
+    </TabItem>
+</Tabs>
 
 Next, update the [Prettier Config](https://prettier.io/docs/en/configuration) to include following plugins. This example will use `.prettierrc`:
 
