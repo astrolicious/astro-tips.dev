@@ -8,7 +8,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "ignore": [".prettierrc.mjs", ".prettierignore", "*.astro"]
+    "ignore": [".prettierrc.mjs", ".prettierignore", "*.astro", "examples/shadcn-ui/*"]
   },
   "formatter": {
     "lineWidth": 100
