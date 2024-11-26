@@ -1,6 +1,6 @@
 {
-    "tags": ["API Endpoints"],
-    "title": "Streaming a file in Astro",
-    "link": "https://astropatterns.dev/p/gems/server-endpoints-file-streaming",
-    "updated": "2024-10-09"
+  "tags": ["API Endpoints"],
+  "title": "Streaming a file in Astro",
+  "link": "https://astropatterns.dev/p/gems/server-endpoints-file-streaming",
+  "updated": "2024-10-09"
 }
