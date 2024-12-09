@@ -2,7 +2,7 @@
   "name": "astro-tips",
   "type": "module",
   "version": "0.0.1",
-  "packageManager": "pnpm@9.14.4",
+  "packageManager": "pnpm@9.15.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -31,8 +31,8 @@
     "@types/semver": "7.5.8",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.2",
-    "prettier": "3.4.1",
+    "prettier": "3.4.2",
     "prettier-plugin-astro": "0.14.1",
-    "wrangler": "3.91.0"
+    "wrangler": "3.93.0"
   }
 }
