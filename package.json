@@ -20,19 +20,19 @@
     "astro": "4.16.17",
     "semver": "7.6.3",
     "sharp": "0.33.5",
-    "starlight-package-managers": "0.8.0",
+    "starlight-package-managers": "0.8.1",
     "typescript": "5.7.2"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/github-script": "github:actions/github-script",
     "@types/mdast": "4.0.4",
-    "@types/node": "20.17.9",
+    "@types/node": "20.17.10",
     "@types/semver": "7.5.8",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.2",
     "prettier": "3.4.2",
     "prettier-plugin-astro": "0.14.1",
-    "wrangler": "3.93.0"
+    "wrangler": "3.95.0"
   }
 }
