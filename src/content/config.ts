@@ -1,11 +1,14 @@
 import { defineCollection, z } from 'astro:content';
+import { docsLoader } from "@astrojs/starlight/loaders";
 import { docsSchema } from '@astrojs/starlight/schema';
 import { minVersion, outside, validRange } from 'semver';
 import pkg from '../../package.json';
+import { glob } from 'astro/loaders';
 
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
 
 const starlightSchema = defineCollection({
+	loader: docsLoader(),
 	schema: docsSchema({
 		extend: z.object({
 			astroRange: z
@@ -26,7 +29,7 @@ const starlightSchema = defineCollection({
 });
 
 const resourcesSchema = defineCollection({
-	type: 'data',
+	loader: glob({ pattern: "**/*.json", base: "./src/content/resources" }),
 	schema: z.object({
 		tags: z.array(z.string()),
 		title: z.string(),
