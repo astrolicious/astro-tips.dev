@@ -5,7 +5,7 @@ astroRange: ^4.0.0
 ---
 import ExampleLinks from '~/components/ExampleLinks.astro'
 
-Scripts with no attributes in Astro are automatically processed into [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and all hoisted into one `.js` file that has static imports to other `.js` files. It is possible to use [dynamic module loading](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#dynamic_module_loading) instead of the default static imports, in order to gain more granular control over if/when the imported code is actually imported (downloaded).
+[Dynamic module loading](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#dynamic_module_loading) can be leveraged for granular control over when code is imported and thus downloaded. This can be useful for optimizing performance in Astro, where scripts without attributes are automatically processed into [`type="module"`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
 
 For more details on Astro's script processing, refer to the [official documentation](https://docs.astro.build/en/guides/client-side-scripts/#script-processing).
 
