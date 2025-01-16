@@ -1,8 +1,18 @@
 # Add Darkmode
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/astrolicious/astro-tips.dev/tree/main/examples/dark-mode)
+<p align="center">
+  <a href="https://stackblitz.com/github/astrolicious/astro-tips.dev/tree/main/examples/dark-mode"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt=""></a>
+</p>
 
-[astro-tips.dev article](https://astro-tips.dev/recipes/dark-mode/)
+ <p align="center">
+  <a href="https://app.codeanywhere.com/#https://github/astrolicious/astro-tips.dev/tree/main/examples/dark-mode"><img src="https://codeanywhere.com/img/open-in-codeanywhere-btn.svg" alt=""></a>
+</p>
+
+<p align="center">
+<a href="https://astro-tips.dev/recipes/dark-mode/">
+[astro-tips.dev article]
+</a>
+</p>
 
 ## Features
 
