@@ -6,6 +6,7 @@ interface Props {
   tags?: string[];
 }
 const allResources = await getCollection("resources");
+const allTags = await getCollection("tags")
 
 const referer = Astro.request.headers.get("referer");
 const tagsParams =
@@ -19,13 +20,13 @@ const { tags } = Astro.props;
 // Determine which tags to display
 const filteredTags =
   tags && tags.length > 0
-    ? allTags.filter((tag) => tags.includes(tag))
+    ? allTags.filter((tag) => tags.includes(tag.id))
     : allTags;
 
 const style = allTags
   .map(
     (tag) =>
-      `.sl-markdown-content:has([data-tag=${JSON.stringify(tag)}]:checked) .card-wrapper[data-tags*=${JSON.stringify(tag)}] { display: block; }`,
+      `.sl-markdown-content:has([data-tag=${JSON.stringify(tag.id)}]:checked) .card-wrapper[data-tags*=${JSON.stringify(tag.id)}] { display: block; }`,
   )
   .join("\n");
 ---
@@ -79,12 +80,12 @@ const style = allTags
           <input
             type="checkbox"
             name="tag"
-            id={tag}
-            value={tag}
-            data-tag={tag}
-            checked={tagsParams.length === 0 ? true : tagsParams.includes(tag)}
+            id={tag.id}
+            value={tag.id}
+            data-tag={tag.id}
+            checked={tagsParams.length === 0 ? true : tagsParams.includes(tag.id)}
           />
-          <label for={tag}>{tag}</label>
+          <label for={tag.id}>{tag.data.title}</label>
         </div>
       ))
     }
@@ -95,7 +96,7 @@ const style = allTags
 <CardGrid>
   {
     allResources.map((r) => (
-      <div class="card-wrapper" data-tags={r.data.tags}>
+      <div class="card-wrapper" data-tags={r.data.tags.map(t => t.id)}>
         <LinkCard
           title={r.data.title}
           description={r.data.description ?? ""}
