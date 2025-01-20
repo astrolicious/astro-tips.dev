@@ -1,9 +1,9 @@
 import { defineCollection, z } from 'astro:content';
-import { docsLoader } from "@astrojs/starlight/loaders";
+import { docsLoader } from '@astrojs/starlight/loaders';
 import { docsSchema } from '@astrojs/starlight/schema';
+import { glob } from 'astro/loaders';
 import { minVersion, outside, validRange } from 'semver';
 import pkg from '../../package.json';
-import { glob } from 'astro/loaders';
 
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
 
@@ -29,7 +29,7 @@ const starlightSchema = defineCollection({
 });
 
 const resourcesSchema = defineCollection({
-	loader: glob({ pattern: "**/*.json", base: "./src/content/resources" }),
+	loader: glob({ pattern: '**/*.json', base: './src/content/resources' }),
 	schema: z.object({
 		tags: z.array(z.string()),
 		title: z.string(),

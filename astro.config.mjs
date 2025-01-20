@@ -1,10 +1,10 @@
+import { builtinModules } from 'node:module';
 // @ts-check
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import cloudflare from '@astrojs/cloudflare';
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
-import { builtinModules } from 'node:module';
 
 export default defineConfig({
 	site: process.env.DEPLOY_URL ?? 'https://astro-tips.dev',
@@ -74,7 +74,7 @@ export default defineConfig({
 			},
 		},
 		ssr: {
-			external: [...builtinModules, ...builtinModules.map(mod => `node:${mod}`)],
+			external: [...builtinModules, ...builtinModules.map((mod) => `node:${mod}`)],
 		},
 	},
 	output: 'server',
