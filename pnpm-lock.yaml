@@ -13,13 +13,13 @@ importers:
         version: 0.9.4(prettier-plugin-astro@0.14.1)(prettier@3.4.2)(typescript@5.7.3)
       '@astrojs/cloudflare':
         specifier: 12.2.1
-        version: 12.2.1(@types/node@20.17.16)(astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))(yaml@2.7.0)
+        version: 12.2.1(@types/node@20.17.16)(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))(yaml@2.7.0)
       '@astrojs/starlight':
         specifier: 0.31.1
-        version: 0.31.1(astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
+        version: 0.31.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
       astro:
-        specifier: 5.2.4
-        version: 5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
+        specifier: 5.2.5
+        version: 5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
       semver:
         specifier: 7.7.0
         version: 7.7.0
@@ -28,7 +28,7 @@ importers:
         version: 0.33.5
       starlight-package-managers:
         specifier: 0.9.1
-        version: 0.9.1(@astrojs/starlight@0.31.1(astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)))
+        version: 0.9.1(@astrojs/starlight@0.31.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)))
       typescript:
         specifier: 5.7.3
         version: 5.7.3
@@ -1097,8 +1097,8 @@ packages:
     peerDependencies:
       astro: ^4.0.0-beta || ^5.0.0-beta || ^3.3.0
 
-  astro@5.2.4:
-    resolution: {integrity: sha512-zTWiOyRIy+cKzdjG4mvb5gJ8/Gy0z1s9nAZVirlzpYXd8j5LORlKPywEalNU+Q+nssG2QadBTxXCmAjhKYB93Q==}
+  astro@5.2.5:
+    resolution: {integrity: sha512-AYXyYkc+c5xbKTm48FyQA91y81nXyNPAaoyafR0LUugE4lAwuvIUcXDBfMzmbuP1lGRvsE33G2oypv6gbGaPFg==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -2158,6 +2158,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  semver@7.7.1:
+    resolution: {integrity: sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   sharp@0.33.5:
     resolution: {integrity: sha512-haPVm1EkS9pgvHrQ/F3Xy+hgcuMV0Wm9vfIBSiwZ05k+xgb0PkBQpGsAA/oWdDobNaZTH5ppvHtzCFbnSEwHVw==}
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
@@ -2744,12 +2749,12 @@ snapshots:
       - prettier
       - prettier-plugin-astro
 
-  '@astrojs/cloudflare@12.2.1(@types/node@20.17.16)(astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))(yaml@2.7.0)':
+  '@astrojs/cloudflare@12.2.1(@types/node@20.17.16)(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))(yaml@2.7.0)':
     dependencies:
       '@astrojs/internal-helpers': 0.4.2
       '@astrojs/underscore-redirects': 0.6.0
       '@cloudflare/workers-types': 4.20250129.0
-      astro: 5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
+      astro: 5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
       esbuild: 0.24.2
       estree-walker: 3.0.3
       magic-string: 0.30.17
@@ -2829,12 +2834,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@4.0.8(astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))':
+  '@astrojs/mdx@4.0.8(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))':
     dependencies:
       '@astrojs/markdown-remark': 6.1.0
       '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
       acorn: 8.14.0
-      astro: 5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
+      astro: 5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
       es-module-lexer: 1.6.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.4
@@ -2858,16 +2863,16 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.24.1
 
-  '@astrojs/starlight@0.31.1(astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))':
+  '@astrojs/starlight@0.31.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))':
     dependencies:
-      '@astrojs/mdx': 4.0.8(astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
+      '@astrojs/mdx': 4.0.8(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
       '@astrojs/sitemap': 3.2.1
       '@pagefind/default-ui': 1.3.0
       '@types/hast': 3.0.4
       '@types/js-yaml': 4.0.9
       '@types/mdast': 4.0.4
-      astro: 5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
-      astro-expressive-code: 0.40.1(astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
+      astro: 5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
+      astro-expressive-code: 0.40.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
       bcp-47: 2.1.0
       hast-util-from-html: 2.0.3
       hast-util-select: 6.0.3
@@ -3661,12 +3666,12 @@ snapshots:
 
   astring@1.9.0: {}
 
-  astro-expressive-code@0.40.1(astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)):
+  astro-expressive-code@0.40.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)):
     dependencies:
-      astro: 5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
+      astro: 5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
       rehype-expressive-code: 0.40.1
 
-  astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0):
+  astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0):
     dependencies:
       '@astrojs/compiler': 2.10.3
       '@astrojs/internal-helpers': 0.5.1
@@ -3710,7 +3715,7 @@ snapshots:
       preferred-pm: 4.1.1
       prompts: 2.4.2
       rehype: 13.0.2
-      semver: 7.7.0
+      semver: 7.7.1
       shiki: 1.29.2
       tinyexec: 0.3.2
       tsconfck: 3.1.4(typescript@5.7.3)
@@ -5344,6 +5349,8 @@ snapshots:
 
   semver@7.7.0: {}
 
+  semver@7.7.1: {}
+
   sharp@0.33.5:
     dependencies:
       color: 4.2.3
@@ -5413,9 +5420,9 @@ snapshots:
       as-table: 1.0.55
       get-source: 2.0.12
 
-  starlight-package-managers@0.9.1(@astrojs/starlight@0.31.1(astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))):
+  starlight-package-managers@0.9.1(@astrojs/starlight@0.31.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))):
     dependencies:
-      '@astrojs/starlight': 0.31.1(astro@5.2.4(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
+      '@astrojs/starlight': 0.31.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
 
   stoppable@1.1.0: {}
 
