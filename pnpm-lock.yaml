@@ -10,25 +10,25 @@ importers:
     dependencies:
       '@astrojs/check':
         specifier: 0.9.4
-        version: 0.9.4(prettier-plugin-astro@0.14.1)(prettier@3.4.2)(typescript@5.7.3)
+        version: 0.9.4(prettier-plugin-astro@0.14.1)(prettier@3.5.0)(typescript@5.7.3)
       '@astrojs/cloudflare':
         specifier: 12.2.1
-        version: 12.2.1(@types/node@20.17.16)(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))(yaml@2.7.0)
+        version: 12.2.1(@types/node@20.17.17)(astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))(yaml@2.7.0)
       '@astrojs/starlight':
         specifier: 0.31.1
-        version: 0.31.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
+        version: 0.31.1(astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
       astro:
         specifier: 5.2.5
-        version: 5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
+        version: 5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
       semver:
-        specifier: 7.7.0
-        version: 7.7.0
+        specifier: 7.7.1
+        version: 7.7.1
       sharp:
         specifier: 0.33.5
         version: 0.33.5
       starlight-package-managers:
-        specifier: 0.9.1
-        version: 0.9.1(@astrojs/starlight@0.31.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)))
+        specifier: 0.10.0
+        version: 0.10.0(@astrojs/starlight@0.31.1(astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)))
       typescript:
         specifier: 5.7.3
         version: 5.7.3
@@ -38,13 +38,13 @@ importers:
         version: 1.9.4
       '@types/github-script':
         specifier: github:actions/github-script
-        version: '@actions/github-script@https://codeload.github.com/actions/github-script/tar.gz/91a83c091797b22c5771b1d7178fd0fddacc73ea'
+        version: '@actions/github-script@https://codeload.github.com/actions/github-script/tar.gz/378a50fac5798d21828ee1c3ea7444341c3f04ca'
       '@types/mdast':
         specifier: 4.0.4
         version: 4.0.4
       '@types/node':
-        specifier: 20.17.16
-        version: 20.17.16
+        specifier: 20.17.17
+        version: 20.17.17
       '@types/semver':
         specifier: 7.5.8
         version: 7.5.8
@@ -55,14 +55,14 @@ importers:
         specifier: 2.1.2
         version: 2.1.2
       prettier:
-        specifier: 3.4.2
-        version: 3.4.2
+        specifier: 3.5.0
+        version: 3.5.0
       prettier-plugin-astro:
         specifier: 0.14.1
         version: 0.14.1
       wrangler:
-        specifier: 3.107.2
-        version: 3.107.2(@cloudflare/workers-types@4.20250129.0)
+        specifier: 3.107.3
+        version: 3.107.3(@cloudflare/workers-types@4.20250129.0)
 
 packages:
 
@@ -72,8 +72,8 @@ packages:
   '@actions/exec@1.1.1':
     resolution: {integrity: sha512-+sCcHHbVdk93a0XT19ECtO/gIXoxvdsgQLzb2fE2/5sIZmWQuluYyjPQtrtTHdU1YzTZ7bAPN4sITq2xi1679w==}
 
-  '@actions/github-script@https://codeload.github.com/actions/github-script/tar.gz/91a83c091797b22c5771b1d7178fd0fddacc73ea':
-    resolution: {tarball: https://codeload.github.com/actions/github-script/tar.gz/91a83c091797b22c5771b1d7178fd0fddacc73ea}
+  '@actions/github-script@https://codeload.github.com/actions/github-script/tar.gz/378a50fac5798d21828ee1c3ea7444341c3f04ca':
+    resolution: {tarball: https://codeload.github.com/actions/github-script/tar.gz/378a50fac5798d21828ee1c3ea7444341c3f04ca}
     version: 7.0.1
     engines: {node: '>=20.0.0 <21.0.0'}
 
@@ -985,8 +985,8 @@ packages:
   '@types/node@17.0.45':
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
 
-  '@types/node@20.17.16':
-    resolution: {integrity: sha512-vOTpLduLkZXePLxHiHsBLp98mHGnl8RptV4YAO3HfKO5UHjDvySGbxKtpYfy8Sx5+WKcgc45qNreJJRVM3L6mw==}
+  '@types/node@20.17.17':
+    resolution: {integrity: sha512-/WndGO4kIfMicEQLTi/mDANUu/iVUhT7KboZPdEqqHQ4aTS+3qT3U5gIqWDFV+XouorjfgGqvKILJeHhuQgFYg==}
 
   '@types/sax@1.2.7':
     resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
@@ -1996,8 +1996,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.4.2:
-    resolution: {integrity: sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==}
+  prettier@3.5.0:
+    resolution: {integrity: sha512-quyMrVt6svPS7CjQ9gKb3GLEX/rl3BCL2oa/QkNcXv4YNVBC9olt3s+H7ukto06q7B1Qz46PbrKLO34PR6vXcA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -2153,11 +2153,6 @@ packages:
   sax@1.4.1:
     resolution: {integrity: sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg==}
 
-  semver@7.7.0:
-    resolution: {integrity: sha512-DrfFnPzblFmNrIZzg5RzHegbiRWg7KMR7btwi2yjHwx06zsUbO5g613sVwEV7FTwmzJu+Io0lJe2GJ3LxqpvBQ==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   semver@7.7.1:
     resolution: {integrity: sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==}
     engines: {node: '>=10'}
@@ -2210,8 +2205,8 @@ packages:
   stacktracey@2.1.8:
     resolution: {integrity: sha512-Kpij9riA+UNg7TnphqjH7/CzctQ/owJGNbFkfEeve4Z4uxT5+JapVLFXcsurIfN34gnTWZNJ/f7NMG0E8JDzTw==}
 
-  starlight-package-managers@0.9.1:
-    resolution: {integrity: sha512-sR5CBXTR83K9CDmTJIG0u6a5MVbjOM+hXFeD+0e7gAwM+FYvWiniQrV0hnH2o8F2gk5rQ9/nAekhv+bzLbwJOg==}
+  starlight-package-managers@0.10.0:
+    resolution: {integrity: sha512-ndliTHXzaCIQ2FFnq5KIH5Uhs9FCACeS3XQMtx/35aSPXzeGsoGxBNreC1zBif4yzGZRCJN3kXBqjUO82WDtcA==}
     engines: {node: '>=18.17.1'}
     peerDependencies:
       '@astrojs/starlight': '>=0.22.0'
@@ -2603,8 +2598,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@3.107.2:
-    resolution: {integrity: sha512-YOSfx0pETj18qcBD4aLvHjlcoV1sCVxYm9En8YphymW5rlTYD0Lc4MR3kzN1AGiWCjJ/ydrvA7eZuF/zPBotiw==}
+  wrangler@3.107.3:
+    resolution: {integrity: sha512-N9ZMDHZ+DI5/B0yclr3bG57U/Zw7wSzGdpO2l7j6+3q8yUf+4Fk0Rvneo2t8rjLewKlvqgt9D9siFuo8MXJ55Q==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
@@ -2707,7 +2702,7 @@ snapshots:
     dependencies:
       '@actions/io': 1.1.3
 
-  '@actions/github-script@https://codeload.github.com/actions/github-script/tar.gz/91a83c091797b22c5771b1d7178fd0fddacc73ea':
+  '@actions/github-script@https://codeload.github.com/actions/github-script/tar.gz/378a50fac5798d21828ee1c3ea7444341c3f04ca':
     dependencies:
       '@actions/core': 1.11.1
       '@actions/exec': 1.1.1
@@ -2717,7 +2712,7 @@ snapshots:
       '@octokit/core': 5.2.0
       '@octokit/plugin-request-log': 4.0.1(@octokit/core@5.2.0)
       '@octokit/plugin-retry': 6.1.0(@octokit/core@5.2.0)
-      '@types/node': 20.17.16
+      '@types/node': 20.17.17
 
   '@actions/github@6.0.0':
     dependencies:
@@ -2738,9 +2733,9 @@ snapshots:
 
   '@actions/io@1.1.3': {}
 
-  '@astrojs/check@0.9.4(prettier-plugin-astro@0.14.1)(prettier@3.4.2)(typescript@5.7.3)':
+  '@astrojs/check@0.9.4(prettier-plugin-astro@0.14.1)(prettier@3.5.0)(typescript@5.7.3)':
     dependencies:
-      '@astrojs/language-server': 2.15.4(prettier-plugin-astro@0.14.1)(prettier@3.4.2)(typescript@5.7.3)
+      '@astrojs/language-server': 2.15.4(prettier-plugin-astro@0.14.1)(prettier@3.5.0)(typescript@5.7.3)
       chokidar: 4.0.3
       kleur: 4.1.5
       typescript: 5.7.3
@@ -2749,19 +2744,19 @@ snapshots:
       - prettier
       - prettier-plugin-astro
 
-  '@astrojs/cloudflare@12.2.1(@types/node@20.17.16)(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))(yaml@2.7.0)':
+  '@astrojs/cloudflare@12.2.1(@types/node@20.17.17)(astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))(yaml@2.7.0)':
     dependencies:
       '@astrojs/internal-helpers': 0.4.2
       '@astrojs/underscore-redirects': 0.6.0
       '@cloudflare/workers-types': 4.20250129.0
-      astro: 5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
+      astro: 5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
       esbuild: 0.24.2
       estree-walker: 3.0.3
       magic-string: 0.30.17
       miniflare: 3.20250129.0
       tiny-glob: 0.2.9
-      vite: 6.0.11(@types/node@20.17.16)(yaml@2.7.0)
-      wrangler: 3.107.2(@cloudflare/workers-types@4.20250129.0)
+      vite: 6.0.11(@types/node@20.17.17)(yaml@2.7.0)
+      wrangler: 3.107.3(@cloudflare/workers-types@4.20250129.0)
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -2783,7 +2778,7 @@ snapshots:
 
   '@astrojs/internal-helpers@0.5.1': {}
 
-  '@astrojs/language-server@2.15.4(prettier-plugin-astro@0.14.1)(prettier@3.4.2)(typescript@5.7.3)':
+  '@astrojs/language-server@2.15.4(prettier-plugin-astro@0.14.1)(prettier@3.5.0)(typescript@5.7.3)':
     dependencies:
       '@astrojs/compiler': 2.10.3
       '@astrojs/yaml2ts': 0.2.2
@@ -2797,14 +2792,14 @@ snapshots:
       volar-service-css: 0.0.62(@volar/language-service@2.4.11)
       volar-service-emmet: 0.0.62(@volar/language-service@2.4.11)
       volar-service-html: 0.0.62(@volar/language-service@2.4.11)
-      volar-service-prettier: 0.0.62(@volar/language-service@2.4.11)(prettier@3.4.2)
+      volar-service-prettier: 0.0.62(@volar/language-service@2.4.11)(prettier@3.5.0)
       volar-service-typescript: 0.0.62(@volar/language-service@2.4.11)
       volar-service-typescript-twoslash-queries: 0.0.62(@volar/language-service@2.4.11)
       volar-service-yaml: 0.0.62(@volar/language-service@2.4.11)
       vscode-html-languageservice: 5.3.1
       vscode-uri: 3.0.8
     optionalDependencies:
-      prettier: 3.4.2
+      prettier: 3.5.0
       prettier-plugin-astro: 0.14.1
     transitivePeerDependencies:
       - typescript
@@ -2834,12 +2829,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@4.0.8(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))':
+  '@astrojs/mdx@4.0.8(astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))':
     dependencies:
       '@astrojs/markdown-remark': 6.1.0
       '@mdx-js/mdx': 3.1.0(acorn@8.14.0)
       acorn: 8.14.0
-      astro: 5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
+      astro: 5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
       es-module-lexer: 1.6.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.4
@@ -2863,16 +2858,16 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.24.1
 
-  '@astrojs/starlight@0.31.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))':
+  '@astrojs/starlight@0.31.1(astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))':
     dependencies:
-      '@astrojs/mdx': 4.0.8(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
+      '@astrojs/mdx': 4.0.8(astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
       '@astrojs/sitemap': 3.2.1
       '@pagefind/default-ui': 1.3.0
       '@types/hast': 3.0.4
       '@types/js-yaml': 4.0.9
       '@types/mdast': 4.0.4
-      astro: 5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
-      astro-expressive-code: 0.40.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
+      astro: 5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
+      astro-expressive-code: 0.40.1(astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
       bcp-47: 2.1.0
       hast-util-from-html: 2.0.3
       hast-util-select: 6.0.3
@@ -3546,13 +3541,13 @@ snapshots:
 
   '@types/node@17.0.45': {}
 
-  '@types/node@20.17.16':
+  '@types/node@20.17.17':
     dependencies:
       undici-types: 6.19.8
 
   '@types/sax@1.2.7':
     dependencies:
-      '@types/node': 20.17.16
+      '@types/node': 20.17.17
 
   '@types/semver@7.5.8': {}
 
@@ -3666,12 +3661,12 @@ snapshots:
 
   astring@1.9.0: {}
 
-  astro-expressive-code@0.40.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)):
+  astro-expressive-code@0.40.1(astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)):
     dependencies:
-      astro: 5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
+      astro: 5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0)
       rehype-expressive-code: 0.40.1
 
-  astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0):
+  astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0):
     dependencies:
       '@astrojs/compiler': 2.10.3
       '@astrojs/internal-helpers': 0.5.1
@@ -3723,8 +3718,8 @@ snapshots:
       unist-util-visit: 5.0.0
       unstorage: 1.14.4
       vfile: 6.0.3
-      vite: 6.0.11(@types/node@20.17.16)(yaml@2.7.0)
-      vitefu: 1.0.5(vite@6.0.11(@types/node@20.17.16)(yaml@2.7.0))
+      vite: 6.0.11(@types/node@20.17.17)(yaml@2.7.0)
+      vitefu: 1.0.5(vite@6.0.11(@types/node@20.17.17)(yaml@2.7.0))
       which-pm: 3.0.1
       xxhash-wasm: 1.1.0
       yargs-parser: 21.1.1
@@ -5090,13 +5085,13 @@ snapshots:
   prettier-plugin-astro@0.14.1:
     dependencies:
       '@astrojs/compiler': 2.10.3
-      prettier: 3.4.2
+      prettier: 3.5.0
       sass-formatter: 0.7.9
 
   prettier@2.8.7:
     optional: true
 
-  prettier@3.4.2: {}
+  prettier@3.5.0: {}
 
   printable-characters@1.0.42: {}
 
@@ -5347,15 +5342,13 @@ snapshots:
 
   sax@1.4.1: {}
 
-  semver@7.7.0: {}
-
   semver@7.7.1: {}
 
   sharp@0.33.5:
     dependencies:
       color: 4.2.3
       detect-libc: 2.0.3
-      semver: 7.7.0
+      semver: 7.7.1
     optionalDependencies:
       '@img/sharp-darwin-arm64': 0.33.5
       '@img/sharp-darwin-x64': 0.33.5
@@ -5420,9 +5413,9 @@ snapshots:
       as-table: 1.0.55
       get-source: 2.0.12
 
-  starlight-package-managers@0.9.1(@astrojs/starlight@0.31.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))):
+  starlight-package-managers@0.10.0(@astrojs/starlight@0.31.1(astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))):
     dependencies:
-      '@astrojs/starlight': 0.31.1(astro@5.2.5(@types/node@20.17.16)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
+      '@astrojs/starlight': 0.31.1(astro@5.2.5(@types/node@20.17.17)(rollup@4.34.1)(typescript@5.7.3)(yaml@2.7.0))
 
   stoppable@1.1.0: {}
 
@@ -5493,7 +5486,7 @@ snapshots:
 
   typescript-auto-import-cache@0.3.5:
     dependencies:
-      semver: 7.7.0
+      semver: 7.7.1
 
   typescript@5.7.3: {}
 
@@ -5611,19 +5604,19 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite@6.0.11(@types/node@20.17.16)(yaml@2.7.0):
+  vite@6.0.11(@types/node@20.17.17)(yaml@2.7.0):
     dependencies:
       esbuild: 0.24.2
       postcss: 8.5.1
       rollup: 4.34.1
     optionalDependencies:
-      '@types/node': 20.17.16
+      '@types/node': 20.17.17
       fsevents: 2.3.3
       yaml: 2.7.0
 
-  vitefu@1.0.5(vite@6.0.11(@types/node@20.17.16)(yaml@2.7.0)):
+  vitefu@1.0.5(vite@6.0.11(@types/node@20.17.17)(yaml@2.7.0)):
     optionalDependencies:
-      vite: 6.0.11(@types/node@20.17.16)(yaml@2.7.0)
+      vite: 6.0.11(@types/node@20.17.17)(yaml@2.7.0)
 
   volar-service-css@0.0.62(@volar/language-service@2.4.11):
     dependencies:
@@ -5650,12 +5643,12 @@ snapshots:
     optionalDependencies:
       '@volar/language-service': 2.4.11
 
-  volar-service-prettier@0.0.62(@volar/language-service@2.4.11)(prettier@3.4.2):
+  volar-service-prettier@0.0.62(@volar/language-service@2.4.11)(prettier@3.5.0):
     dependencies:
       vscode-uri: 3.0.8
     optionalDependencies:
       '@volar/language-service': 2.4.11
-      prettier: 3.4.2
+      prettier: 3.5.0
 
   volar-service-typescript-twoslash-queries@0.0.62(@volar/language-service@2.4.11):
     dependencies:
@@ -5666,7 +5659,7 @@ snapshots:
   volar-service-typescript@0.0.62(@volar/language-service@2.4.11):
     dependencies:
       path-browserify: 1.0.1
-      semver: 7.7.0
+      semver: 7.7.1
       typescript-auto-import-cache: 0.3.5
       vscode-languageserver-textdocument: 1.0.12
       vscode-nls: 5.2.0
@@ -5755,7 +5748,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20250129.0
       '@cloudflare/workerd-windows-64': 1.20250129.0
 
-  wrangler@3.107.2(@cloudflare/workers-types@4.20250129.0):
+  wrangler@3.107.3(@cloudflare/workers-types@4.20250129.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
