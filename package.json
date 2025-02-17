@@ -2,7 +2,7 @@
   "name": "astro-tips",
   "type": "module",
   "version": "0.0.1",
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@9.15.5",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -27,12 +27,12 @@
     "@biomejs/biome": "1.9.4",
     "@types/github-script": "github:actions/github-script",
     "@types/mdast": "4.0.4",
-    "@types/node": "20.17.17",
+    "@types/node": "20.17.19",
     "@types/semver": "7.5.8",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.2",
-    "prettier": "3.5.0",
+    "prettier": "3.5.1",
     "prettier-plugin-astro": "0.14.1",
-    "wrangler": "3.107.3"
+    "wrangler": "3.109.1"
   }
 }
