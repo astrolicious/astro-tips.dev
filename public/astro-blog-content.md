@@ -43,7 +43,7 @@
 }
 
 {
-  "tags": ["3rd-party", "db"],
+  "tags": ["3rd-party"],
   "title": "Basic analytics with Vercel Postgres - Drizzle - Astro",
   "link": "https://www.thomasledoux.be/blog/basic-analytics-vercel-postgres-astro",
   "updated": "2024-01-16"
@@ -57,7 +57,7 @@
 }
 
 {
-  "tags": ["3rd-party", "HTMX"],
+  "tags": ["3rd-party"],
   "title": "Using HTMX with Astro Partials",
   "link": "https://blog.trevfox.dev/posts/htmx-and-astro-partials/",
   "updated": "2024-01-26"
