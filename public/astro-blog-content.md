@@ -339,7 +339,7 @@ For each of the entries below, check that it doesn't already exist on the "Exter
 }
 
 {
-  "tags": ["API Endppoints"],
+  "tags": ["API Endpoints"],
   "title": "Adding an Astro \"healthcheck\" endpoint",
   "link": "https://playfulprogramming.com/posts/astro-heathcheck-monitor-blog-for-issues",
   "updated": "2024-12-31"
