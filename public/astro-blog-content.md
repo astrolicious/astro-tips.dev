@@ -1,3 +1,14 @@
+# More External Links
+
+## How to use this file
+
+For each of the entries below, check that it doesn't already exist on the "External Links" page and then:
+
+1. Create a `.json` file in `src/content/resources/` and add the entry as the only content.
+2. Verify the tag makes sense
+3. Visit the link to test, and check that the title is accurate. (It doesn't have to match *exactly*, but should be helpful in identifying its contents to the reader so they know what content to expect.)
+4. Optionally: update the exact date. (Most dates are approximate, using the end of the month. Only some are the published date of the article. I don't think precision matters too much.)
+
 ## Formatted Entries
 
 {
