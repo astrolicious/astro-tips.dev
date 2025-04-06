@@ -1,0 +1,6 @@
+{
+  "tags": ["utilities"],
+  "title": "Streaming a file in Astro",
+  "link": "https://astropatterns.dev/p/gems/server-endpoints-file-streaming",
+  "updated": "2024-09-30"
+}

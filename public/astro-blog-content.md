@@ -337,9 +337,10 @@ For each of the entries below, check that it doesn't already exist on the "Exter
   "link": "https://webtech-media.jp/article/astro-pathname-based-active-class",
   "updated": "2025-01-31"
 }
+
 {
-  "tags": ["API Endppoints"],
-  "title": "Adding an Astro "healthcheck" endpoint",
+  "tags": ["API Endpoints"],
+  "title": "Adding an Astro \"healthcheck\" endpoint",
   "link": "https://playfulprogramming.com/posts/astro-heathcheck-monitor-blog-for-issues",
   "updated": "2024-12-31"
 }
@@ -857,7 +858,7 @@ For each of the entries below, check that it doesn't already exist on the "Exter
 
 {
   "tags": ["CSS"],
-  "title": Create a TODO list with Tailwind CSS and Alpine",
+  "title": "Create a TODO list with Tailwind CSS and Alpine",
   "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-todo-with-alpine-js-and-tailwind-css/",
   "updated": "2024-04-30"
 }
