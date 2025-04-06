@@ -1,0 +1,6 @@
+{
+  "tags": ["utilities"],
+  "title": "How to preserve React components' state in Astro",
+  "link": "https://astropatterns.dev/p/react-love/view-transitions-and-react-state",
+  "updated": "2024-12-31"
+}
