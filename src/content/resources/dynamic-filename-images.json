@@ -1,5 +1,5 @@
 {
-  "tags": ["rss"],
+  "tags": ["RSS"],
   "title": "Use a dynamic filename when importing images",
   "link": "https://vaihe.com/blog/astro/astro-dynamic-image-prop/",
   "updated": "2023-01-25"
