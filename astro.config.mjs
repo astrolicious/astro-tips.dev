@@ -34,8 +34,8 @@ export default defineConfig({
 				},
 			],
 			social: [
-				{ icon: "github", label: "GitHub", href: "https://github.com/astrolicious/astro-tips.dev" },
-				{ icon: "discord", label: "Discord", href: "https://chat.astrolicious.dev" }
+				{ icon: 'github', label: 'GitHub', href: 'https://github.com/astrolicious/astro-tips.dev' },
+				{ icon: 'discord', label: 'Discord', href: 'https://chat.astrolicious.dev' },
 			],
 			sidebar: [
 				{
