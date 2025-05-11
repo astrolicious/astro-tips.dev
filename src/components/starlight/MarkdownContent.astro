@@ -1,11 +1,10 @@
 ---
 import { Aside } from "@astrojs/starlight/components";
 import Default from "@astrojs/starlight/components/MarkdownContent.astro";
-import type { Props } from "@astrojs/starlight/props";
 import { minVersion, outside } from "semver";
 import pkg from "../../../package.json";
 
-const { astroRange } = Astro.props.entry.data;
+const { astroRange } = Astro.locals.starlightRoute.entry.data;
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
 // check if the Astro version is less than the required range.
 const outRange =
@@ -30,4 +29,4 @@ const semverUrl = `https://semver.otterlord.dev/?package=astro&range=${astroRang
   )
 }
 
-<Default {...Astro.props}><slot /></Default>
+<Default><slot /></Default>
