@@ -1,6 +1,6 @@
 {
-    "tags": ["utilities"],
-    "title": "How to automatically update the `updated` property of content on your site based on the last Git commit",
-    "link": "https://www.lloydatkinson.net/notes/22/",
-    "updated": "2025-04-30"
+  "tags": ["utilities"],
+  "title": "How to automatically update the `updated` property of content on your site based on the last Git commit",
+  "link": "https://www.lloydatkinson.net/notes/22/",
+  "updated": "2025-04-30"
 }

@@ -1,6 +1,6 @@
 {
-    "tags": ["db"],
-    "title": "How to Generate Pre-signed URLs for Firebase Storage with Astro on Cloudflare Workers",
-    "link": "https://www.launchfa.st/blog/firebase-storage-cloudflare-workers",
-    "updated": "2025-04-30"
+  "tags": ["db"],
+  "title": "How to Generate Pre-signed URLs for Firebase Storage with Astro on Cloudflare Workers",
+  "link": "https://www.launchfa.st/blog/firebase-storage-cloudflare-workers",
+  "updated": "2025-04-30"
 }

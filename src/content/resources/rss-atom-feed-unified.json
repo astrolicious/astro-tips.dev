@@ -1,6 +1,6 @@
 {
-    "tags": ["RSS"],
-    "title": "Building Better RSS/Atom Feeds in Astro with the `unified` Ecosystem",
-    "link": "https://gsong.dev/articles/astro-feed-unified/",
-    "updated": "2025-04-30"
+  "tags": ["RSS"],
+  "title": "Building Better RSS/Atom Feeds in Astro with the `unified` Ecosystem",
+  "link": "https://gsong.dev/articles/astro-feed-unified/",
+  "updated": "2025-04-30"
 }
