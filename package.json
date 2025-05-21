@@ -2,7 +2,7 @@
   "name": "astro-tips",
   "type": "module",
   "version": "0.0.1",
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@9.15.9",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -18,21 +18,21 @@
     "@astrojs/cloudflare": "12.5.3",
     "@astrojs/starlight": "0.34.3",
     "astro": "5.7.13",
-    "semver": "7.7.1",
-    "sharp": "0.33.5",
-    "starlight-package-managers": "0.10.0",
-    "typescript": "5.7.3"
+    "semver": "7.7.2",
+    "sharp": "0.34.2",
+    "starlight-package-managers": "0.11.0",
+    "typescript": "5.8.3"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/github-script": "github:actions/github-script",
     "@types/mdast": "4.0.4",
-    "@types/node": "20.17.19",
-    "@types/semver": "7.5.8",
+    "@types/node": "20.17.50",
+    "@types/semver": "7.7.0",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.2",
-    "prettier": "3.5.1",
+    "prettier": "3.5.3",
     "prettier-plugin-astro": "0.14.1",
-    "wrangler": "3.109.1"
+    "wrangler": "3.114.8"
   }
 }
