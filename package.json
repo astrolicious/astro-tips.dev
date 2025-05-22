@@ -33,6 +33,6 @@
     "mdast-util-to-markdown": "2.1.2",
     "prettier": "3.5.3",
     "prettier-plugin-astro": "0.14.1",
-    "wrangler": "3.114.8"
+    "wrangler": "3.114.9"
   }
 }
