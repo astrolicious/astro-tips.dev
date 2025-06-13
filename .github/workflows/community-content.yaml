@@ -31,12 +31,12 @@ jobs:
           script: |
             const { default: script } = await import('${{ github.workspace }}/.github/scripts/mdx.js')
             await script({github, context, core})
-      - uses: actions/create-github-app-token@d72941d797fd3113feb6b93fd0dec494b13a2547 # v1.12.0
+      - uses: actions/create-github-app-token@df432ceedc7162793a195dd1713ff69aefc7379e # v2.0.6
         id: app-token
         with:
           app-id: ${{ vars.BOT_APPID }}
           private-key: ${{ secrets.BOT_SECRET }}
-      - uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5
+      - uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6
         with:
           commit_user_email: 168325803+astrolicious[bot]@users.noreply.github.com
           commit_user_name: astrolicious[bot]
