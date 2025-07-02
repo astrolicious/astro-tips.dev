@@ -25,5 +25,15 @@
       "enabled": true
     }
   },
-  "upload_source_maps": true
+  "upload_source_maps": true,
+  "routes": [
+    {
+      "pattern": "astro-tips.dev",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.astro-tips.dev",
+      "custom_domain": true
+    }
+  ]
 }
