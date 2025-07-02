@@ -6,7 +6,7 @@
   "main": "dist/_worker.js/index.js",
   "assets": {
     "directory": "./dist/",
-    "binding": "ASSETS",
+    "binding": "ASSETS"
   },
   "workers_dev": true,
   "preview_urls": true,
@@ -14,9 +14,7 @@
   "rules": [
     {
       "type": "ESModule",
-      "globs": [
-        "**/*.mjs"
-      ],
+      "globs": ["**/*.mjs"],
       "fallthrough": true
     }
   ],
