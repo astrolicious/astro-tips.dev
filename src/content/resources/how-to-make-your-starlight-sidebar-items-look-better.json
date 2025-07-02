@@ -1,5 +1,7 @@
 {
-    "tags": ["Starlight"],
+    "tags": [
+        "Starlight"
+    ],
     "title": "How to make your Starlight sidebar items look better",
     "link": "https://blog.trueberryless.org/blog/starlight-sidebar-whitespace/",
     "updated": "2025-06-13"

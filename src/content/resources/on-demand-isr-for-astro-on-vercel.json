@@ -1,5 +1,7 @@
 {
-    "tags": [ "deploy"],
+    "tags": [
+        "deploy"
+    ],
     "title": "On-Demand ISR For Astro on Vercel",
     "link": "https://www.shawn.so/blog/isr-astro-vercel-on-demand-incremental-static-regeneration/",
     "updated": "2025-06-1"
