@@ -1,8 +1,6 @@
 {
-    "tags": [
-        "3rd-party"
-    ],
-    "title": "No Server, No Database: Smarter Related Posts in Astro with transformers.js",
-    "link": "https://alexop.dev/posts/semantic-related-posts-astro-transformersjs/",
-    "updated": "2025-06-13"
+  "tags": ["3rd-party"],
+  "title": "No Server, No Database: Smarter Related Posts in Astro with transformers.js",
+  "link": "https://alexop.dev/posts/semantic-related-posts-astro-transformersjs/",
+  "updated": "2025-06-13"
 }
