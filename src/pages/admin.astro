@@ -1,0 +1,252 @@
+---
+export const prerender = false;
+
+import { Icon } from "@astrojs/starlight/components";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { auth as betterAuth } from "~/lib/auth";
+
+const auth = betterAuth(
+  new URL(Astro.request.url).origin,
+  Astro.locals.runtime.env,
+);
+
+const { users, total } = await auth.api.listUsers({
+  query: {
+    limit: 100,
+  },
+  headers: Astro.request.headers,
+});
+---
+
+<StarlightPage
+  frontmatter={{ title: "Admin", tableOfContents: false, template: "splash" }}
+>
+  <main>
+    <p>Manage users and their roles.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Ban</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          users.map((user) => (
+            <tr>
+              <td>{user.name}</td>
+              <td>
+                <div>
+                  {user.role}
+                  <button
+                    data-userid={user.id}
+                    id="promote"
+                    disabled={user.role === "admin"}
+                  >
+                    <Icon name="up-caret" />
+                  </button>
+                  <button
+                    data-userid={user.id}
+                    id="demote"
+                    disabled={user.role === "user"}
+                  >
+                    <Icon name="down-caret" />
+                  </button>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <button
+                    data-userid={user.id}
+                    id="ban"
+                    disabled={user.banned === true}
+                  >
+                    <Icon name="close" />
+                  </button>
+                  <button
+                    data-userid={user.id}
+                    id="unban"
+                    disabled={user.banned === false || !user.banned}
+                  >
+                    <Icon name="approve-check" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+
+    <p>Total users: {total}</p>
+  </main>
+</StarlightPage>
+
+<script>
+  import { authClient } from "~/lib/auth-client.ts";
+
+  document.querySelector("#promote")?.addEventListener("click", async (e) => {
+    if (!(e.currentTarget instanceof HTMLButtonElement)) {
+      console.error("Expected a button element.");
+      return;
+    }
+    const userId = e.currentTarget.dataset.userid;
+    if (!userId) {
+      console.error("User ID not found in button data attribute.");
+      return;
+    }
+    await authClient.admin.setRole({
+      userId: userId,
+      role: "admin",
+    });
+  });
+
+  document.querySelector("#demote")?.addEventListener("click", async (e) => {
+    if (!(e.currentTarget instanceof HTMLButtonElement)) {
+      console.error("Expected a button element.");
+      return;
+    }
+    const userId = e.currentTarget.dataset.userid;
+    if (!userId) {
+      console.error("User ID not found in button data attribute.");
+      return;
+    }
+    await authClient.admin.setRole({
+      userId: userId,
+      role: "user",
+    });
+  });
+
+  document.querySelector("#ban")?.addEventListener("click", async (e) => {
+    if (!(e.currentTarget instanceof HTMLButtonElement)) {
+      console.error("Expected a button element.");
+      return;
+    }
+    const userId = e.currentTarget.dataset.userid;
+    if (!userId) {
+      console.error("User ID not found in button data attribute.");
+      return;
+    }
+    await authClient.admin.banUser({
+      userId: userId,
+    });
+  });
+
+  document.querySelector("#unban")?.addEventListener("click", async (e) => {
+    if (!(e.currentTarget instanceof HTMLButtonElement)) {
+      console.error("Expected a button element.");
+      return;
+    }
+    const userId = e.currentTarget.dataset.userid;
+    if (!userId) {
+      console.error("User ID not found in button data attribute.");
+      return;
+    }
+    await authClient.admin.unbanUser({
+      userId: userId,
+    });
+  });
+</script>
+
+<style>
+  main {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--sl-color-bg, #fff);
+    border-radius: 1rem;
+    box-shadow: 0 4px 24px 0 rgba(36, 39, 47, 0.08);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: transparent;
+    margin-bottom: 1.5rem;
+  }
+
+  th,
+  td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+  }
+
+  th {
+    background: var(--sl-color-bg-secondary, #f5f6fa);
+    font-weight: 600;
+    color: #23272f;
+    border-bottom: 2px solid #e6e6e6;
+  }
+
+  tbody tr {
+    background: var(--sl-color-bg, #fff);
+    border-radius: 0.5rem;
+    transition: background 0.2s;
+  }
+
+  tbody tr:hover {
+    background: #f0f2f7;
+  }
+
+  button {
+    background: linear-gradient(135deg, #e6e6e6 0%, #ffffff 50%, #e6e6e6 100%);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    margin-left: 0.25rem;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      box-shadow 0.2s;
+    box-shadow: 0 1px 4px 0 rgba(36, 39, 47, 0.06);
+    color: #23272f;
+    display: inline-flex;
+    align-items: center;
+    font-size: 1rem;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #e6e6e6;
+  }
+
+  button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #d1d5db 0%, #f3f4f6 100%);
+    box-shadow: 0 2px 8px 0 rgba(36, 39, 47, 0.1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    main {
+      background: #23272f;
+      color: #eee;
+      box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.25);
+    }
+    th {
+      background: #23272f;
+      color: #eee;
+      border-bottom: 2px solid #2d323c;
+    }
+    tbody tr {
+      background: #1a1c22;
+    }
+    tbody tr:hover {
+      background: #23272f;
+    }
+    button {
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.16) 100%
+      );
+      color: #eee;
+    }
+    button:disabled {
+      background: #2d323c;
+      color: #888;
+    }
+  }
+</style>
