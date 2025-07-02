@@ -1,5 +1,4 @@
 import { builtinModules } from 'node:module';
-// @ts-check
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import cloudflare from '@astrojs/cloudflare';
@@ -68,6 +67,9 @@ export default defineConfig({
 		}),
 	],
 	vite: {
+		build: {
+			minify: false,
+		},
 		resolve: {
 			alias: {
 				'~': resolve(dirname(fileURLToPath(import.meta.url)), './src'),
@@ -80,5 +82,8 @@ export default defineConfig({
 	output: 'server',
 	adapter: cloudflare({
 		imageService: 'passthrough',
+		platformProxy: {
+			enabled: true,
+		},
 	}),
 });

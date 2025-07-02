@@ -1,8 +1,9 @@
 {
   "name": "astro-tips",
   "type": "module",
-  "version": "0.0.1",
-  "packageManager": "pnpm@9.15.9",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.12.4",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -11,7 +12,8 @@
     "astro": "astro",
     "format": "biome check --write ./ && prettier -w \"**/*\" --ignore-unknown --cache",
     "lint": "biome check .",
-    "lint:fix": "biome check --apply ."
+    "lint:fix": "biome check --apply .",
+    "cf-typegen": "wrangler types --include-runtime --include-env"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
@@ -24,15 +26,14 @@
     "typescript": "5.8.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@types/github-script": "github:actions/github-script",
+    "@biomejs/biome": "2.0.6",
     "@types/mdast": "4.0.4",
-    "@types/node": "20.17.50",
+    "@types/node": "22.16.0",
     "@types/semver": "7.7.0",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.2",
-    "prettier": "3.5.3",
+    "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1",
-    "wrangler": "3.114.8"
+    "wrangler": "4.22.0"
   }
 }

@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "account_id": "69e5e09fd9c27bf9e7540c12be67ab9d",
+  "name": "astro-tips",
+  "compatibility_date": "2025-06-02",
+  "main": "dist/_worker.js/index.js",
+  "assets": {
+    "directory": "./dist/",
+    "binding": "ASSETS",
+  },
+  "workers_dev": true,
+  "preview_urls": true,
+  "find_additional_modules": true,
+  "rules": [
+    {
+      "type": "ESModule",
+      "globs": [
+        "**/*.mjs"
+      ],
+      "fallthrough": true
+    }
+  ],
+  "minify": false,
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true
+    }
+  },
+  "upload_source_maps": true
+}
