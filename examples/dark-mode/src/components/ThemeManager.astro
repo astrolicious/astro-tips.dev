@@ -30,7 +30,7 @@ const { defaultTheme = "auto" } = Astro.props;
       document.dispatchEvent(
         new CustomEvent("theme-changed", {
           detail: { theme, systemTheme, defaultTheme },
-        })
+        }),
       );
     }
 

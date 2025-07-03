@@ -14,7 +14,7 @@ import ThemeToggleButton from "../components/ThemeToggleButton.astro";
     const setThemeElem = document.getElementById("setTheme");
     setThemeElem &&
       setThemeElem.addEventListener("click", () =>
-        window.theme.setTheme("auto")
+        window.theme.setTheme("auto"),
       );
 
     const getThemeElem = document.getElementById("getTheme");
