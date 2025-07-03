@@ -10,16 +10,19 @@ import ThemeToggleButton from "../components/ThemeToggleButton.astro";
   <ThemeToggleButton />
   <button id="setTheme">theme.setTheme("auto")</button>
   <p><code>theme.getTheme()</code> returns: <code id="getTheme"></code></p>
-  <script is:inline>
-    document
-      .getElementById("setTheme")
-      .addEventListener("click", () => theme.setTheme("auto"));
+  <script>
+    const setThemeElem = document.getElementById("setTheme");
+    setThemeElem &&
+      setThemeElem.addEventListener("click", () =>
+        window.theme.setTheme("auto")
+      );
 
-    document.getElementById("getTheme").innerHTML = theme.getTheme();
+    const getThemeElem = document.getElementById("getTheme");
+    getThemeElem && (getThemeElem.innerHTML = window.theme.getTheme());
 
     document.addEventListener("theme-changed", () => {
       const resultsElem = document.getElementById("getTheme");
-      resultsElem && (resultsElem.innerHTML = theme.getTheme());
+      resultsElem && (resultsElem.innerHTML = window.theme.getTheme());
     });
   </script>
 </Layout>

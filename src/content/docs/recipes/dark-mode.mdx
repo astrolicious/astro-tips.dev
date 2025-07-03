@@ -1,6 +1,8 @@
 ---
 title: How to handle dark mode
-astroRange: ^4.0.0
+astroRange: ^5.0.0
+tableOfContents:
+  maxHeadingLevel: 2
 ---
 
 import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
@@ -22,7 +24,6 @@ Check out an example of this recipe:
 
 ## Key Features
 
-- Compatible with Astro's [View Transitions](https://docs.astro.build/en/guides/view-transitions/) polyfill (renamed to `<ClientRouter/>` in v5)
 - Uses [color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme) CSS property to match [user-agent stylesheet](https://developer.mozilla.org/en-US/docs/Web/CSS/Cascade#user-agent_stylesheets) with theme
 - Respects user preferences and updates when user changes their preferences even when Javascript is disabled
 - Allows for setting a default theme easily with a prop
@@ -43,7 +44,6 @@ The core functionality of this recipe lives in this `.astro` component. It consi
 - Creating the `window.theme` client-side API
 - Dispatching a custom event `theme-changed` whenever the theme changes.
 
-The second script is not inline and adds an event listener for `astro:after-swap` to make this work with Astro's [View Transitions](https://docs.astro.build/en/guides/view-transitions/) polyfill (Renamed to `<ClientRouter/>` in v5).
 
 The first script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) and checks if `window.theme` already exists before executing. This prevents the global scope from being polluted and ensures we don't see any `Identifier has already been declared` errors. The second script is specifically not inline so we don't have to worry about the potential for redundant event listeners. 
 
@@ -67,11 +67,6 @@ The first script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/
       })();
       theme.setTheme(theme.getTheme());
     </script>
-    <script>
-      document.addEventListener("astro:after-swap", () =>
-        window.theme.setTheme(window.theme.getTheme()),
-      );
-    </script>
     ```
 
 2. Next, let's listen for device setting changes so that `auto` mode will work properly. To do that, we also need to create the `applyTheme` function.
@@ -86,7 +81,7 @@ The first script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/
         let systemTheme = mediaMatcher.matches ? "light" : "dark";
         mediaMatcher.addEventListener("change", (event) => {
           systemTheme = event.matches ? "light" : "dark";
-          applyTheme(theme.getTheme());
+          applyTheme(getTheme());
         });
 
         function applyTheme(theme) {
@@ -105,11 +100,6 @@ The first script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/
 
       })();
       theme.setTheme(theme.getTheme());
-    </script>
-    <script>
-      document.addEventListener("astro:after-swap", () =>
-        window.theme.setTheme(window.theme.getTheme()),
-      );
     </script>
     ```
     Note that our `applyTheme` function will also set the [color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme), and the way we have set this up relies on our theme names being light and dark, if you are going to extend this to have other themes you'll need to refactor this.
@@ -142,14 +132,23 @@ The first script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/
       })();
       theme.setTheme(theme.getTheme());
     </script>
-    <script>
-      document.addEventListener("astro:after-swap", () =>
-        window.theme.setTheme(window.theme.getTheme()),
-      );
-    </script>
     ```
-
 </Steps>
+
+### `<ClientRouter/>` Considerations
+
+If you are using the [`<ClientRouter/>`](https://docs.astro.build/en/reference/components-reference/#clientrouter) component, you will need to add another `<script>` to the ThemeManger Component that will re-apply the theme when navigating between pages. This is because the `<ClientRouter/>` component will not re-run the inline script on navigation.
+
+
+```astro title="ThemeManager.astro"
+...
+</script>
+<script>
+  document.addEventListener("astro:after-swap", () =>
+    window.theme.setTheme(window.theme.getTheme()),
+  );
+</script>
+```
 
 ## Theme Select Component
 
@@ -237,16 +236,13 @@ Do not rely on `color-scheme` for accessibility, for example Chrome does not sty
 </style>
 ```
 
-### Tailwind darkMode
+### Tailwind
 
-What would a recipe's style section be if it didn't mention [Tailwind CSS](https://tailwindcss.com/), especially when setting it up is easy as this:
+What would a recipe's style section be if it didn't mention [Tailwind CSS](https://tailwindcss.com/docs/dark-mode), especially when setting it up is easy as this:
 
-```ts title="tailwind.config.cjs" ins={3}
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: ['selector', '[data-theme="dark"]'],
-  // ...
-}
+```ts title="tailwind.css" ins={3}
+@import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 ```
 
 ## ESLint and TypeScript
@@ -258,9 +254,7 @@ If you're using ESLint, there's a good chance you'll run into `'theme' is not de
 
 <Tabs>
   <TabItem label="TypeScript">
-    ```ts title="src/env.d.ts" ins={3-10}
-    /// <reference types="astro/client" />
-
+    ```ts title="src/env.d.ts"
     interface Window {
       theme: {
         setTheme: (theme: "auto" | "dark" | "light") => void;
@@ -271,30 +265,19 @@ If you're using ESLint, there's a good chance you'll run into `'theme' is not de
     }
     ```
   </TabItem>
-      <TabItem label="ESLint Flat config">
-    ```js title="eslint.config.js" ins={3-9}
-    /** @type {import('@types/eslint').Linter.FlatConfig[]} */
-    export default [
+  <TabItem label="ESLint config">
+    ```js title="eslint.config.js"
+    import { defineConfig } from "eslint/config";
+    export default defineConfig([
       {
         languageOptions: {
           globals: {
-            theme: 'readonly'
-          }
-        }
+            theme: "readonly",
+          },
+        },
       },
       // ...
-    ];
-    ```
-  </TabItem>
-  <TabItem label="ESLint RC config">
-    ```js title="eslintrc.cjs" ins={3-5}
-    /** @type {import("@types/eslint").Linter.Config} */
-    module.exports = {
-      globals: {
-        theme: "readonly",
-      },
-      // ...
-    };
+    ]);
     ```
   </TabItem>
 </Tabs>
@@ -302,18 +285,16 @@ If you're using ESLint, there's a good chance you'll run into `'theme' is not de
 
 ## Usage
 
-```astro title="Layout.astro" {10,15,19-26}
+```astro title="Layout.astro" {9,13,17-24}
 ---
 import ThemeManager from "./ThemeManager.astro";
 import ThemeSelect from "./ThemeSelect.astro";
-import { ViewTransitions } from "astro:transitions";
 ---
 
 <html lang="en">
   <head>
     <!-- ... -->
     <ThemeManager defaultTheme="auto" />
-    <ViewTransitions />
   </head>
   <main>
     <body>
@@ -359,7 +340,7 @@ const { defaultTheme = "auto" } = Astro.props;
     let systemTheme = mediaMatcher.matches ? "light" : "dark";
     mediaMatcher.addEventListener("change", (event) => {
       systemTheme = event.matches ? "light" : "dark";
-      applyTheme(theme.getTheme());
+      applyTheme(getTheme());
     });
 
     function applyTheme(theme) {
@@ -393,11 +374,6 @@ const { defaultTheme = "auto" } = Astro.props;
     return { setTheme, getTheme, getSystemTheme, getDefaultTheme };
   })();
   theme.setTheme(theme.getTheme());
-</script>
-<script>
-	document.addEventListener("astro:after-swap", () =>
-		window.theme.setTheme(window.theme.getTheme()),
-	);
 </script>
 ```
   </TabItem>

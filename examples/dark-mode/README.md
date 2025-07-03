@@ -6,7 +6,6 @@
 
 ## Features
 
-- View Transitions Compatible
 - Allows for setting a default theme easily with a prop
 - Includes [button](./src/components/ThemeToggle.astro) and [select](./src/components/ThemeToggle.astro) [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) (which aren't necesary to use the script in `ThemeManager.astro`)
 - Exposes `theme` global for a nice API
