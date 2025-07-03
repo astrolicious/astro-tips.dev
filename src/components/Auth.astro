@@ -32,6 +32,7 @@ const session = await auth.api.getSession({
   document.querySelector("#login")?.addEventListener("click", async () => {
     await signIn.social({
       provider: "github",
+      callbackURL: "/",
     });
   });
   document.querySelector("#logout")?.addEventListener("click", async () => {
