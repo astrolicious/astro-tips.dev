@@ -5,7 +5,7 @@ import { glob } from 'astro/loaders';
 import { minVersion, outside, validRange } from 'semver';
 import pkg from '../../package.json';
 
-const astroVersion = minVersion(pkg.dependencies.astro)?.version;
+const astroVersion = minVersion(pkg.devDependencies.astro)?.version;
 
 const starlightSchema = defineCollection({
 	loader: docsLoader(),

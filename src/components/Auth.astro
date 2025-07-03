@@ -1,0 +1,81 @@
+---
+import { auth as betterAuth } from "~/lib/auth";
+
+const auth = betterAuth(
+  new URL(Astro.request.url).origin,
+  Astro.locals.runtime.env,
+);
+
+const session = await auth.api.getSession({
+  headers: Astro.request.headers,
+});
+---
+
+{
+  session ? (
+    <img
+      class="avatar"
+      id="logout"
+      alt="User avatar"
+      src={session.user.image}
+    />
+  ) : (
+    <button id="login"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" d="M8 16c0 2.828 0 4.243.879 5.121C9.757 22 11.172 22 14 22h1c2.828 0 4.243 0 5.121-.879C21 20.243 21 18.828 21 16V8c0-2.828 0-4.243-.879-5.121C19.243 2 17.828 2 15 2h-1c-2.828 0-4.243 0-5.121.879C8 3.757 8 5.172 8 8"/><path d="M8 19.5c-2.357 0-3.536 0-4.268-.732C3 18.035 3 16.857 3 14.5v-5c0-2.357 0-3.536.732-4.268S5.643 4.5 8 4.5" opacity=".5"/><path stroke-linecap="round" stroke-linejoin="round" d="M6 12h9m0 0l-2.5 2.5M15 12l-2.5-2.5"/></g></svg></button>
+  )
+}
+
+<script>
+  const { signIn, signOut } = await import("~/lib/auth-client");
+  document.querySelector("#login")?.addEventListener("click", async () => {
+    await signIn.social({
+      provider: "github",
+    });
+  });
+  document.querySelector("#logout")?.addEventListener("click", async () => {
+    await signOut();
+    window.location.reload();
+  });
+</script>
+
+<style>
+ #login {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: linear-gradient(135deg, #e6e6e6 0%, #ffffff 50%, #e6e6e6 100%);
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+  #login {
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,0.10) 0%,
+      rgba(255,255,255,0.18) 50%,
+      rgba(255,255,255,0.10) 100%
+    );
+    color: #eee;
+  }
+}
+
+#login svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: block;
+}
+  #logout {
+    cursor: pointer;
+  }
+  .avatar {
+    max-width: 2rem;
+    max-height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+</style>

@@ -5,7 +5,7 @@ import { minVersion, outside } from "semver";
 import pkg from "../../../package.json";
 
 const { astroRange } = Astro.locals.starlightRoute.entry.data;
-const astroVersion = minVersion(pkg.dependencies.astro)?.version;
+const astroVersion = minVersion(pkg.devDependencies.astro)?.version;
 // check if the Astro version is less than the required range.
 const outRange =
   astroRange && astroVersion && outside(astroVersion, astroRange, ">");

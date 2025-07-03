@@ -35,5 +35,16 @@
       "pattern": "www.astro-tips.dev",
       "custom_domain": true
     }
-  ]
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "astro-tips",
+      "database_id": "26bb4560-6378-4c93-bd0e-6c4f24426df7",
+      "experimental_remote": true
+    }
+  ],
+  "vars": {
+    "GITHUB_CLIENT_ID": "Ov23lig7iTHNZD7CWaHS"
+  }
 }

@@ -15,25 +15,30 @@
     "lint:fix": "biome check --apply .",
     "cf-typegen": "wrangler types --include-runtime --include-env"
   },
-  "dependencies": {
+  "devDependencies": {
     "@astrojs/check": "0.9.4",
     "@astrojs/cloudflare": "12.6.0",
     "@astrojs/starlight": "0.34.4",
-    "astro": "5.10.2",
-    "semver": "7.7.2",
-    "sharp": "0.34.2",
-    "starlight-package-managers": "0.11.0",
-    "typescript": "5.8.3"
-  },
-  "devDependencies": {
     "@biomejs/biome": "2.0.6",
     "@types/mdast": "4.0.4",
     "@types/node": "22.16.0",
     "@types/semver": "7.7.0",
+    "astro": "5.10.2",
+    "better-auth": "1.2.12",
+    "kysely-d1": "0.4.0",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.2",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1",
+    "semver": "7.7.2",
+    "sharp": "0.34.2",
+    "starlight-package-managers": "0.11.0",
+    "typescript": "5.8.3",
     "wrangler": "4.22.0"
+  },
+  "overrides": {
+    "@astrojs/cloudflare": {
+      "wrangler": "4.22.0"
+    }
   }
 }
