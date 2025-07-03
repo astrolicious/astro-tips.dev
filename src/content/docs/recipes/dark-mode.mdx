@@ -254,7 +254,7 @@ If you're using ESLint, there's a good chance you'll run into `'theme' is not de
 
 <Tabs>
   <TabItem label="TypeScript">
-    ```ts title="src/env.d.ts" ins={3-10}
+    ```ts title="src/env.d.ts"
     interface Window {
       theme: {
         setTheme: (theme: "auto" | "dark" | "light") => void;
@@ -265,8 +265,8 @@ If you're using ESLint, there's a good chance you'll run into `'theme' is not de
     }
     ```
   </TabItem>
-      <TabItem label="ESLint config">
-    ```js title="eslint.config.js" ins={5-7}
+  <TabItem label="ESLint config">
+    ```js title="eslint.config.js"
     import { defineConfig } from "eslint/config";
     export default defineConfig([
       {
