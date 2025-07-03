@@ -1,5 +1,4 @@
 ---
-import { ViewTransitions } from "astro:transitions";
 import ThemeManager from "./ThemeManager.astro";
 ---
 
@@ -11,7 +10,6 @@ import ThemeManager from "./ThemeManager.astro";
     <meta name="generator" content={Astro.generator} />
     <title>Astro</title>
     <ThemeManager defaultTheme="dark" />
-    <ViewTransitions />
   </head>
   <main>
     <body>
@@ -25,12 +23,19 @@ import ThemeManager from "./ThemeManager.astro";
       --text-color: #000000;
       color-scheme: light;
     }
-    @media (prefers-color-scheme: dark), :root[data-theme="dark"] {
-      :root {
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
         --background-color: #333333;
         --text-color: #ffffff;
         color-scheme: dark;
       }
+    }
+
+    :root[data-theme="dark"] {
+      --background-color: #333333;
+      --text-color: #ffffff;
+      color-scheme: dark;
     }
 
     body {

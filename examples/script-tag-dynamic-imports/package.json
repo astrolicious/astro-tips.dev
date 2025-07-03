@@ -10,9 +10,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@tsparticles/confetti": "^3.4.0",
-    "astro": "^5.1.1",
-    "js-confetti": "^0.12.0",
-    "typescript": "^5.4.5"
+    "@tsparticles/confetti": "^3.8.1",
+    "astro": "^5.10.2",
+    "js-confetti": "^0.12.0"
   }
 }
