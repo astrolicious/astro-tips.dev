@@ -69,11 +69,11 @@ With `v1.6` Biome provides partial support for Astro. Linting and Formatting is 
 
 3. Provide the overrides property inside biome config to support `.astro` files:
 
-    ```json title="biome.json" ins={12-24} 
+    ```json title="biome.json" ins={12-28} 
     {
-      "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+      "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
       "organizeImports": {
-        "enabled": true
+      "enabled": true
       },
       "linter": {
         "enabled": true,
@@ -83,12 +83,16 @@ With `v1.6` Biome provides partial support for Astro. Linting and Formatting is 
       },
       "overrides": [
         {
-          "include": ["*.astro"],
+          "includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
           "linter": {
             "rules": {
               "style": {
                 "useConst": "off",
                 "useImportType": "off"
+              },
+              "correctness": {
+                "noUnusedVariables": "off",
+                "noUnusedImports": "off"
               }
             }
           }
