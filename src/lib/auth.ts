@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { admin, oAuthProxy } from 'better-auth/plugins';
 import { D1Dialect } from 'kysely-d1';
+import { BETTER_AUTH_SECRET } from 'astro:env/server';
 
 export const auth = (url: string, env: Env) => {
 	return betterAuth({

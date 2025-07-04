@@ -91,13 +91,21 @@ export default defineConfig({
 			},
 		},
 	}),
-	// env: {
-	// 	validateSecrets: true,
-	// 	schema: {
-	// 		BETTER_AUTH_SECRET: envField.string({
-	// 			context: "server",
-	// 			access: "secret",
-	// 		})
-	// 	}
-	// }
+	env: {
+		validateSecrets: true,
+		schema: {
+			BETTER_AUTH_SECRET: envField.string({
+				context: "server",
+				access: "secret",
+			}),
+			GITHUB_CLIENT_SECRET: envField.string({
+				context: "server",
+				access: "secret",
+			}),
+			GITHUB_CLIENT_ID: envField.string({
+				context: "server",
+				access: "public",
+			})
+		}
+	}
 });
