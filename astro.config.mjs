@@ -87,8 +87,8 @@ export default defineConfig({
 		platformProxy: {
 			enabled: true,
 			experimental: {
-				remoteBindings: true,
-			},
+				remoteBindings: true
+			}
 		},
 	}),
 	// env: {
