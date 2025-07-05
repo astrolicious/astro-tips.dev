@@ -1,6 +1,0 @@
-{
-  "tags": ["3rd-party"],
-  "title": "Using Astro server islands and Cloudflare geo headers for dynamic region-based content",
-  "link": "https://www.blackspike.com/blog/astro-server-islands-cloudflare-geolocation/",
-  "updated": "2024-09-30"
-}

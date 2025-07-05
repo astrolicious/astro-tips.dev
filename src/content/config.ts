@@ -1,7 +1,7 @@
 import { defineCollection, z } from 'astro:content';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { docsSchema } from '@astrojs/starlight/schema';
-import { glob } from 'astro/loaders';
+import { file } from 'astro/loaders';
 import { minVersion, outside, validRange } from 'semver';
 import pkg from '../../package.json';
 
@@ -29,7 +29,7 @@ const starlightSchema = defineCollection({
 });
 
 const resourcesSchema = defineCollection({
-	loader: glob({ pattern: '**/*.json', base: './src/content/resources' }),
+	loader: file('src/content/resources.json'),
 	schema: z.object({
 		tags: z.array(z.string()),
 		title: z.string(),
