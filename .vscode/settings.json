@@ -1,0 +1,25 @@
+{
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  // "json.schemas": [
+  //   {
+  //     "fileMatch": ["/src/content/resources.json"],
+  //     "url": "./.astro/collections/resources.schema.json"
+  //   }
+  // ],
+  "astro.content-intellisense": true
+}

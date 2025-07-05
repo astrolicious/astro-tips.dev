@@ -31,6 +31,7 @@ const starlightSchema = defineCollection({
 const resourcesSchema = defineCollection({
 	loader: file('src/content/resources.json'),
 	schema: z.object({
+		slug: z.string(),
 		tags: z.array(z.string()),
 		title: z.string(),
 		link: z.string(),

@@ -12,6 +12,9 @@ export default defineConfig({
 		'/contributing': '/#want-to-get-involved',
 		'/resources/educational': '/external-resources',
 	},
+	experimental: {
+		contentIntellisense: true,
+	},
 	integrations: [
 		starlight({
 			title: 'Astro Tips',
