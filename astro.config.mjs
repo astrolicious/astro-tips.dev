@@ -3,7 +3,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import cloudflare from '@astrojs/cloudflare';
 import starlight from '@astrojs/starlight';
-import { defineConfig, envField } from 'astro/config';
+import { defineConfig } from 'astro/config';
 
 export default defineConfig({
 	site: process.env.DEPLOY_URL ?? 'https://astro-tips.dev',
@@ -14,7 +14,6 @@ export default defineConfig({
 	},
 	integrations: [
 		starlight({
-			prerender: true,
 			title: 'Astro Tips',
 			logo: {
 				light: './src/assets/logo-light.svg',
@@ -63,7 +62,6 @@ export default defineConfig({
 			components: {
 				PageTitle: './src/components/starlight/PageTitle.astro',
 				MarkdownContent: './src/components/starlight/MarkdownContent.astro',
-				ThemeSelect: './src/components/starlight/ThemeSelect.astro',
 			},
 			credits: true,
 		}),
@@ -81,23 +79,11 @@ export default defineConfig({
 			external: [...builtinModules, ...builtinModules.map((mod) => `node:${mod}`)],
 		},
 	},
-	output: 'static',
+	output: 'server',
 	adapter: cloudflare({
 		imageService: 'passthrough',
 		platformProxy: {
 			enabled: true,
-			experimental: {
-				remoteBindings: true,
-			},
 		},
 	}),
-	// env: {
-	// 	validateSecrets: true,
-	// 	schema: {
-	// 		BETTER_AUTH_SECRET: envField.string({
-	// 			context: "server",
-	// 			access: "secret",
-	// 		})
-	// 	}
-	// }
 });

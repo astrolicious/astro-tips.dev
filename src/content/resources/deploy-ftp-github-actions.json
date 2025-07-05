@@ -1,6 +1,0 @@
-{
-  "tags": ["deploy"],
-  "title": "Deploy AstroJS with FTP via GitHub Actions",
-  "link": "https://glombardi.dev/posts/deploy-astrojs-with-ftp-via-github-actions/",
-  "updated": "2024-08-30"
-}

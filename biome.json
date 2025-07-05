@@ -10,7 +10,6 @@
     "ignoreUnknown": true,
     "includes": [
       "**",
-      "!**/worker-configuration.d.ts",
       "!**/.prettierrc.mjs",
       "!**/.prettierignore",
       "!**/*.astro",
