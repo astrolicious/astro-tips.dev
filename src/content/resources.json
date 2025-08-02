@@ -1398,5 +1398,12 @@
     "link": "https://zenn.dev/chot/articles/a03fa6c3c5244c",
     "updated": "2024-04-15",
     "slug": "how-to-build-a-likes-counter-with-astro-db"
-  }
+  },
+  {
+    "tags": ["images"],
+    "title": "Astro OG Image for SEO on cloudflare workers",
+    "link": "https://viveklokhande.com/blogs/astro-og-image-for-seo",
+    "updated": "2025-08-02"
+}
+
 ]
