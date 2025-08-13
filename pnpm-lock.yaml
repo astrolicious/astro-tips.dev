@@ -15,8 +15,8 @@ importers:
         specifier: 12.6.0
         version: 12.6.0(@types/node@22.16.0)(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1))(yaml@2.8.1)
       '@astrojs/starlight':
-        specifier: 0.34.8
-        version: 0.34.8(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1))
+        specifier: 0.35.2
+        version: 0.35.2(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1))
       astro:
         specifier: 5.11.1
         version: 5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1)
@@ -28,7 +28,7 @@ importers:
         version: 0.34.2
       starlight-package-managers:
         specifier: 0.11.0
-        version: 0.11.0(@astrojs/starlight@0.34.8(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1)))
+        version: 0.11.0(@astrojs/starlight@0.35.2(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1)))
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -114,8 +114,8 @@ packages:
   '@astrojs/sitemap@3.4.2':
     resolution: {integrity: sha512-wfN2dZzdkto6yaMtOFa/J9gc60YE3wl3rgSBoNJ+MU3lJVUMsDY9xf9uAVi8Mp/zEQKFDSJlQzBvqQUpw0Hf6g==}
 
-  '@astrojs/starlight@0.34.8':
-    resolution: {integrity: sha512-XuYz0TfCZhje2u1Q9FNtmTdm7/B9QP91RDI1VkPgYvDhSYlME3k8gwgcBMHnR9ASDo2p9gskrqe7t1Pub/qryg==}
+  '@astrojs/starlight@0.35.2':
+    resolution: {integrity: sha512-curGghoW4s5pCbW2tINsJPoxEYPan87ptCOv7GZ+S24N3J6AyaOu/OsjZDEMaIpo3ZlObM5DQn+w7iXl3drDhQ==}
     peerDependencies:
       astro: ^5.5.0
 
@@ -2844,7 +2844,7 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.25.76
 
-  '@astrojs/starlight@0.34.8(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1))':
+  '@astrojs/starlight@0.35.2(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1))':
     dependencies:
       '@astrojs/markdown-remark': 6.3.5
       '@astrojs/mdx': 4.3.3(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1))
@@ -5373,9 +5373,9 @@ snapshots:
       as-table: 1.0.55
       get-source: 2.0.12
 
-  starlight-package-managers@0.11.0(@astrojs/starlight@0.34.8(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1))):
+  starlight-package-managers@0.11.0(@astrojs/starlight@0.35.2(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1))):
     dependencies:
-      '@astrojs/starlight': 0.34.8(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1))
+      '@astrojs/starlight': 0.35.2(astro@5.11.1(@types/node@22.16.0)(rollup@4.46.2)(typescript@5.8.3)(yaml@2.8.1))
 
   stoppable@1.1.0: {}
 
