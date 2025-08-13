@@ -1404,5 +1404,110 @@
     "title": "Astro OG Image for SEO on Cloudflare workers",
     "link": "https://viveklokhande.com/blogs/astro-og-image-for-seo",
     "updated": "2025-08-02"
+  },
+  {
+    "tags": ["deploy"],
+    "title": "How To Build and Deploy a Basic Site Using Astro and Netlify",
+    "link": "https://thenewstack.io/how-to-build-and-deploy-a-basic-site-using-astro-and-netlify/",
+    "updated": "2025-08-12",
+    "slug": "how-to-build-and-deploy-a-basic-site-using-astro-and-netlify"
+  },
+  {
+    "tags": ["content-collections"],
+    "title": "Using Astro’s live content collection to display webmentions for blog posts",
+    "link": "https://sugardave.cloud/posts/astro/using-live-collection-for-webmentions",
+    "updated": "2025-08-12",
+    "slug": "using-live-collection-for-webmentions"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Media catalogue with Astro and Turso",
+    "link": "https://goulven-clech.dev/2025/catalogue-astro-turso/",
+    "updated": "2025-08-12",
+    "slug": "catalogue-astro-turso"
+  },
+  {
+    "tags": ["images"],
+    "title": "Generate Dynamic SEO Images with Vercel OG (Satori) for Tanstack Start, Astro & Laravel",
+    "link": "https://nikuscs.com/blog/09-dynamic-seo-images-vercel-og-satori/",
+    "updated": "2025-08-12",
+    "slug": "09-dynamic-seo-images-vercel-og-satori"
+  },
+  {
+    "tags": ["markdown"],
+    "title": "Power your Astro blog with Markdown View, Copy buttons to LLMS + Voice Resumes",
+    "link": "https://nikuscs.com/blog/07-astro-copy-llms-button/",
+    "updated": "2025-08-12",
+    "slug": "07-astro-copy-llms-button"
+  },
+  {
+    "tags": ["markdown"],
+    "title": "Power your Astro blog with Markdown View, Copy buttons to LLMS + Voice Resumes",
+    "link": "https://nikuscs.com/blog/07-astro-copy-llms-button/",
+    "updated": "2025-08-12",
+    "slug": "07-astro-copy-llms-button"
+  },
+  {
+    "tags": ["auth"],
+    "title": "How to Implement Basic Authorization in Astro",
+    "link": "https://www.launchfa.st/blog/implement-basic-authorization-astro",
+    "updated": "2025-08-12",
+    "slug": "implement-basic-authorization-astro"
+  },
+  {
+    "tags": ["markdown"],
+    "title": "How to create a Rehype plugin that turns GitHub links into beautiful badges",
+    "link": "https://blog.trueberryless.org/blog/rehype-github-badge-links/",
+    "updated": "2025-08-12",
+    "slug": "rehype-github-badge-links"
+  },
+  {
+    "tags": ["deploy"],
+    "title": "Lightning Fast Building with Strapi & Astro",
+    "link": "https://strapi.io/blog/lightning-fast-building-with-strapi-and-astro",
+    "updated": "2025-08-12",
+    "slug": "lightning-fast-building-with-strapi-and-astro"
+  },
+  {
+    "tags": ["auth"],
+    "title": "Using An EVM Wallet For IndieAuth in Astro",
+    "link": "https://sugardave.cloud/posts/indieauth-using-evm-wallet/",
+    "updated": "2025-08-12",
+    "slug": "indieauth-using-evm-wallet"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Mastodon as Comments in Astrojs",
+    "link": "https://gregnewman.io/blog/mastodon-comments-in-astrojs/",
+    "updated": "2025-08-12",
+    "slug": "mastodon-comments-in-astrojs"
+  },
+  {
+    "tags": ["images"],
+    "title": "Astro OG image generation with SSR on Cloudflare workers",
+    "link": "https://viveklokhande.com/blogs/astro-og-image-for-seo",
+    "updated": "2025-08-12",
+    "slug": "astro-og-image-for-seo"
+  },
+  {
+    "tags": ["deploy"],
+    "title": "Vibing this summer: Building a Landing Page with Astro & Cloudflare Workers",
+    "link": "https://dev.to/fiberplane/vibe-this-summer-building-a-landing-page-with-astro-cloudflare-workers-29io",
+    "updated": "2025-08-12",
+    "slug": "vibe-this-summer-building-a-landing-page-with-astro-cloudflare-workers-29io"
+  },
+  {
+    "tags": ["content-collections"],
+    "title": "How to Display Latest YouTube Videos on Your Astro Blog (SSG + SSR Guide)",
+    "link": "https://www.bitdoze.com/add-youtube-videos-astro-blog/",
+    "updated": "2025-08-12",
+    "slug": "add-youtube-videos-astro-blog"
+  },
+  {
+    "tags": ["API Endpoints"],
+    "title": "Build a Lightning-Fast Real-Time App with Astro and Convex",
+    "link": "https://www.bitdoze.com/astro-convex-realtime-app/",
+    "updated": "2025-08-12",
+    "slug": "astro-convex-realtime-app"
   }
 ]
