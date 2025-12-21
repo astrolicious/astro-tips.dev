@@ -1,0 +1,22 @@
+---
+title: Using web components in MDX
+astroRange: ^4.0.0
+---
+
+If you have a web component defined in a separate JavaScript file, you can include it in your MDX file by importing the script and adding a `<script>` tag with `type="module"`.
+The script will be executed on the client side.
+
+```js title="src/web-component.js"
+class MyEl extends HTMLElement { ... }
+customElements.define('my-el', MyEl);
+```
+
+Then in your `.mdx` file you can import it
+
+```mdx title="src/Page.mdx"
+import webComponent from "./web-component.js?url";
+
+<script src={webComponent} type="module"></script>
+
+<my-el />
+```
