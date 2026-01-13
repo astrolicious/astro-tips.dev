@@ -1509,5 +1509,12 @@
     "link": "https://www.bitdoze.com/astro-convex-realtime-app/",
     "updated": "2025-08-12",
     "slug": "astro-convex-realtime-app"
+  },
+  {
+    "tags": ["images"],
+    "title": "How To Generate Dynamic OG Images For All Pages During Runtime",
+    "link": "https://anav.dev/blogs/how-to-generate-dynamic-open-graph-images-with-astro-and-satori",
+    "updated": "2026-01-13",
+    "slug": "how-to-generate-dynamic-og-images-for-all-pages-during-runtime"
   }
 ]
