@@ -21,7 +21,7 @@ jobs:
           app-id: ${{ vars.BOT_APPID }}
           private-key: ${{ secrets.BOT_SECRET }}
 
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           token: ${{ steps.app-token.outputs.token }}
           ref: ${{ github.head_ref }}
@@ -30,7 +30,7 @@ jobs:
         uses: pnpm/action-setup@v3
 
       - name: Setup Node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
@@ -42,7 +42,7 @@ jobs:
         run: pnpm run format
 
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6
+        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7
         with:
           commit_message: "[ci] lint"
           branch: ${{ github.head_ref }}
