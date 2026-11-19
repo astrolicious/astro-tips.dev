@@ -1,0 +1,292 @@
+---
+import { Badge, Icon } from '@astrojs/starlight/components';
+import AuthorAvatar from '~/components/AuthorAvatar.astro';
+import type { ResolvedResource } from '~/lib/resources';
+
+interface Props {
+	resource: ResolvedResource;
+	showAuthors?: boolean;
+	interactiveTags?: boolean;
+}
+
+const { resource, showAuthors = true, interactiveTags = false } = Astro.props;
+
+const searchText = [
+	resource.title,
+	resource.description ?? '',
+	resource.domain,
+	...resource.authors.map((author) => author.name),
+	...resource.tags.flatMap((tag) => [tag.title, tag.id]),
+]
+	.join(' ')
+	.toLowerCase();
+---
+
+<article
+	class="resource-card"
+	data-resource-card
+	data-tags={resource.tags.map((tag) => tag.id).join(' ')}
+	data-updated={resource.updated.getTime()}
+	data-added={resource.addedAt.getTime()}
+	data-title={resource.title.toLowerCase()}
+	data-search={searchText}
+	data-new-until={resource.newUntilIso ?? undefined}
+	data-is-new={resource.isNewAtBuild ? 'true' : 'false'}
+>
+	<div class="resource-header">
+		<a
+			href={resource.link}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="resource-title"
+		>
+			<span class="resource-title-text">{resource.title}</span>
+			<Icon name="external" size="0.9rem" class="external-icon" />
+			<span class="sr-only"> (opens in a new tab)</span>
+		</a>
+
+		{
+			resource.isNewAtBuild && resource.newUntilIso && (
+				<span class="resource-new-badge" data-new-badge={resource.newUntilIso}>
+					<Badge text="New" variant="tip" size="small" />
+				</span>
+			)
+		}
+	</div>
+
+	{resource.description && <p class="resource-description">{resource.description}</p>}
+
+	<div class="resource-meta">
+		{
+			showAuthors && resource.authors.length > 0 ? (
+				<div class="resource-authors">
+					{resource.authors.map((author) => (
+						<a href={author.href} class="resource-author-chip">
+							<AuthorAvatar
+								name={author.name}
+								avatarUrl={author.avatarUrl}
+								initials={author.initials}
+								size={20}
+								decorative
+							/>
+							<span>{author.name}</span>
+						</a>
+					))}
+				</div>
+			) : (
+				<span class="resource-domain">{resource.domain}</span>
+			)
+		}
+
+		<span class="meta-separator" aria-hidden="true">·</span>
+
+		<time datetime={resource.updatedIso} class="resource-date">
+			{resource.updatedLabel}
+		</time>
+	</div>
+
+	{
+		resource.tags.length > 0 && (
+			<ul class="resource-tags" aria-label="Topics">
+				{resource.tags.map((tag) => (
+					<li>
+						{interactiveTags ? (
+							<button
+								type="button"
+								class="resource-tag-pill"
+								data-filter-tag={tag.id}
+								aria-label={`Filter by ${tag.title}`}
+							>
+								{tag.title}
+							</button>
+						) : (
+							<a
+								href={`/external-resources?tag=${encodeURIComponent(tag.id)}`}
+								class="resource-tag-pill"
+							>
+								{tag.title}
+							</a>
+						)}
+					</li>
+				))}
+			</ul>
+		)
+	}
+</article>
+
+<style>
+	.resource-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.625rem;
+		padding-block: 1rem;
+		padding-inline: 1.125rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		background-color: var(--sl-color-bg-nav);
+		transition:
+			border-color 0.15s ease,
+			background-color 0.15s ease;
+	}
+
+	.resource-card:hover {
+		border-color: var(--sl-color-gray-4);
+	}
+
+	.resource-card[data-is-new='true'] {
+		border-color: var(--sl-color-purple);
+	}
+
+	.resource-card[hidden] {
+		display: none;
+	}
+
+	.resource-header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 0.625rem;
+	}
+
+	.resource-title {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 0.35rem;
+		font-size: var(--sl-text-base);
+		font-weight: 600;
+		line-height: 1.4;
+		color: var(--sl-color-white);
+		text-decoration: none;
+		min-inline-size: 0;
+	}
+
+	.resource-title:hover {
+		color: var(--sl-color-text-accent);
+		text-decoration: underline;
+	}
+
+	.resource-title:focus-visible,
+	.resource-author-chip:focus-visible,
+	.resource-tag-pill:focus-visible {
+		outline: 2px solid var(--sl-color-text-accent);
+		outline-offset: 2px;
+		border-radius: 0.25rem;
+	}
+
+	.resource-title-text {
+		overflow-wrap: anywhere;
+	}
+
+	.external-icon {
+		flex-shrink: 0;
+		color: var(--sl-color-gray-3);
+		align-self: center;
+	}
+
+	.resource-title:hover .external-icon {
+		color: var(--sl-color-text-accent);
+	}
+
+	.resource-new-badge {
+		flex-shrink: 0;
+		line-height: 1;
+	}
+
+	.resource-new-badge[hidden] {
+		display: none;
+	}
+
+	.resource-description {
+		margin: 0;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-2);
+		line-height: 1.5;
+	}
+
+	.resource-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.375rem 0.5rem;
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-3);
+	}
+
+	.resource-authors {
+		display: inline-flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.resource-author-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		color: var(--sl-color-gray-2);
+		font-weight: 500;
+		text-decoration: none;
+	}
+
+	.resource-author-chip:hover {
+		color: var(--sl-color-text-accent);
+		text-decoration: underline;
+	}
+
+	.resource-domain {
+		color: var(--sl-color-gray-2);
+		font-weight: 500;
+		overflow-wrap: anywhere;
+	}
+
+	.meta-separator {
+		color: var(--sl-color-gray-4);
+	}
+
+	.resource-date {
+		white-space: nowrap;
+	}
+
+	.resource-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.375rem;
+		list-style: none;
+		margin: 0;
+		margin-block-start: auto;
+		padding: 0;
+		padding-block-start: 0.25rem;
+	}
+
+	.resource-tag-pill {
+		display: inline-flex;
+		align-items: center;
+		padding-block: 0.15rem;
+		padding-inline: 0.55rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 9999px;
+		background-color: var(--sl-color-bg);
+		color: var(--sl-color-gray-2);
+		font-family: inherit;
+		font-size: var(--sl-text-2xs);
+		font-weight: 500;
+		line-height: 1.4;
+		text-decoration: none;
+		cursor: pointer;
+		transition:
+			border-color 0.15s ease,
+			background-color 0.15s ease,
+			color 0.15s ease;
+	}
+
+	.resource-tag-pill:hover {
+		border-color: var(--sl-color-text-accent);
+		color: var(--sl-color-text-accent);
+	}
+
+	.resource-tag-pill[data-active='true'] {
+		border-color: var(--sl-color-text-accent);
+		background-color: var(--sl-color-accent-low);
+		color: var(--sl-color-accent-high);
+	}
+</style>

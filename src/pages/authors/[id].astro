@@ -4,12 +4,14 @@ import { CardGrid, Icon, LinkCard } from '@astrojs/starlight/components';
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import type { GetStaticPaths, MarkdownHeading } from 'astro';
 import AuthorAvatar from '~/components/AuthorAvatar.astro';
+import ResourceCard from '~/components/ResourceCard.astro';
 import {
 	formatContributionSummary,
 	getAuthorContributions,
 	getDisplayDomain,
 	resolveAuthor,
 } from '~/lib/authors';
+import { resolveResourcesByEntries } from '~/lib/resources';
 
 export const getStaticPaths = (async () => {
 	const authors = await getCollection('authors');
@@ -26,6 +28,7 @@ interface Props {
 const { authorEntry } = Astro.props;
 const author = resolveAuthor(authorEntry);
 const contributions = await getAuthorContributions(author.id);
+const resolvedResources = await resolveResourcesByEntries(contributions.resources);
 
 const headings: MarkdownHeading[] = [];
 if (contributions.recipes.length > 0) {
@@ -137,20 +140,14 @@ const summary = formatContributionSummary({
 	}
 
 	{
-		contributions.resources.length > 0 && (
+		resolvedResources.length > 0 && (
 			<>
 				<h2 id="external-resources">External resources</h2>
-				<CardGrid>
-					{contributions.resources.map((resource) => (
-						<LinkCard
-							title={resource.data.title}
-							href={resource.data.link}
-							target="_blank"
-							rel="noopener noreferrer"
-							{...(resource.data.description ? { description: resource.data.description } : {})}
-						/>
+				<div class="not-content author-resources-grid">
+					{resolvedResources.map((resource) => (
+						<ResourceCard resource={resource} showAuthors={false} />
 					))}
-				</CardGrid>
+				</div>
 			</>
 		)
 	}
@@ -239,6 +236,12 @@ const summary = formatContributionSummary({
 	.empty-state {
 		color: var(--sl-color-gray-3);
 		font-style: italic;
+	}
+
+	.author-resources-grid {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
 	}
 
 	.back-link-wrapper {

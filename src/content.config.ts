@@ -6,6 +6,7 @@ import { z } from 'astro/zod';
 import { minVersion, outside, validRange } from 'semver';
 import pkg from '../package.json';
 import { compatibilitySchema } from './lib/compatibility';
+import { parseResourcesWithGitMetadata } from './lib/resources-loader';
 
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
 
@@ -63,7 +64,9 @@ const starlightSchema = defineCollection({
 });
 
 const resourcesSchema = defineCollection({
-	loader: file('src/content/resources.json'),
+	loader: file('src/content/resources.json', {
+		parser: parseResourcesWithGitMetadata,
+	}),
 	schema: z.object({
 		slug: z.string(),
 		tags: z.array(reference('tags')),
@@ -72,6 +75,12 @@ const resourcesSchema = defineCollection({
 		description: z.string().optional(),
 		updated: z.union([z.number(), z.string(), z.date()]).pipe(z.coerce.date()),
 		authors: z.array(reference('authors')).optional(),
+		addedAt: z.union([z.number(), z.string(), z.date()]).pipe(z.coerce.date()).optional(),
+		newUntil: z
+			.union([z.number(), z.string(), z.date()])
+			.pipe(z.coerce.date())
+			.nullable()
+			.optional(),
 	}),
 });
 

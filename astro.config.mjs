@@ -71,7 +71,6 @@ export default defineConfig({
 				},
 				{
 					label: 'External resources',
-					badge: 'Updated',
 					link: '/external-resources',
 				},
 				{
@@ -86,6 +85,7 @@ export default defineConfig({
 			routeMiddleware: [
 				'./src/middleware/compatibility-toc.ts',
 				'./src/middleware/authors-meta.ts',
+				'./src/middleware/resources-badge.ts',
 			],
 			credits: true,
 		}),
