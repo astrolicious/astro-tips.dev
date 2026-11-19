@@ -10,11 +10,11 @@ import ThemeManager from "./ThemeManager.astro";
     <title>Astro</title>
     <ThemeManager defaultTheme="dark" />
   </head>
-  <main>
-    <body>
+  <body>
+    <main>
       <slot />
-    </body>
-  </main>
+    </main>
+  </body>
   <style is:global>
     :root,
     :root[data-theme="light"] {
