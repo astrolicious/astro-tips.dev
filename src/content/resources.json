@@ -403,7 +403,8 @@
     "title": "Passing data to a bundled script in Astro",
     "link": "https://florian-lefebvre.dev/blog/passing-data-to-a-bundled-script-in-astro/",
     "updated": "2025-04-30",
-    "slug": "passing-data-to-a-bundled-script-in-astro"
+    "slug": "passing-data-to-a-bundled-script-in-astro",
+    "authors": ["florian-lefebvre"]
   },
   {
     "tags": ["3rd-party"],
@@ -459,7 +460,8 @@
     "title": "Building a Contact Form with Astro and Cloudflare Workers: A Simple Guide",
     "link": "https://hkbertoson.hashnode.dev/building-a-contact-form-with-astro-and-cloudflare-workers-a-simple-guide",
     "updated": "2024-06-30",
-    "slug": "building-a-contact-form-with-astro-and-cloudflare-workers:-a-simple-guide"
+    "slug": "building-a-contact-form-with-astro-and-cloudflare-workers:-a-simple-guide",
+    "authors": ["hunter-bertoson"]
   },
   {
     "tags": ["3rd-party"],
@@ -781,7 +783,8 @@
     "title": "Creating an endpoint that sends emails",
     "link": "https://oliverspeir.dev/garden/nodemailer/",
     "updated": "2024-01-29",
-    "slug": "creating-an-endpoint-that-sends-emails"
+    "slug": "creating-an-endpoint-that-sends-emails",
+    "authors": ["oliver-speir"]
   },
   {
     "tags": ["editor"],

@@ -1,0 +1,263 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import { CardGrid, Icon, LinkCard } from '@astrojs/starlight/components';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import type { GetStaticPaths, MarkdownHeading } from 'astro';
+import AuthorAvatar from '~/components/AuthorAvatar.astro';
+import {
+	formatContributionSummary,
+	getAuthorContributions,
+	getDisplayDomain,
+	resolveAuthor,
+} from '~/lib/authors';
+
+export const getStaticPaths = (async () => {
+	const authors = await getCollection('authors');
+	return authors.map((authorEntry) => ({
+		params: { id: authorEntry.id },
+		props: { authorEntry },
+	}));
+}) satisfies GetStaticPaths;
+
+interface Props {
+	authorEntry: CollectionEntry<'authors'>;
+}
+
+const { authorEntry } = Astro.props;
+const author = resolveAuthor(authorEntry);
+const contributions = await getAuthorContributions(author.id);
+
+const headings: MarkdownHeading[] = [];
+if (contributions.recipes.length > 0) {
+	headings.push({ depth: 2, slug: 'recipes', text: 'Recipes' });
+}
+if (contributions.tips.length > 0) {
+	headings.push({ depth: 2, slug: 'tips', text: 'Tips' });
+}
+if (contributions.resources.length > 0) {
+	headings.push({ depth: 2, slug: 'external-resources', text: 'External resources' });
+}
+
+const summary = formatContributionSummary({
+	recipes: contributions.recipes.length,
+	tips: contributions.tips.length,
+	resources: contributions.resources.length,
+	total: contributions.total,
+});
+---
+
+<StarlightPage
+	frontmatter={{
+		title: author.name,
+		description: author.bio ?? `Contributions by ${author.name} on Astro Tips.`,
+		...(headings.length === 0 ? { tableOfContents: false } : {}),
+	}}
+	headings={headings}
+>
+	<div class="not-content author-profile">
+		<AuthorAvatar
+			name={author.name}
+			avatarUrl={author.avatarUrl}
+			initials={author.initials}
+			size={96}
+			decorative
+		/>
+
+		<div class="author-profile-details">
+			{author.bio && <p class="author-profile-bio">{author.bio}</p>}
+			<p class="author-profile-summary">{summary}</p>
+
+			{
+				(author.website || author.links.length > 0) && (
+					<ul class="author-profile-links" aria-label={`Links for ${author.name}`}>
+						{author.website && (
+							<li>
+								<a
+									href={author.website}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="profile-pill"
+								>
+									<Icon name="external" size="0.95rem" />
+									<span>{getDisplayDomain(author.website)}</span>
+								</a>
+							</li>
+						)}
+						{author.links.map((link) => (
+							<li>
+								<a
+									href={link.href}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="profile-pill"
+								>
+									<Icon name={link.icon} size="0.95rem" />
+									<span>{link.label}</span>
+								</a>
+							</li>
+						))}
+					</ul>
+				)
+			}
+		</div>
+	</div>
+
+	{
+		contributions.recipes.length > 0 && (
+			<>
+				<h2 id="recipes">Recipes</h2>
+				<CardGrid>
+					{contributions.recipes.map((recipe) => (
+						<LinkCard
+							title={recipe.data.title}
+							href={`/${recipe.id}`}
+							{...(recipe.data.description ? { description: recipe.data.description } : {})}
+						/>
+					))}
+				</CardGrid>
+			</>
+		)
+	}
+
+	{
+		contributions.tips.length > 0 && (
+			<>
+				<h2 id="tips">Tips</h2>
+				<CardGrid>
+					{contributions.tips.map((tip) => (
+						<LinkCard
+							title={tip.data.title}
+							href={`/${tip.id}`}
+							{...(tip.data.description ? { description: tip.data.description } : {})}
+						/>
+					))}
+				</CardGrid>
+			</>
+		)
+	}
+
+	{
+		contributions.resources.length > 0 && (
+			<>
+				<h2 id="external-resources">External resources</h2>
+				<CardGrid>
+					{contributions.resources.map((resource) => (
+						<LinkCard
+							title={resource.data.title}
+							href={resource.data.link}
+							target="_blank"
+							rel="noopener noreferrer"
+							{...(resource.data.description ? { description: resource.data.description } : {})}
+						/>
+					))}
+				</CardGrid>
+			</>
+		)
+	}
+
+	{
+		contributions.total === 0 && (
+			<p class="empty-state">{author.name} has not published any contributions on Astro Tips yet.</p>
+		)
+	}
+
+	<p class="back-link-wrapper not-content">
+		<a href="/authors" class="back-link">
+			<Icon name="left-arrow" size="0.95rem" />
+			<span>All authors</span>
+		</a>
+	</p>
+</StarlightPage>
+
+<style>
+	.author-profile {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1.5rem;
+		padding-block: 1.25rem;
+		padding-inline: 1.5rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.75rem;
+		background-color: var(--sl-color-bg-nav);
+		margin-block-end: 2rem;
+	}
+
+	.author-profile-details {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		flex: 1;
+		min-inline-size: min(100%, 16rem);
+	}
+
+	.author-profile-bio {
+		margin: 0;
+		font-size: var(--sl-text-base);
+		color: var(--sl-color-white);
+		line-height: 1.5;
+	}
+
+	.author-profile-summary {
+		margin: 0;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+	}
+
+	.author-profile-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		list-style: none;
+		margin: 0;
+		margin-block-start: 0.25rem;
+		padding: 0;
+	}
+
+	.profile-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding-block: 0.25rem;
+		padding-inline: 0.65rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 9999px;
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-2);
+		text-decoration: none;
+		background-color: var(--sl-color-bg);
+		transition:
+			border-color 0.15s ease,
+			color 0.15s ease;
+	}
+
+	.profile-pill:hover {
+		border-color: var(--sl-color-text-accent);
+		color: var(--sl-color-text-accent);
+	}
+
+	.empty-state {
+		color: var(--sl-color-gray-3);
+		font-style: italic;
+	}
+
+	.back-link-wrapper {
+		margin-block-start: 2.5rem;
+		padding-block-start: 1.25rem;
+		border-block-start: 1px solid var(--sl-color-hairline-light);
+	}
+
+	.back-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-size: var(--sl-text-sm);
+		font-weight: 500;
+		color: var(--sl-color-text-accent);
+		text-decoration: none;
+	}
+
+	.back-link:hover {
+		text-decoration: underline;
+	}
+</style>

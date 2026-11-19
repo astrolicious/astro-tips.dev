@@ -1,0 +1,79 @@
+---
+import AuthorAvatar from '~/components/AuthorAvatar.astro';
+import type { ResolvedAuthor } from '~/lib/authors';
+
+interface Props {
+	authors: ResolvedAuthor[];
+}
+
+const { authors } = Astro.props;
+---
+
+{
+	authors.length > 0 && (
+		<div class="author-byline">
+			<div class="avatar-stack" aria-hidden="true">
+				{authors.map((author) => (
+					<span class="avatar-item">
+						<AuthorAvatar
+							name={author.name}
+							avatarUrl={author.avatarUrl}
+							initials={author.initials}
+							size={22}
+							decorative
+						/>
+					</span>
+				))}
+			</div>
+			<p class="byline-text">
+				<span>By </span>
+				{authors.map((author, index) => (
+					<>
+						{index > 0 && (index === authors.length - 1 ? ' and ' : ', ')}
+						<a href={author.href}>{author.name}</a>
+					</>
+				))}
+			</p>
+		</div>
+	)
+}
+
+<style>
+	.author-byline {
+		display: inline-flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		color: var(--sl-color-gray-2);
+	}
+
+	.avatar-stack {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.avatar-item {
+		display: inline-flex;
+		border-radius: 9999px;
+		box-shadow: 0 0 0 2px var(--sl-color-bg);
+	}
+
+	.avatar-item + .avatar-item {
+		margin-inline-start: -0.375rem;
+	}
+
+	.byline-text {
+		margin: 0;
+		line-height: 1.4;
+	}
+
+	a {
+		color: var(--sl-color-text-accent);
+		text-decoration: none;
+		font-weight: 500;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+</style>

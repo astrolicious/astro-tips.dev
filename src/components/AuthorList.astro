@@ -1,0 +1,48 @@
+---
+import AuthorCard from '~/components/AuthorCard.astro';
+import type { ResolvedAuthor } from '~/lib/authors';
+
+interface Props {
+	authors: ResolvedAuthor[];
+}
+
+const { authors } = Astro.props;
+const heading = authors.length === 1 ? 'Author' : 'Authors';
+---
+
+{
+	authors.length > 0 && (
+		<aside class="not-content author-section" aria-labelledby="article-authors-heading">
+			<h2 id="article-authors-heading" class="author-section-title">
+				{heading}
+			</h2>
+			<div class="author-grid">
+				{authors.map((author) => (
+					<AuthorCard author={author} />
+				))}
+			</div>
+		</aside>
+	)
+}
+
+<style>
+	.author-section {
+		margin-block-start: 3rem;
+		padding-block-start: 1.5rem;
+		border-block-start: 1px solid var(--sl-color-hairline-light);
+	}
+
+	.author-section-title {
+		margin: 0;
+		margin-block-end: 1rem;
+		font-size: var(--sl-text-h4);
+		font-weight: 600;
+		color: var(--sl-color-white);
+	}
+
+	.author-grid {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+	}
+</style>

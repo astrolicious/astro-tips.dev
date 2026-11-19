@@ -1,0 +1,179 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+import AuthorAvatar from '~/components/AuthorAvatar.astro';
+import { getDisplayDomain, type ResolvedAuthor } from '~/lib/authors';
+
+interface Props {
+	author: ResolvedAuthor;
+	summary?: string | undefined;
+}
+
+const { author, summary } = Astro.props;
+---
+
+<article class="author-card">
+	<a href={author.href} class="avatar-link" aria-label={`View ${author.name}'s profile`}>
+		<AuthorAvatar
+			name={author.name}
+			avatarUrl={author.avatarUrl}
+			initials={author.initials}
+			size={56}
+			decorative
+		/>
+	</a>
+
+	<div class="author-body">
+		<div class="author-header">
+			<a href={author.href} class="author-name">{author.name}</a>
+			{
+				(author.website || author.links.length > 0) && (
+					<ul class="author-links" aria-label={`Links for ${author.name}`}>
+						{author.website && (
+							<li>
+								<a
+									href={author.website}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="social-link"
+									aria-label={`${author.name}'s website (${getDisplayDomain(author.website)})`}
+									title={getDisplayDomain(author.website)}
+								>
+									<Icon name="external" size="1rem" />
+								</a>
+							</li>
+						)}
+						{author.links.map((link) => (
+							<li>
+								<a
+									href={link.href}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="social-link"
+									aria-label={`${author.name} on ${link.label}`}
+									title={link.label}
+								>
+									<Icon name={link.icon} size="1rem" />
+								</a>
+							</li>
+						))}
+					</ul>
+				)
+			}
+		</div>
+
+		{author.bio && <p class="author-bio">{author.bio}</p>}
+
+		{
+			summary ? (
+				<p class="author-summary">{summary}</p>
+			) : (
+				<a href={author.href} class="profile-link">
+					All contributions by {author.name}
+					<Icon name="right-arrow" size="0.875rem" />
+				</a>
+			)
+		}
+	</div>
+</article>
+
+<style>
+	.author-card {
+		display: flex;
+		align-items: flex-start;
+		gap: 1rem;
+		padding-block: 1rem;
+		padding-inline: 1.25rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		background-color: var(--sl-color-bg-nav);
+		transition: border-color 0.15s ease;
+	}
+
+	.author-card:hover {
+		border-color: var(--sl-color-gray-4);
+	}
+
+	.avatar-link {
+		flex-shrink: 0;
+		text-decoration: none;
+	}
+
+	.author-body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.375rem;
+		min-inline-size: 0;
+		flex: 1;
+	}
+
+	.author-header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+
+	.author-name {
+		font-size: var(--sl-text-base);
+		font-weight: 600;
+		color: var(--sl-color-white);
+		text-decoration: none;
+	}
+
+	.author-name:hover {
+		color: var(--sl-color-text-accent);
+		text-decoration: underline;
+	}
+
+	.author-links {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.social-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--sl-color-gray-3);
+		transition: color 0.15s ease;
+	}
+
+	.social-link:hover {
+		color: var(--sl-color-text-accent);
+	}
+
+	.author-bio {
+		margin: 0;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-2);
+		line-height: 1.5;
+	}
+
+	.author-summary {
+		margin: 0;
+		margin-block-start: 0.125rem;
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-3);
+	}
+
+	.profile-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		margin-block-start: 0.25rem;
+		font-size: var(--sl-text-xs);
+		font-weight: 500;
+		color: var(--sl-color-text-accent);
+		text-decoration: none;
+		align-self: flex-start;
+	}
+
+	.profile-link:hover {
+		text-decoration: underline;
+	}
+</style>
