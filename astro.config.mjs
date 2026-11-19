@@ -79,6 +79,7 @@ export default defineConfig({
 				PageTitle: './src/components/starlight/PageTitle.astro',
 				MarkdownContent: './src/components/starlight/MarkdownContent.astro',
 			},
+			routeMiddleware: './src/middleware/compatibility-toc.ts',
 			credits: true,
 		}),
 	],

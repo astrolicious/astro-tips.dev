@@ -1,0 +1,350 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+import {
+	type CompatibilityData,
+	type CompatibilityInput,
+	getSemverUrl,
+	hasCompatibilityInfo,
+	resolveCompatibility,
+	STATUS_META,
+} from '~/lib/compatibility';
+
+interface Props {
+	compatibility: CompatibilityInput | CompatibilityData;
+	astroRange?: string | undefined;
+	tableId?: string | false | undefined;
+}
+
+const { compatibility, astroRange, tableId = 'compatibility' } = Astro.props;
+const shouldRender = hasCompatibilityInfo(compatibility);
+const resolved = shouldRender ? resolveCompatibility(compatibility, astroRange) : undefined;
+const hasRendering = resolved?.sections.some((section) => section.id === 'rendering') ?? false;
+const astroSemverUrl = astroRange ? getSemverUrl('astro', astroRange) : undefined;
+---
+
+{
+	resolved && (
+		<details class="compat-summary not-content" data-tone={resolved.overall.tone}>
+			<summary class="compat-summary-header">
+				<span class="compat-overall">
+					<span class="compat-overall-icon" aria-hidden="true">
+						<Icon name={resolved.overall.icon} size="1.125rem" />
+					</span>
+					<span class="compat-overall-label">{resolved.overall.label}</span>
+				</span>
+
+				<span class="compat-groups">
+					{resolved.sections.map((section) => (
+						<span class="compat-group">
+							<span class="sr-only">{section.label}:</span>
+							{section.rows.map((row) => {
+								const statusMeta = STATUS_META[row.status];
+								const tooltip = [
+									`${row.label}: ${statusMeta.label}`,
+									row.version ? `(${row.version})` : undefined,
+									row.note ? `— ${row.note}` : undefined,
+								]
+									.filter(Boolean)
+									.join(' ');
+								const isLabeled = section.id === 'rendering';
+
+								return (
+									<span
+										class:list={['compat-pill', { 'compat-pill-icon-only': !isLabeled }]}
+										data-status={row.status}
+										title={tooltip}
+									>
+										{!isLabeled && (
+											<span class="compat-target-icon" aria-hidden="true">
+												<Icon name={row.icon} size="0.95rem" />
+											</span>
+										)}
+										{isLabeled ? (
+											<span class="compat-pill-label">{row.label}</span>
+										) : (
+											<span class="sr-only">{row.label}</span>
+										)}
+										<span class="compat-status-icon" aria-hidden="true">
+											<Icon name={statusMeta.icon} size="0.875rem" />
+										</span>
+										<span class="sr-only">: {statusMeta.label}</span>
+										{row.footnoteIndex && (
+											<sup class="compat-asterisk" aria-hidden="true">
+												*
+											</sup>
+										)}
+									</span>
+								);
+							})}
+						</span>
+					))}
+
+					{astroRange && (
+						<span
+							class="compat-pill compat-pill-version"
+							title={`Compatible with Astro ${astroRange}`}
+						>
+							<span class="compat-target-icon" aria-hidden="true">
+								<Icon name="astro" size="0.875rem" />
+							</span>
+							<span class="sr-only">Astro</span>
+							<span class="compat-pill-label">{astroRange}</span>
+						</span>
+					)}
+				</span>
+
+				<span class="compat-chevron" aria-hidden="true">
+					<Icon name="down-caret" size="1.125rem" />
+				</span>
+			</summary>
+
+			<div class="compat-summary-body">
+				<p class="compat-summary-desc">{resolved.note ?? resolved.overall.description}</p>
+
+				{resolved.footnotes.length > 0 && (
+					<ul class="compat-summary-notes">
+						{resolved.footnotes.map((item) => (
+							<li>
+								<strong>{item.targetLabel}:</strong> {item.note}
+							</li>
+						))}
+					</ul>
+				)}
+
+				<div class="compat-summary-links">
+					{tableId && (
+						<a href={`#${tableId}`}>See full compatibility</a>
+					)}
+					{hasRendering && (
+						<a href="https://docs.astro.build/en/guides/on-demand-rendering/">
+							Astro rendering modes
+						</a>
+					)}
+					{astroRange && astroSemverUrl && (
+						<a href={astroSemverUrl}>Astro {astroRange} releases</a>
+					)}
+				</div>
+			</div>
+		</details>
+	)
+}
+
+<style>
+	.compat-summary {
+		--compat-tone-bg: var(--sl-color-bg-nav);
+		--compat-tone-accent: var(--sl-color-gray-3);
+
+		margin-block: 0 1.5rem;
+		border: 1px solid var(--sl-color-hairline-light);
+		border-inline-start: 0.25rem solid var(--compat-tone-accent);
+		border-radius: 0.5rem;
+		background-color: var(--compat-tone-bg);
+		font-size: var(--sl-text-sm);
+		line-height: 1.5;
+	}
+
+	.compat-summary[data-tone='recommended'] {
+		--compat-tone-accent: var(--sl-color-blue);
+	}
+
+	.compat-summary[data-tone='supported'] {
+		--compat-tone-accent: var(--sl-color-green);
+	}
+
+	.compat-summary[data-tone='limited'] {
+		--compat-tone-accent: var(--sl-color-orange);
+	}
+
+	.compat-summary[data-tone='unsupported'] {
+		--compat-tone-accent: var(--sl-color-red);
+	}
+
+	.compat-summary-header {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 0.625rem 0.75rem;
+		padding-block: 0.75rem;
+		padding-inline: 1rem;
+		cursor: pointer;
+		list-style: none;
+	}
+
+	.compat-summary-header::-webkit-details-marker {
+		display: none;
+	}
+
+	.compat-summary-header:focus-visible {
+		outline: 2px solid var(--sl-color-accent);
+		outline-offset: -2px;
+		border-radius: 0.375rem;
+	}
+
+	.compat-overall {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: 600;
+		color: var(--sl-color-white);
+		min-inline-size: 0;
+	}
+
+	.compat-overall-icon {
+		display: inline-flex;
+		color: var(--compat-tone-accent);
+		flex-shrink: 0;
+	}
+
+	.compat-groups {
+		grid-column: 1 / -1;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.375rem;
+		min-inline-size: 0;
+	}
+
+	.compat-chevron {
+		grid-column: 2;
+		grid-row: 1;
+		display: inline-flex;
+		align-items: center;
+		justify-self: end;
+		color: var(--sl-color-gray-2);
+		transition: transform 0.2s ease;
+	}
+
+	@media (min-width: 44rem) {
+		.compat-summary-header {
+			grid-template-columns: auto minmax(0, 1fr) auto;
+		}
+
+		.compat-groups {
+			grid-column: 2;
+			grid-row: 1;
+			justify-content: flex-end;
+		}
+
+		.compat-chevron {
+			grid-column: 3;
+			grid-row: 1;
+		}
+	}
+
+	.compat-group {
+		display: inline-flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.375rem;
+	}
+
+	.compat-pill {
+		--pill-bg: var(--sl-color-bg);
+		--pill-border: var(--sl-color-hairline-light);
+		--pill-text: var(--sl-color-white);
+		--pill-icon: var(--sl-color-gray-2);
+
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		padding-block: 0.2rem;
+		padding-inline: 0.55rem;
+		border: 1px solid var(--pill-border);
+		border-radius: 9999px;
+		background-color: var(--pill-bg);
+		color: var(--pill-text);
+		font-size: var(--sl-text-xs);
+		font-weight: 500;
+		line-height: 1.25;
+	}
+
+	.compat-pill-icon-only {
+		padding-inline: 0.45rem;
+	}
+
+	.compat-pill[data-status='recommended'] {
+		--pill-border: var(--sl-color-blue);
+		--pill-text: var(--sl-color-blue-high);
+		--pill-icon: var(--sl-color-blue);
+	}
+
+	.compat-pill[data-status='supported'] {
+		--pill-border: var(--sl-color-green);
+		--pill-text: var(--sl-color-green-high);
+		--pill-icon: var(--sl-color-green);
+	}
+
+	.compat-pill[data-status='unsupported'] {
+		--pill-border: var(--sl-color-red);
+		--pill-text: var(--sl-color-red-high);
+		--pill-icon: var(--sl-color-red);
+	}
+
+	.compat-pill-version {
+		--pill-border: var(--sl-color-hairline-light);
+		--pill-text: var(--sl-color-gray-1);
+		font-family: var(--__sl-font-mono);
+	}
+
+	.compat-target-icon,
+	.compat-status-icon {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.compat-status-icon {
+		color: var(--pill-icon);
+	}
+
+	.compat-asterisk {
+		font-size: 0.7em;
+		line-height: 0;
+		color: var(--pill-icon);
+	}
+
+	.compat-summary[open] .compat-chevron {
+		transform: rotate(180deg);
+	}
+
+	.compat-summary-body {
+		padding-block: 0.75rem 0.875rem;
+		padding-inline: 1rem;
+		border-block-start: 1px solid var(--sl-color-hairline-light);
+		color: var(--sl-color-gray-1);
+		display: flex;
+		flex-direction: column;
+		gap: 0.625rem;
+	}
+
+	.compat-summary-desc {
+		margin: 0;
+	}
+
+	.compat-summary-notes {
+		margin: 0;
+		padding-inline-start: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-2);
+	}
+
+	.compat-summary-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.25rem;
+		font-size: var(--sl-text-xs);
+		font-weight: 500;
+	}
+
+	.compat-summary-links a {
+		color: var(--sl-color-text-accent);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	.compat-summary-links a:hover {
+		color: var(--sl-color-white);
+	}
+</style>
