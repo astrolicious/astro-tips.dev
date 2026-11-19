@@ -85,13 +85,6 @@
   },
   {
     "tags": ["utilities"],
-    "title": "Streaming a file in Astro",
-    "link": "https://astropatterns.dev/p/gems/server-endpoints-file-streaming",
-    "updated": "2024-09-30",
-    "slug": "streaming-a-file-in-astro"
-  },
-  {
-    "tags": ["utilities"],
     "title": "Using React Context in Astro",
     "link": "https://astropatterns.dev/p/react-love/react-context-in-astro",
     "updated": "2024-10-31",
@@ -110,13 +103,6 @@
     "link": "https://billyle.dev/posts/adding-rss-feed-content-and-fixing-markdown-image-paths-in-astro",
     "updated": "2024-05-04",
     "slug": "adding-rss-feed-content-and-fixing-markdown-image-paths-in-astro"
-  },
-  {
-    "tags": ["RSS"],
-    "title": "RSS Feed Content and Fixing Markdown Image Paths in Astro",
-    "link": "https://billyle.dev/posts/adding-rss-feed-content-and-fixing-markdown-image-paths-in-astro",
-    "updated": "2024-05-30",
-    "slug": "rss-feed-content-and-fixing-markdown-image-paths-in-astro"
   },
   {
     "tags": ["3rd-party"],
@@ -138,13 +124,6 @@
     "link": "https://blog.damato.design/posts/astro-rss-mdx/",
     "updated": "2023-10-24",
     "slug": "astro-rss-mdx"
-  },
-  {
-    "tags": ["RSS"],
-    "title": "Rendering full content MDX in your Astro RSS feed",
-    "link": "https://blog.damato.design/posts/astro-rss-mdx/",
-    "updated": "2024-08-30",
-    "slug": "rendering-full-content-mdx-in-your-astro-rss-feed"
   },
   {
     "tags": ["utilities"],
@@ -333,13 +312,6 @@
     "title": "Astro + PhotoSwipe",
     "link": "https://dev.to/petrovicz/astro-photoswipe-549a",
     "updated": "2024-04-04",
-    "slug": "astro-+-photoswipe"
-  },
-  {
-    "tags": ["images"],
-    "title": "Astro + PhotoSwipe",
-    "link": "https://dev.to/petrovicz/astro-photoswipe-549a",
-    "updated": "2024-04-30",
     "slug": "astro-+-photoswipe"
   },
   {
@@ -546,13 +518,6 @@
     "slug": "extend-astro-syntax-highlighting-"
   },
   {
-    "tags": ["CSS"],
-    "title": "Extend Astro Syntax Highlighting",
-    "link": "https://jorgeglz.io/blog/extend-astro-syntax-highlighting/",
-    "updated": "2024-04-30",
-    "slug": "extend-astro-syntax-highlighting"
-  },
-  {
     "tags": ["3rd-party"],
     "title": "Astro on Android with Tauri",
     "link": "https://keshav.is-a.dev/FreqKnow/programming_stuff/webdev/astro_on_android_with_tauri/",
@@ -691,13 +656,6 @@
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-animated-images-with-tailwind-css-and-astro-js/",
     "updated": "2024-02-20",
     "slug": "how-to-create-animated-images-with-tailwindcss-and-astro"
-  },
-  {
-    "tags": ["CSS"],
-    "title": "How to simplify your code and avoid repeating your markup with Astrojs and Tailwind CSS",
-    "link": "https://lexingtonthemes.com/tutorials/how-to-simplify-your-code-and-avoid-repeating-your-markup-with-astrojs-and-tailwind-css/",
-    "updated": "2024-03-28",
-    "slug": "how-to-simplify-your-code-and-avoid-repeating-your-markup-with-astrojs-and-tailwind-css"
   },
   {
     "tags": ["CSS"],
@@ -896,13 +854,6 @@
     "slug": "tailwind-dark-mode:-with-or-without-javascript."
   },
   {
-    "tags": ["CSS"],
-    "title": "Tailwind Dark Mode: With or Without Javascript",
-    "link": "https://shelbyjenkins.github.io/easy/blog/light-dark-modes/",
-    "updated": "2024-09-03",
-    "slug": "tailwind-dark-mode:-with-or-without-javascript"
-  },
-  {
     "tags": ["3rd-party"],
     "title": "How to generate OpenGraph images with Astro and Satori",
     "link": "https://skyfall.dev/posts/astro-og-with-satori",
@@ -971,13 +922,6 @@
     "link": "https://techsquidtv.com/blog/astro-fetching-youtube-videos-with-rss/",
     "updated": "2024-02-13",
     "slug": "astro-component:-fetching-latest-youtube-videos-with-rss"
-  },
-  {
-    "tags": ["3rd-party"],
-    "title": "Fetching Latest YouTube Videos",
-    "link": "https://techsquidtv.com/blog/astro-fetching-youtube-videos-with-rss/",
-    "updated": "2024-02-28",
-    "slug": "fetching-latest-youtube-videos"
   },
   {
     "tags": ["images"],
@@ -1239,13 +1183,6 @@
     "slug": "authenticating-users-with-clerk-and-react"
   },
   {
-    "tags": ["auth"],
-    "title": "Authenticating users in Astro with Clerk and React",
-    "link": "https://www.launchfa.st/blog/react-astro-clerk",
-    "updated": "2024-04-12",
-    "slug": "authenticating-users-in-astro-with-clerk-and-react"
-  },
-  {
     "tags": ["3rd-party"],
     "title": "Using Unplug Icons in Astro with React: A Step-by-Step Guide",
     "link": "https://www.launchfa.st/blog/react-astro-unplugin-icons",
@@ -1300,13 +1237,6 @@
     "link": "https://www.robcipolla.co.uk/blog/step-by-step-guide-to-building-a-custom-newsletter-subscription-form-with-astro-react-and-convertkit",
     "updated": "2024-04-30",
     "slug": "step-by-step-guide-to-a-custom-newsletter-form-with-astro,-react,-and-convertkit"
-  },
-  {
-    "tags": ["3rd-party"],
-    "title": "Step-by-step guide to building a custom newsletter subscription form with Astro, React, and ConvertKit",
-    "link": "https://www.robcipolla.co.uk/blog/step-by-step-guide-to-building-a-custom-newsletter-subscription-form-with-astro-react-and-convertkit",
-    "updated": "2024-04-04",
-    "slug": "step-by-step-guide-to-building-a-custom-newsletter-subscription-form-with-astro,-react,-and-convertkit"
   },
   {
     "tags": ["deploy"],
@@ -1403,7 +1333,8 @@
     "tags": ["images"],
     "title": "Astro OG Image for SEO on Cloudflare workers",
     "link": "https://viveklokhande.com/blogs/astro-og-image-for-seo",
-    "updated": "2025-08-02"
+    "updated": "2025-08-02",
+    "slug": "astro-og-image-for-seo-on-cloudflare-workers"
   },
   {
     "tags": ["deploy"],
@@ -1432,13 +1363,6 @@
     "link": "https://nikuscs.com/blog/09-dynamic-seo-images-vercel-og-satori/",
     "updated": "2025-08-12",
     "slug": "09-dynamic-seo-images-vercel-og-satori"
-  },
-  {
-    "tags": ["markdown"],
-    "title": "Power your Astro blog with Markdown View, Copy buttons to LLMS + Voice Resumes",
-    "link": "https://nikuscs.com/blog/07-astro-copy-llms-button/",
-    "updated": "2025-08-12",
-    "slug": "07-astro-copy-llms-button"
   },
   {
     "tags": ["markdown"],
@@ -1481,13 +1405,6 @@
     "link": "https://gregnewman.io/blog/mastodon-comments-in-astrojs/",
     "updated": "2025-08-12",
     "slug": "mastodon-comments-in-astrojs"
-  },
-  {
-    "tags": ["images"],
-    "title": "Astro OG image generation with SSR on Cloudflare workers",
-    "link": "https://viveklokhande.com/blogs/astro-og-image-for-seo",
-    "updated": "2025-08-12",
-    "slug": "astro-og-image-for-seo"
   },
   {
     "tags": ["deploy"],
