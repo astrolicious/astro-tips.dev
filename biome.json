@@ -30,17 +30,57 @@
   "assist": {
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": "on",
+        "noDuplicateClasses": "on"
       }
     }
   },
   "linter": {
     "enabled": true,
     "domains": {
-      "project": "recommended"
+      "project": "recommended",
+      "astro": "all",
+      "types": "recommended"
     },
     "rules": {
-      "preset": "recommended"
+      "preset": "recommended",
+      "a11y": {
+        "noAmbiguousAnchorText": "warn"
+      },
+      "correctness": {
+        "noUndeclaredDependencies": "error",
+        "useImageSize": "warn"
+      },
+      "nursery": {
+        "noZeroLengthUnit": "warn",
+        "useLogicalProperties": "warn"
+      },
+      "security": {
+        "noSecrets": "error"
+      },
+      "style": {
+        "useBlockStatements": "error",
+        "useCollapsedIf": "error",
+        "useConsistentArrayType": "error",
+        "useSelfClosingElements": "error"
+      },
+      "suspicious": {
+        "noDeprecatedImports": "error",
+        "noImportCycles": "error",
+        "useBaseline": "warn"
+      }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": [".github/scripts/mdx.js"],
+      "linter": {
+        "rules": {
+          "security": {
+            "noSecrets": "off"
+          }
+        }
+      }
+    }
+  ]
 }

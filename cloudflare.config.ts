@@ -1,6 +1,7 @@
 import { bindings, defineConfig } from 'cf/config';
 
 export default defineConfig({
+	// biome-ignore lint/security/noSecrets: public Cloudflare account ID
 	accountId: '69e5e09fd9c27bf9e7540c12be67ab9d',
 	worker: {
 		name: 'astro-tips',
