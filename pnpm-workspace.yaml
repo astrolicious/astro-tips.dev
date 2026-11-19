@@ -2,3 +2,10 @@ allowBuilds:
   esbuild: true
   sharp: true
   workerd: true
+
+supportedArchitectures:
+  cpu:
+    - current
+    - wasm32
+minimumReleaseAgeExclude:
+  - cf@1.0.0-rc.2

@@ -1,9 +1,10 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { docsLoader } from '@astrojs/starlight/loaders';
 import { docsSchema } from '@astrojs/starlight/schema';
 import { file } from 'astro/loaders';
+import { z } from 'astro/zod';
 import { minVersion, outside, validRange } from 'semver';
-import pkg from '../../package.json';
+import pkg from '../package.json';
 
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
 
@@ -13,14 +14,14 @@ const starlightSchema = defineCollection({
 		extend: z.object({
 			astroRange: z
 				.string()
-				.refine(validRange, { message: 'Must be a valid semver range' })
+				.refine((val) => validRange(val) !== null, { error: 'Must be a valid semver range' })
 				.refine(
 					(range) => {
 						// check if range is bigger than the current Astro version.
-						return astroVersion && !outside(astroVersion, range, '<');
+						return Boolean(astroVersion && !outside(astroVersion, range, '<'));
 					},
 					{
-						message: `'astroRange' must be compatible with the current released Astro version: '${astroVersion}'`,
+						error: `'astroRange' must be compatible with the current released Astro version: '${astroVersion}'`,
 					}
 				)
 				.optional(),

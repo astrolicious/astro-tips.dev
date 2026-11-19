@@ -1,4 +1,3 @@
-import { builtinModules } from 'node:module';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import cloudflare from '@astrojs/cloudflare';
@@ -7,6 +6,8 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
 	site: process.env.DEPLOY_URL ?? 'https://astro-tips.dev',
+	scopedStyleStrategy: 'where',
+	session: false,
 	redirects: {
 		'/recipes/how-to-add-gsap': '/tips/how-to-add-gsap',
 		'/contributing': '/#want-to-get-involved',
@@ -36,7 +37,11 @@ export default defineConfig({
 				},
 			],
 			social: [
-				{ icon: 'github', label: 'GitHub', href: 'https://github.com/astrolicious/astro-tips.dev' },
+				{
+					icon: 'github',
+					label: 'GitHub',
+					href: 'https://github.com/astrolicious/astro-tips.dev',
+				},
 				{ icon: 'discord', label: 'Discord', href: 'https://chat.astrolicious.dev' },
 			],
 			sidebar: [
@@ -46,15 +51,23 @@ export default defineConfig({
 				},
 				{
 					label: 'Recipes',
-					autogenerate: {
-						directory: 'recipes',
-					},
+					items: [
+						{
+							autogenerate: {
+								directory: 'recipes',
+							},
+						},
+					],
 				},
 				{
 					label: 'Tips',
-					autogenerate: {
-						directory: 'tips',
-					},
+					items: [
+						{
+							autogenerate: {
+								directory: 'tips',
+							},
+						},
+					],
 				},
 				{
 					label: 'External resources',
@@ -78,15 +91,9 @@ export default defineConfig({
 				'~': resolve(dirname(fileURLToPath(import.meta.url)), './src'),
 			},
 		},
-		ssr: {
-			external: [...builtinModules, ...builtinModules.map((mod) => `node:${mod}`)],
-		},
 	},
-	output: 'server',
 	adapter: cloudflare({
 		imageService: 'passthrough',
-		platformProxy: {
-			enabled: true,
-		},
+		prerenderEnvironment: 'node',
 	}),
 });
