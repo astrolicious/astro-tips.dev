@@ -1,0 +1,236 @@
+---
+title: Handling Open Graph images
+description: Add static or generated Open Graph images to your Astro site using astro-og-canvas or satori-astro.
+astroRange: ">=5.0.0"
+---
+
+import { Aside, LinkCard, Steps } from "@astrojs/starlight/components";
+import AllPackageManagers from "~/components/AllPackageManagers.astro";
+
+When someone shares a link to your site on Bluesky, Discord, Slack, or X, the platform reads the page's Open Graph `<meta>` tags and builds a preview card. A sharp, legible card gives the link context before anyone clicks it.
+
+For a small marketing site or portfolio, a single handcrafted image in `public/` is often all you need. Once your site grows into a blog, documentation hub, or catalog with dozens of pages, designing a banner for every entry quickly becomes tedious. Because Astro lets you [write endpoints](https://docs.astro.build/en/guides/endpoints/) that output binary files, you can generate tailored social cards automatically alongside your pages.
+
+This tip covers three levels of setup:
+
+- **A static image** in `public/` when one card works across your site.
+- **[`astro-og-canvas`](#quick-social-cards-with-astro-og-canvas)** when you want clean, consistent cards per page with minimal configuration.
+- **[`satori-astro`](#full-layout-control-with-satori-astro)** when you need bespoke layouts built with HTML, CSS, or JSX.
+
+## Adding the meta tags
+
+Every approach starts in the same place: telling social crawlers where to find the image.
+
+There is one requirement that catches many sites off guard: **`og:image` must be an absolute URL**. Social crawlers will ignore relative paths like `/og.png`. Set the `site` option in `astro.config.mjs` so Astro knows your canonical origin:
+
+```js title="astro.config.mjs" ins={4}
+import { defineConfig } from "astro/config";
+
+export default defineConfig({
+	site: "https://example.com",
+});
+```
+
+Then resolve each page's image path against `Astro.site` in your shared layout. A `1200 × 630` image (a `1.91:1` aspect ratio) displays cleanly across major platforms without awkward cropping, and setting `twitter:card` to `summary_large_image` ensures wide previews on X and clients that read Twitter card tags.
+
+```astro title="src/layouts/BaseLayout.astro" {9,18-26}
+---
+interface Props {
+	title: string;
+	description: string;
+	ogImage?: string;
+}
+
+const { title, description, ogImage = "/og.png" } = Astro.props;
+const ogImageURL = new URL(ogImage, Astro.site).href;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImageURL} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={title} />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:image" content={ogImageURL} />
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+```
+
+If a single static image at `public/og.png` covers your whole site, you are already done. To generate a unique card for every page, choose one of the two packages below and pass its generated path into `ogImage`.
+
+## Quick social cards with `astro-og-canvas`
+
+If you want polished cards without writing custom markup, [`astro-og-canvas`](https://github.com/delucis/astro-og-canvas) is the fastest way to get there. It renders `1200 × 630` images from a plain options object, handling text wrapping, gradients, accent borders, logos, background images, and right-to-left scripts. It also caches generated files in `node_modules/.astro-og-canvas` so unchanged cards aren't redrawn on every build.
+
+<Steps>
+
+1. Install `astro-og-canvas`:
+
+    <AllPackageManagers pkg="astro-og-canvas" />
+
+    <Aside type="note">
+    If you use `pnpm`, install `canvaskit-wasm` as a direct dependency as well (`pnpm add canvaskit-wasm`) so `astro-og-canvas` can resolve it under pnpm's strict dependency layout.
+    </Aside>
+
+2. Create a dynamic endpoint that feeds your pages (such as a [Content Collection](https://docs.astro.build/en/guides/content-collections/)) into `OGImageRoute`:
+
+    ```ts title="src/pages/og/[...slug].ts"
+    import { getCollection } from "astro:content";
+    import { OGImageRoute } from "astro-og-canvas";
+
+    const posts = await getCollection("blog");
+    const pages = Object.fromEntries(posts.map(({ id, data }) => [id, data]));
+
+    export const { getStaticPaths, GET } = await OGImageRoute({
+    	pages,
+    	getImageOptions: (_path, page) => ({
+    		title: page.title,
+    		description: page.description,
+    		bgGradient: [
+    			[15, 23, 42],
+    			[30, 41, 59],
+    		],
+    		border: {
+    			color: [56, 189, 248],
+    			width: 16,
+    		},
+    		logo: {
+    			path: "./src/assets/logo.png",
+    			size: [120],
+    		},
+    	}),
+    });
+    ```
+
+    `OGImageRoute` reads the dynamic parameter (`slug`) directly from the filename and appends `.png` to each key in `pages`. A blog entry with `id: "hello-world"` emits its image at `/og/hello-world.png`, which you can pass straight to your layout:
+
+    ```astro title="src/pages/blog/[...slug].astro"
+    <BaseLayout
+    	title={post.data.title}
+    	description={post.data.description}
+    	ogImage={`/og/${post.id}.png`}
+    >
+    	<!-- Post content -->
+    </BaseLayout>
+    ```
+
+</Steps>
+
+For custom fonts, background images, RTL layouts, or WebP/JPEG output, see the package documentation:
+
+<LinkCard
+	title="astro-og-canvas documentation"
+	description="Full list of image options, font settings, and caching configuration."
+	href="https://github.com/delucis/astro-og-canvas/tree/latest/packages/astro-og-canvas"
+/>
+
+## Full layout control with `satori-astro`
+
+When a preset card layout feels too rigid, [Satori](https://github.com/vercel/satori) gives you full design freedom for author avatars, category badges, custom typography, or multi-column layouts. Satori converts HTML (or JSX) and CSS into an SVG, and [Sharp](https://sharp.pixelplumbing.com/) turns that SVG into a PNG. [`satori-astro`](https://github.com/florian-lefebvre/satori-astro) wraps both steps into a concise helper built for Astro endpoints.
+
+<Steps>
+
+1. Install `satori-astro`, `sharp`, and `satori-html`:
+
+    <AllPackageManagers pkg="satori-astro sharp satori-html" />
+
+    `satori-html` lets you write templates with plain HTML strings, so you don't need to install a UI framework. If your project already uses React or Preact, you can omit `satori-html` and pass JSX directly to `template`.
+
+2. Add a local font file (for example, `src/assets/fonts/Inter-Bold.ttf`) and create a dynamic PNG endpoint:
+
+    ```ts title="src/pages/og/[...slug].png.ts"
+    import { readFile } from "node:fs/promises";
+    import { getCollection } from "astro:content";
+    import type { APIRoute, GetStaticPaths } from "astro";
+    import { satoriAstroOG } from "satori-astro";
+    import { html } from "satori-html";
+
+    const fontData = await readFile("./src/assets/fonts/Inter-Bold.ttf");
+
+    export const getStaticPaths = (async () => {
+    	const posts = await getCollection("blog");
+    	return posts.map((post) => ({
+    		params: { slug: post.id },
+    		props: {
+    			title: post.data.title,
+    			description: post.data.description,
+    		},
+    	}));
+    }) satisfies GetStaticPaths;
+
+    export const GET: APIRoute = async ({ props }) => {
+    	const template = html`<div
+    		style="display: flex; flex-direction: column; justify-content: space-between; width: 100%; height: 100%; padding: 64px; background: #0f172a; color: #f8fafc; font-family: Inter;"
+    	>
+    		<div style="display: flex; flex-direction: column; gap: 20px;">
+    			<h1 style="font-size: 64px; line-height: 1.1; margin: 0;">
+    				${props.title}
+    			</h1>
+    			<p style="font-size: 32px; color: #94a3b8; margin: 0;">
+    				${props.description}
+    			</p>
+    		</div>
+    		<div style="font-size: 24px; color: #38bdf8;">example.com</div>
+    	</div>`;
+
+    	return await satoriAstroOG({
+    		template,
+    		width: 1200,
+    		height: 630,
+    	}).toResponse({
+    		satori: {
+    			fonts: [
+    				{
+    					name: "Inter",
+    					data: fontData,
+    					weight: 700,
+    					style: "normal",
+    				},
+    			],
+    		},
+    	});
+    };
+    ```
+
+    Reading the font once from disk at module scope keeps builds fast and avoids depending on an external CDN during CI. Just as before, point your layout's `ogImage` prop at `/og/${post.id}.png`.
+
+</Steps>
+
+`toResponse()` returns a `Response` with `Content-Type: image/png` and immutable caching headers already configured, and you can override them through the `response` option. When you need lower-level access to post-process the image or inspect the markup, `satoriAstroOG` also provides `toImage()` (returning a PNG `Buffer`) and `toSvg()` (returning an SVG string).
+
+<Aside type="caution" title="Two Satori quirks to keep in mind">
+- **Flexbox only:** Every container with more than one child element must explicitly declare `display: flex`. CSS Grid is not supported.
+- **Font formats:** Satori requires at least one font in TTF, OTF, or WOFF format. WOFF2 is not supported.
+</Aside>
+
+<LinkCard
+	title="satori-astro on GitHub"
+	description="API reference and examples for toResponse, toImage, and toSvg."
+	href="https://github.com/florian-lefebvre/satori-astro"
+/>
+
+## Build-time vs. on-demand generation
+
+Both endpoints above are prerendered at build time, which is the best default for most Astro sites. Every card is emitted as a plain `.png` file alongside your HTML and served straight from your CDN with zero server latency.
+
+If your content lives in a CMS or database and changes without triggering a rebuild, you can render cards on demand by adding `export const prerender = false` to your endpoint (assuming you have an [adapter](https://docs.astro.build/en/guides/on-demand-rendering/) configured). Keep two trade-offs in mind when going dynamic:
+
+- **`astro-og-canvas` is built for static routes** via `OGImageRoute` and `getStaticPaths`. Use `satori-astro` (or call `satori` directly) when you need on-demand rendering.
+- **Sharp requires a Node.js runtime.** `satori-astro` works on Node servers and Node-compatible serverless functions, while edge runtimes such as Cloudflare Workers cannot run native Sharp binaries. On the edge, pair Satori with a WebAssembly rasterizer like `@resvg/resvg-wasm`, or delegate rendering to a dedicated image service.
+
+## Previewing before you ship
+
+During development, you don't need to deploy to check your layout: start the dev server and open `/og/your-post.png` directly in your browser. Once deployed, paste a live page URL into a preview checker such as [OpenGraph.xyz](https://www.opengraph.xyz/) to verify that the URL is absolute, reachable, and renders the card you expect.
+
+If you need a more specialized setup, such as rendering on Cloudflare Workers, generating cards with Cloudinary, or using raw Satori, browse the community guides in [External resources](/external-resources).
