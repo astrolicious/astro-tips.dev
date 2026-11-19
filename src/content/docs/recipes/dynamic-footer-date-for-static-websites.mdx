@@ -1,6 +1,14 @@
 ---
 title: Dynamic footer date for static websites
 astroRange: ">=4.0.0"
+compatibility:
+  rendering:
+    prerendered:
+      status: recommended
+      note: Avoids stale build-time copyright years on statically generated pages while keeping a fallback for browsers without JavaScript.
+    on-demand:
+      status: supported
+      note: Works, though unnecessary on server-rendered routes because new Date().getFullYear() already runs on every request.
 ---
 
 import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";

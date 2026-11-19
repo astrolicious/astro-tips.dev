@@ -5,6 +5,7 @@ import { file } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { minVersion, outside, validRange } from 'semver';
 import pkg from '../package.json';
+import { compatibilitySchema } from './lib/compatibility';
 
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
 
@@ -25,6 +26,7 @@ const starlightSchema = defineCollection({
 					}
 				)
 				.optional(),
+			compatibility: compatibilitySchema,
 		}),
 	}),
 });

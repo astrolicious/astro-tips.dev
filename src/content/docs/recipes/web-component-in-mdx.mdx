@@ -1,6 +1,10 @@
 ---
 title: Using web components in MDX
 astroRange: ">=4.0.0"
+compatibility:
+  rendering:
+    prerendered: supported
+    on-demand: supported
 ---
 
 If you have a web component defined in a separate JavaScript file, you can include it in your MDX file by importing the script and adding a `<script>` tag with `type="module"`.

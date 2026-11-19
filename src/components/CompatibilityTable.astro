@@ -1,0 +1,528 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+import {
+	COMPATIBILITY_STATUSES,
+	type CompatibilityData,
+	type CompatibilityInput,
+	getSemverUrl,
+	hasCompatibilityInfo,
+	resolveCompatibility,
+	STATUS_META,
+} from '~/lib/compatibility';
+
+interface Props {
+	compatibility: CompatibilityInput | CompatibilityData;
+	astroRange?: string | undefined;
+	id?: string | undefined;
+	heading?: string | false | undefined;
+}
+
+const {
+	compatibility,
+	astroRange,
+	id = 'compatibility',
+	heading = 'Compatibility',
+} = Astro.props;
+
+const shouldRender = hasCompatibilityInfo(compatibility);
+const resolved = shouldRender ? resolveCompatibility(compatibility, astroRange) : undefined;
+const colCount = resolved?.hasAnyVersion ? 3 : 2;
+const astroSemverUrl = astroRange ? getSemverUrl('astro', astroRange) : undefined;
+---
+
+{
+	resolved && (
+		<section class="compat-wrapper" aria-labelledby={heading ? id : undefined}>
+			{heading && <h2 id={id}>{heading}</h2>}
+
+			<div class="compat-table-container not-content">
+				{resolved.note && <p class="compat-table-note">{resolved.note}</p>}
+
+				<div class="compat-table-scroll">
+					<table class="compat-table">
+						<thead>
+							<tr>
+								<th scope="col">Environment</th>
+								<th scope="col">Support</th>
+								{resolved.hasAnyVersion && <th scope="col">Version</th>}
+							</tr>
+						</thead>
+						<tbody>
+							{astroRange && astroSemverUrl && (
+								<>
+									<tr class="compat-group-row">
+										<th colspan={colCount} scope="colgroup">
+											Framework
+										</th>
+									</tr>
+									<tr>
+										<th scope="row" class="compat-target-cell">
+											<span class="compat-target">
+												<span class="compat-target-icon" aria-hidden="true">
+													<Icon name="astro" size="1rem" />
+												</span>
+												<a href="https://docs.astro.build/" class="compat-target-link">
+													Astro
+												</a>
+											</span>
+										</th>
+										<td class="compat-status-cell">
+											<span class="compat-badge" data-status="supported">
+												<span class="compat-badge-icon" aria-hidden="true">
+													<Icon name={STATUS_META.supported.icon} size="0.9rem" />
+												</span>
+												<span>{STATUS_META.supported.label}</span>
+											</span>
+										</td>
+										<td class="compat-version-cell">
+											<a
+												href={astroSemverUrl}
+												class="compat-version-link"
+												title={`Compatible with Astro ${astroRange}`}
+											>
+												<code>{astroRange}</code>
+											</a>
+										</td>
+									</tr>
+								</>
+							)}
+
+							{resolved.sections.map((section) => (
+								<>
+									<tr class="compat-group-row">
+										<th colspan={colCount} scope="colgroup">
+											<span class="compat-group-header">
+												<span>{section.label}</span>
+												{section.docsUrl && (
+													<a href={section.docsUrl} class="compat-group-docs">
+														Astro docs
+														<Icon name="external" size="0.8rem" />
+													</a>
+												)}
+											</span>
+										</th>
+									</tr>
+
+									{section.rows.map((row) => {
+										const statusMeta = STATUS_META[row.status];
+										const noteAnchor = row.footnoteIndex
+											? `#${id}-note-${row.footnoteIndex}`
+											: undefined;
+										const rowSemverUrl =
+											row.version && row.packageName
+												? getSemverUrl(row.packageName, row.version)
+												: undefined;
+
+										return (
+											<tr>
+												<th scope="row" class="compat-target-cell">
+													<span class="compat-target">
+														<span class="compat-target-icon" aria-hidden="true">
+															<Icon name={row.icon} size="1rem" />
+														</span>
+														<span class="compat-target-text">
+															<a
+																href={row.docsUrl}
+																class="compat-target-link"
+																title={row.description}
+															>
+																{row.label}
+															</a>
+															{row.packageName && (
+																<code class="compat-pkg">{row.packageName}</code>
+															)}
+														</span>
+													</span>
+												</th>
+												<td class="compat-status-cell">
+													<span class="compat-status-wrap">
+														<span
+															class="compat-badge"
+															data-status={row.status}
+															title={row.note ?? statusMeta.description}
+														>
+															<span class="compat-badge-icon" aria-hidden="true">
+																<Icon name={statusMeta.icon} size="0.9rem" />
+															</span>
+															<span>{statusMeta.label}</span>
+														</span>
+														{row.footnoteIndex && noteAnchor && (
+															<sup class="compat-footnote-ref">
+																<a
+																	href={noteAnchor}
+																	aria-label={`See footnote ${row.footnoteIndex} for ${row.label}`}
+																>
+																	[{row.footnoteIndex}]
+																</a>
+															</sup>
+														)}
+													</span>
+												</td>
+												{resolved.hasAnyVersion && (
+													<td class="compat-version-cell">
+														{row.version ? (
+															rowSemverUrl ? (
+																<a
+																	href={rowSemverUrl}
+																	class="compat-version-link"
+																	title={`Compatible with ${row.packageName} ${row.version}`}
+																>
+																	<code>{row.version}</code>
+																</a>
+															) : (
+																<code>{row.version}</code>
+															)
+														) : (
+															<>
+																<span class="compat-na" aria-hidden="true">
+																	—
+																</span>
+																<span class="sr-only">Any version</span>
+															</>
+														)}
+													</td>
+												)}
+											</tr>
+										);
+									})}
+								</>
+							))}
+						</tbody>
+					</table>
+				</div>
+
+				{resolved.footnotes.length > 0 && (
+					<div class="compat-footnotes">
+						<p class="compat-footnotes-title">Notes</p>
+						<ol class="compat-footnotes-list">
+							{resolved.footnotes.map((item) => (
+								<li id={`${id}-note-${item.index}`} value={item.index}>
+									<strong>{item.targetLabel}:</strong> {item.note}
+								</li>
+							))}
+						</ol>
+					</div>
+				)}
+
+				<div class="compat-legend">
+					<span class="sr-only">Compatibility legend:</span>
+					{COMPATIBILITY_STATUSES.map((status) => {
+						const meta = STATUS_META[status];
+						return (
+							<span class="compat-legend-item" data-status={status}>
+								<span class="compat-legend-icon" aria-hidden="true">
+									<Icon name={meta.icon} size="0.875rem" />
+								</span>
+								<span>
+									<strong>{meta.label}</strong>
+									<span class="compat-legend-sep"> — </span>
+									<span class="compat-legend-desc">{meta.shortLabel}</span>
+								</span>
+							</span>
+						);
+					})}
+				</div>
+			</div>
+		</section>
+	)
+}
+
+<style>
+	.compat-wrapper {
+		margin-block-start: 2.5rem;
+	}
+
+	.compat-table-container {
+		margin-block-start: 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		font-size: var(--sl-text-sm);
+	}
+
+	.compat-table-note {
+		margin: 0;
+		color: var(--sl-color-gray-2);
+	}
+
+	.compat-table-scroll {
+		overflow-x: auto;
+		border: 1px solid var(--sl-color-hairline-light);
+		border-radius: 0.5rem;
+		background-color: var(--sl-color-bg);
+	}
+
+	.compat-table {
+		inline-size: 100%;
+		border-collapse: collapse;
+		text-align: start;
+	}
+
+	.compat-table th,
+	.compat-table td {
+		text-align: start;
+	}
+
+	.compat-table thead th {
+		padding-block: 0.625rem;
+		padding-inline: 1rem;
+		background-color: var(--sl-color-gray-6);
+		color: var(--sl-color-gray-2);
+		font-size: var(--sl-text-xs);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		border-block-end: 1px solid var(--sl-color-hairline-light);
+	}
+
+	.compat-table .compat-group-row th {
+		padding-block: 0.5rem;
+		padding-inline: 1rem;
+		background-color: var(--sl-color-bg-nav);
+		color: var(--sl-color-white);
+		font-size: var(--sl-text-xs);
+		font-weight: 600;
+		border-block: 1px solid var(--sl-color-hairline-light);
+	}
+
+	.compat-group-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+	}
+
+	.compat-group-docs {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		color: var(--sl-color-text-accent);
+		font-weight: 500;
+		text-decoration: none;
+	}
+
+	.compat-group-docs:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	.compat-table tbody tr:not(.compat-group-row) {
+		border-block-end: 1px solid var(--sl-color-hairline);
+	}
+
+	.compat-table tbody tr:last-child {
+		border-block-end: none;
+	}
+
+	.compat-target-cell,
+	.compat-status-cell,
+	.compat-version-cell {
+		padding-block: 0.75rem;
+		padding-inline: 1rem;
+		vertical-align: middle;
+	}
+
+	.compat-target-cell {
+		font-weight: 500;
+		color: var(--sl-color-white);
+	}
+
+	.compat-target {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.625rem;
+	}
+
+	.compat-target-icon {
+		display: inline-flex;
+		align-items: center;
+		color: var(--sl-color-gray-2);
+		flex-shrink: 0;
+	}
+
+	.compat-target-text {
+		display: inline-flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.25rem 0.5rem;
+	}
+
+	.compat-target-link {
+		color: var(--sl-color-white);
+		text-decoration: none;
+	}
+
+	.compat-target-link:hover {
+		color: var(--sl-color-text-accent);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	.compat-pkg {
+		font-family: var(--__sl-font-mono);
+		font-size: var(--sl-text-2xs);
+		color: var(--sl-color-gray-3);
+	}
+
+	.compat-status-wrap {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+	}
+
+	.compat-badge {
+		--badge-bg: var(--sl-color-gray-6);
+		--badge-border: var(--sl-color-hairline-light);
+		--badge-text: var(--sl-color-white);
+		--badge-icon: var(--sl-color-gray-2);
+
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding-block: 0.2rem;
+		padding-inline: 0.6rem;
+		border: 1px solid var(--badge-border);
+		border-radius: 9999px;
+		background-color: var(--badge-bg);
+		color: var(--badge-text);
+		font-size: var(--sl-text-xs);
+		font-weight: 600;
+		line-height: 1.3;
+		white-space: nowrap;
+	}
+
+	.compat-badge[data-status='recommended'] {
+		--badge-bg: var(--sl-color-blue-low);
+		--badge-border: var(--sl-color-blue);
+		--badge-text: var(--sl-color-blue-high);
+		--badge-icon: var(--sl-color-blue);
+	}
+
+	.compat-badge[data-status='supported'] {
+		--badge-bg: var(--sl-color-green-low);
+		--badge-border: var(--sl-color-green);
+		--badge-text: var(--sl-color-green-high);
+		--badge-icon: var(--sl-color-green);
+	}
+
+	.compat-badge[data-status='unsupported'] {
+		--badge-bg: var(--sl-color-red-low);
+		--badge-border: var(--sl-color-red);
+		--badge-text: var(--sl-color-red-high);
+		--badge-icon: var(--sl-color-red);
+	}
+
+	.compat-badge-icon {
+		display: inline-flex;
+		align-items: center;
+		color: var(--badge-icon);
+	}
+
+	.compat-footnote-ref {
+		font-size: var(--sl-text-2xs);
+		line-height: 0;
+	}
+
+	.compat-footnote-ref a {
+		color: var(--sl-color-text-accent);
+		text-decoration: none;
+		font-weight: 600;
+	}
+
+	.compat-footnote-ref a:hover {
+		text-decoration: underline;
+	}
+
+	.compat-version-cell {
+		font-family: var(--__sl-font-mono);
+		font-size: var(--sl-text-xs);
+		white-space: nowrap;
+	}
+
+	.compat-version-link {
+		color: var(--sl-color-text-accent);
+		text-decoration: none;
+	}
+
+	.compat-version-link:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	.compat-na {
+		color: var(--sl-color-gray-3);
+	}
+
+	.compat-footnotes {
+		padding-block: 0.75rem;
+		padding-inline: 1rem;
+		border: 1px solid var(--sl-color-hairline-light);
+		border-radius: 0.5rem;
+		background-color: var(--sl-color-bg-nav);
+		font-size: var(--sl-text-xs);
+	}
+
+	.compat-footnotes-title {
+		margin-block: 0 0.5rem;
+		font-weight: 600;
+		color: var(--sl-color-white);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.compat-footnotes-list {
+		margin: 0;
+		padding-inline-start: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.375rem;
+		color: var(--sl-color-gray-2);
+	}
+
+	.compat-footnotes-list li:target {
+		padding-block: 0.125rem;
+		padding-inline: 0.375rem;
+		border-radius: 0.25rem;
+		background-color: var(--sl-color-accent-low);
+		color: var(--sl-color-white);
+	}
+
+	.compat-legend {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.25rem;
+		padding-block: 0.5rem;
+		padding-inline: 0.75rem;
+		border-radius: 0.375rem;
+		background-color: var(--sl-color-gray-6);
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-2);
+	}
+
+	.compat-legend-item {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+	}
+
+	.compat-legend-icon {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.compat-legend-item[data-status='recommended'] .compat-legend-icon {
+		color: var(--sl-color-blue);
+	}
+
+	.compat-legend-item[data-status='supported'] .compat-legend-icon {
+		color: var(--sl-color-green);
+	}
+
+	.compat-legend-item[data-status='unsupported'] .compat-legend-icon {
+		color: var(--sl-color-red);
+	}
+
+	.compat-legend-desc {
+		color: var(--sl-color-gray-3);
+	}
+</style>
