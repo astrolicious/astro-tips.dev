@@ -1,12 +1,12 @@
 ---
-import { getCollection } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
 interface Props {
-  tags?: string[];
+  tags?: CollectionEntry<"tags">["id"][];
 }
 const allResources = await getCollection("resources");
-const allTags = await getCollection("tags")
+const allTags = await getCollection("tags");
 
 const referer = Astro.request.headers.get("referer");
 const tagsParams =
@@ -22,7 +22,7 @@ const filteredTags =
 const style = allTags
   .map(
     (tag) =>
-      `.sl-markdown-content:has([data-tag=${JSON.stringify(tag.id)}]:checked) .card-wrapper[data-tags*=${JSON.stringify(tag.id)}] { display: block; }`,
+      `.sl-markdown-content:has([data-tag=${JSON.stringify(tag.id)}]:checked) .card-wrapper[data-tags~=${JSON.stringify(tag.id)}] { display: block; }`,
   )
   .join("\n");
 ---
@@ -90,7 +90,7 @@ const style = allTags
 <CardGrid>
   {
     allResources.map((r) => (
-      <div class="card-wrapper" data-tags={r.data.tags.map(t => t.id)}>
+      <div class="card-wrapper" data-tags={r.data.tags.map((t) => t.id).join(" ")}>
         <LinkCard
           title={r.data.title}
           description={r.data.description ?? ""}

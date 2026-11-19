@@ -41,15 +41,15 @@ const resourcesSchema = defineCollection({
 	}),
 });
 
-export const tagsSchema = defineCollection({
-	type: 'data',
+const tagsSchema = defineCollection({
+	loader: file('src/content/tags.json'),
 	schema: z.object({
-		title: z.string()
-	})
-})
+		title: z.string(),
+	}),
+});
 
 export const collections = {
 	docs: starlightSchema,
 	resources: resourcesSchema,
-	tags: tagsSchema
+	tags: tagsSchema,
 };

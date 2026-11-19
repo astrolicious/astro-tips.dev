@@ -1,0 +1,59 @@
+{
+  "3rd-party": {
+    "title": "3rd party"
+  },
+  "animation": {
+    "title": "Animation"
+  },
+  "api-endpoints": {
+    "title": "API Endpoints"
+  },
+  "auth": {
+    "title": "Auth"
+  },
+  "content-collections": {
+    "title": "Content Collections"
+  },
+  "css": {
+    "title": "CSS"
+  },
+  "db": {
+    "title": "DB"
+  },
+  "deploy": {
+    "title": "Deploy"
+  },
+  "editor": {
+    "title": "Editor"
+  },
+  "i18n": {
+    "title": "i18n"
+  },
+  "images": {
+    "title": "Images"
+  },
+  "markdown": {
+    "title": "Markdown"
+  },
+  "migration": {
+    "title": "Migration"
+  },
+  "performance": {
+    "title": "Performance"
+  },
+  "rss": {
+    "title": "RSS"
+  },
+  "spa": {
+    "title": "SPA"
+  },
+  "starlight": {
+    "title": "Starlight"
+  },
+  "utilities": {
+    "title": "Utilities"
+  },
+  "view-transitions": {
+    "title": "View Transitions"
+  }
+}
