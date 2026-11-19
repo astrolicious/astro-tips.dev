@@ -10,7 +10,6 @@ export default defineConfig({
 	session: false,
 	redirects: {
 		'/recipes/how-to-add-gsap': '/tips/how-to-add-gsap',
-		'/contributing': '/#want-to-get-involved',
 		'/resources/educational': '/external-resources',
 	},
 	experimental: {
@@ -73,6 +72,10 @@ export default defineConfig({
 					label: 'External resources',
 					badge: 'Updated',
 					link: '/external-resources',
+				},
+				{
+					label: 'Contributing',
+					link: '/contributing',
 				},
 			],
 			components: {

@@ -1,0 +1,117 @@
+---
+title: Contributing
+description: Learn when to contribute to Astro Tips vs. official Astro Docs recipes, and how to share recipes, tips, and external resources.
+---
+
+import { Aside, CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+Astro Tips is a community-driven collection of recipes, quick tips, and external resources built to complement [Astro Docs](https://docs.astro.build)—not replace it.
+
+If you have an idea, solution, or article to share, use this guide to decide whether it belongs in **official Astro Docs** or **Astro Tips**.
+
+## Astro Tips vs. Official Astro Docs
+
+Both sites help developers build with Astro, but they serve different purposes and have different maintenance commitments.
+
+| | Official Astro Docs | Astro Tips |
+| --- | --- | --- |
+| **Best for** | Broadly applicable, single-task how-to recipes, core features, and official integrations | Advanced, opinionated, niche, or experimental recipes, quick tips, and external community links |
+| **Maintenance** | Maintained long-term and translated (i18n) by Astro Team Docs | Community-maintained; can cover version-specific or evolving patterns |
+| **Format** | Strictly scoped step-by-step recipes following the [Astro Docs style guide](https://contribute.docs.astro.build/guides/writing-style/) | Flexible: in-depth recipes, short tips, code snippets, or curated links |
+| **Third-party tools** | Core ecosystem integrations and dedicated [Astro + X guides](https://contribute.docs.astro.build/guides/new-third-party-guide/) (CMS, deployment, backend services, etc.) | Quick Astro-specific setups and gotchas (e.g. Biome, Prettier, GSAP, Shadcn UI) |
+
+### When to contribute to official Astro Docs
+
+Consider contributing directly to [Astro Docs](https://docs.astro.build/en/recipes/) when your content:
+
+- **Follows Astro's official recipe format**: a short, focused, step-by-step how-to guide with clear prerequisites and minimal theory that walks the reader through a single, practical task. See [Contributing a Recipe](https://contribute.docs.astro.build/guides/recipe-writing/) for the full requirements.
+- **Relies primarily on Astro's built-in features or standard tooling**: for example, forms, RSS, Vite/Rollup plugins, i18n, Markdown plugins, or dev toolbar apps.
+- **Documents core Astro behavior or an official integration**: bug fixes, missing API details, or clarifications to existing Astro Docs pages belong in [`withastro/docs`](https://github.com/withastro/docs).
+- **Introduces a supported third-party platform guide**: CMSs, deployment hosts, backend services, and similar ecosystem guides follow Astro's [Adding a new Astro + X Guide](https://contribute.docs.astro.build/guides/new-third-party-guide/) process.
+
+### When to contribute to Astro Tips
+
+Contribute to Astro Tips when your content:
+
+- **Goes beyond official docs**: advanced patterns, unusual use cases, experimental techniques, or opinionated architectures where multiple valid approaches exist.
+- **Is a quick tip or workaround**: short, practical tricks or Astro-specific gotchas for third-party tools that don't warrant a full official recipe (for example, [Setting up Biome](/tips/biome), [Setting up Shadcn UI](/tips/shadcn), or [Leverage Zod's power](/tips/leverage-zod-s-power)).
+- **Is an in-depth or multi-part recipe**: thorough walkthroughs that combine multiple concepts or offer customizable patterns, optionally backed by a runnable example project (for example, [How to handle dark mode](/recipes/dark-mode)).
+- **Is an external community article or tutorial**: blog posts, guides, or videos published on your own site that you want other Astronauts to discover via our [External resources](/external-resources) directory.
+
+### What doesn't belong in Astro Tips
+
+- **Duplicates of official documentation**: don't copy Astro Docs or a third-party package's official getting-started guide. Link to the official docs and focus only on what's specific to Astro.
+- **Incomplete or untested solutions**: tips and recipes should give readers a complete, working solution they can apply to their project.
+
+<Aside type="tip" title="Still not sure where it belongs?">
+If you're unsure whether your idea fits official Astro Docs or Astro Tips, [open an issue](https://github.com/astrolicious/astro-tips.dev/issues) or ask in the [Astrolicious Discord](https://chat.astrolicious.dev/) (or `#docs` in the [Astro Discord](https://astro.build/chat)). Maintainers from both communities are happy to help point you in the right direction!
+</Aside>
+
+## Choosing the right section in Astro Tips
+
+Once you know your contribution belongs in Astro Tips, pick the format that best fits your content:
+
+### Recipes (`src/content/docs/recipes/`)
+
+Use a **recipe** for complete, step-by-step guides that walk through building a full feature or solving a multi-step problem (such as [How to handle dark mode](/recipes/dark-mode) or [Dynamic footer date for static websites](/recipes/dynamic-footer-date-for-static-websites)).
+
+- Include clear steps and complete, working code snippets.
+- If helpful, you can add a runnable project in `examples/` and link to it with the `ExampleLinks` component.
+
+### Tips (`src/content/docs/tips/`)
+
+Use a **tip** for shorter, focused guidance: quick library/tooling setups, useful patterns, or specific workarounds (such as [Setting up Biome](/tips/biome), [Setting up Prettier](/tips/prettier), or [Dynamic imports in module scripts](/tips/script-tag-dynamic-imports)).
+
+- Keep it concise and focused on the Astro-specific details.
+- Link out to the package's official documentation for general usage.
+
+### External resources (`src/content/resources.json`)
+
+Use **external resources** if you've already written a blog post, guide, or tutorial on your own site (or found a helpful community resource) and want to share it on the [External resources](/external-resources) page without duplicating the content here.
+
+Add an entry to `src/content/resources.json` with a `slug`, `title`, `link`, `tags`, `updated` date, and an optional `description`.
+
+### Specifying Astro version compatibility
+
+For recipes and tips that depend on specific Astro versions, you can add an optional `astroRange` field to the page frontmatter using a valid [semver range](https://semver.otterlord.dev/?package=astro):
+
+```mdx
+---
+title: My Astro tip
+description: A short summary of what this tip solves.
+astroRange: ">=5.0.0"
+---
+```
+
+The `astroRange` is validated against the current Astro version at build time and displayed at the top of the page.
+
+## How to submit a contribution
+
+1. **Open an issue** on [GitHub](https://github.com/astrolicious/astro-tips.dev/issues) if you want to propose an idea or get feedback first, or pick up an existing open issue.
+2. **Submit a pull request** with your recipe, tip, or external resource entry.
+3. **Chat with us** on the [Astrolicious Discord](https://chat.astrolicious.dev/) if you have questions or want to collaborate.
+
+## Helpful links
+
+<CardGrid>
+	<LinkCard
+		title="Astro Tips on GitHub"
+		description="Browse open issues, propose ideas, or open a pull request."
+		href="https://github.com/astrolicious/astro-tips.dev"
+	/>
+	<LinkCard
+		title="Contributing a Recipe to Astro Docs"
+		description="Guidelines for official recipes in Astro's documentation."
+		href="https://contribute.docs.astro.build/guides/recipe-writing/"
+	/>
+	<LinkCard
+		title="Astro Docs Docs"
+		description="Style guides and contributor documentation for official Astro Docs."
+		href="https://contribute.docs.astro.build/"
+	/>
+	<LinkCard
+		title="Astrolicious Discord"
+		description="Join the community to discuss ideas and get help with your PR."
+		href="https://chat.astrolicious.dev/"
+	/>
+</CardGrid>
