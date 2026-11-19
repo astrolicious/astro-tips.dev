@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "version": "0.0.0",
-  "packageManager": "pnpm@10.12.4",
+  "packageManager": "pnpm@12.21.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.0.6",
     "@types/mdast": "4.0.4",
-    "@types/node": "22.16.0",
+    "@types/node": "26.6.6",
     "@types/semver": "7.7.0",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.2",
