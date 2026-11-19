@@ -2395,5 +2395,13 @@
     "link": "https://hideoo.dev/notes/starlight-translation-issues-x18n",
     "updated": "2026-10-31",
     "slug": "starlight-translation-issues-x18n"
+  },
+  {
+    "tags": ["i18n", "3rd-party"],
+    "title": "How to internationalize an Astro site with i18next and Locize",
+    "link": "https://www.locize.com/blog/astro-i18n",
+    "updated": "2026-11-17",
+    "slug": "how-to-internationalize-an-astro-site-with-i18next-and-locize",
+    "authors": ["adriano-raiano"]
   }
 ]
