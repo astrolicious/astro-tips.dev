@@ -1,0 +1,11 @@
+min_version = "2026.11.8"
+
+[tools]
+node = "26.13.1"
+pnpm = "12.21.0"
+hk = "2.13.0"
+jactionlint = "2.6.0"
+shellcheck = "0.11.0"
+
+[settings]
+lockfile = true
