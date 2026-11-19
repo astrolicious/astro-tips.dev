@@ -1,0 +1,436 @@
+---
+title: Adding image placeholders
+description: Generate zero-JavaScript dominant-color and blurred LQIP placeholders for Astro images without hurting layout stability or LCP.
+astroRange: ">=5.10.0"
+compatibility:
+  rendering:
+    prerendered:
+      status: recommended
+      note: Generates placeholders once at build time with Sharp and embeds them directly into the static HTML.
+    on-demand:
+      status: unsupported
+      note: Reading local source files from disk with Sharp is built for prerendered pages; for on-demand routes or remote images, precompute placeholders in your CMS or use an image CDN such as @unpic/astro.
+  runtimes:
+    node: recommended
+    cloudflare:
+      status: unsupported
+      note: Native Sharp binaries cannot run inside Cloudflare Workers at request time; prerender routes with local placeholders during your Node.js build instead.
+  note: Local Sharp placeholders run during your build on Node.js. On-demand routes should use precomputed placeholders or a CDN-backed solution such as @unpic/astro.
+authors:
+  - alexander-niebuhr
+---
+
+import { Aside, LinkCard, Steps, TabItem, Tabs } from "@astrojs/starlight/components";
+import AllPackageManagers from "~/components/AllPackageManagers.astro";
+
+Even well-optimized WebP and AVIF images take a moment to arrive over a cellular connection. Without a placeholder, the visitor sees an empty patch of background where a photograph belongs, making a fast page feel half-finished.
+
+Before reaching for a blur effect, though, it helps to separate two problems that often get lumped together:
+
+- **Layout shift (CLS) does not require a placeholder.** Astro's built-in [`<Image />`](https://docs.astro.build/en/guides/images/) and `<Picture />` components already emit explicit `width` and `height` attributes, and setting `layout="constrained"` with `image.responsiveStyles: true` keeps responsive images locked to their aspect ratio before a single pixel downloads.
+- **Perceived loading is what placeholders actually improve.** A quiet visual cue tells the reader that media is on the way rather than leaving them wondering whether the layout broke.
+
+The catch is that [a badly implemented placeholder is worse than none at all](https://www.robinosborne.co.uk/2018/01/05/image-placeholders-do-it-right-or-dont-do-it-at-all-please/). Turning a diagram or screenshot into an unrecognizable smudge creates visual noise and a jarring mental snap when the real graphic appears. Worse, hiding the real image URL in `data-src` and swapping it with a JavaScript lazy-loader blinds the browser's preload scanner, delays Largest Contentful Paint (LCP), hurts image indexing, and strands visitors without JavaScript on a blurry rectangle forever.
+
+This recipe avoids those traps. You will build a drop-in `<PlaceholderImage />` wrapper around Astro's `<Image />` that generates a **dominant color** or a **tiny blurred WebP** at build time with Sharp and applies it as an inline CSS background. The real `src` and `srcset` stay right on the `<img>` element, opaque photos need **zero client-side JavaScript**, and every native Astro prop—including `layout` and `priority`—continues to work unchanged.
+
+## Choosing a placeholder style
+
+Not every image benefits from the same treatment. Match the placeholder to the content and the number of images on the page:
+
+| Style | Inline HTML cost | Visual feel | Best for |
+| --- | --- | --- | --- |
+| **None** | `0 B` | Clean reserved space | UI screenshots, charts, icons, and small thumbnails |
+| **Dominant color** | `~20 B` | Calm, solid tint | Galleries, grids, and cards with many images per page |
+| **Blurred LQIP** | `~350–600 B` | Soft preview of color and shape | Hero photos, article covers, and editorial photography |
+
+<Aside type="tip" title="Keep the real image in src">
+Always render the optimized image URL directly in `<img src>` (and `srcset`), with the placeholder layered behind it via CSS `background`. That lets the browser discover and prioritize above-the-fold images immediately while still showing the placeholder on the very first paint.
+</Aside>
+
+## Building `<PlaceholderImage />`
+
+Astro already uses [Sharp](https://sharp.pixelplumbing.com/) as its default local image service. If you use a strict package manager such as `pnpm`, add `sharp` as a direct dependency so your helper can import it cleanly:
+
+<AllPackageManagers pkg="sharp" />
+
+<Steps>
+
+1. **Create a build-time placeholder helper.**
+
+   This utility reads an imported image (from `src/` or a Content Collection `image()` field) and returns inline CSS background properties for either `"blur"` or `"dominantColor"`.
+
+   ```ts title="src/lib/image-placeholder.ts"
+   import type { ImageMetadata } from "astro";
+   import sharp from "sharp";
+
+   export type PlaceholderType = "blur" | "dominantColor" | "none";
+
+   type LocalImageMetadata = ImageMetadata & {
+   	fsPath?: string;
+   };
+
+   type PlaceholderStyle = Record<string, string>;
+
+   const placeholderCache = new Map<string, Promise<PlaceholderStyle>>();
+
+   async function generatePlaceholder(
+   	fsPath: string,
+   	type: Exclude<PlaceholderType, "none">,
+   ): Promise<PlaceholderStyle> {
+   	if (type === "dominantColor") {
+   		const { dominant } = await sharp(fsPath).stats();
+   		return {
+   			"background-color": `rgb(${dominant.r} ${dominant.g} ${dominant.b})`,
+   		};
+   	}
+
+   	const buffer = await sharp(fsPath)
+   		.resize(20, 20, { fit: "inside", withoutEnlargement: true })
+   		.blur(1)
+   		.webp({ quality: 20 })
+   		.toBuffer();
+
+   	const dataUri = `data:image/webp;base64,${buffer.toString("base64")}`;
+
+   	return {
+   		"background-image": `url("${dataUri}")`,
+   		"background-size": "cover",
+   		"background-position": "center",
+   		"background-repeat": "no-repeat",
+   	};
+   }
+
+   export async function getPlaceholderStyle(
+   	src: ImageMetadata,
+   	type: PlaceholderType = "blur",
+   ): Promise<PlaceholderStyle> {
+   	if (type === "none") {
+   		return {};
+   	}
+
+   	const fsPath = (src as LocalImageMetadata).fsPath;
+   	if (!fsPath) {
+   		return {};
+   	}
+
+   	const cacheKey = `${fsPath}:${type}`;
+   	let pending = placeholderCache.get(cacheKey);
+   	if (!pending) {
+   		pending = generatePlaceholder(fsPath, type);
+   		placeholderCache.set(cacheKey, pending);
+   	}
+
+   	return pending;
+   }
+   ```
+
+   A few deliberate choices make this helper fast and dependable:
+
+   - **Reading `fsPath` directly:** Astro attaches a non-enumerable `fsPath` property to local `ImageMetadata` objects during development and static builds. Reading the original file from `fsPath` works identically in `astro dev` and `astro build`, avoids fragile `./dist/` path assumptions, and does not force Astro to copy the unoptimized source file into your output directory.
+   - **Blurring in Sharp instead of CSS:** A 1-pixel Gaussian blur at `20 × 20` smooths out compression artifacts before base64 encoding. Because the blur lives inside the tiny data URI, you do not need a CSS `filter: blur()` or an `overflow: hidden` wrapper element around the `<img>`.
+   - **Caching the promise:** Storing the in-flight `Promise` in `placeholderCache` ensures that an image reused across dozens of pages or cards is decoded by Sharp only once per build.
+
+2. **Create the `<PlaceholderImage />` component.**
+
+   Wrap Astro's `<Image />` component so callers keep the full `LocalImageProps` API—responsive `layout`, `widths`, `sizes`, `priority`, `format`, `class`, and custom `style`—while gaining a `placeholder` prop.
+
+   ```astro title="src/components/PlaceholderImage.astro"
+   ---
+   import { Image, type LocalImageProps } from "astro:assets";
+   import {
+   	getPlaceholderStyle,
+   	type PlaceholderType,
+   } from "~/lib/image-placeholder";
+
+   type Props = LocalImageProps & {
+   	placeholder?: PlaceholderType;
+   };
+
+   const { placeholder = "blur", style, ...imageProps } = Astro.props;
+
+   const resolvedSrc =
+   	"then" in imageProps.src ? (await imageProps.src).default : imageProps.src;
+   const placeholderStyle = await getPlaceholderStyle(resolvedSrc, placeholder);
+   const hasPlaceholder = Object.keys(placeholderStyle).length > 0;
+
+   const mergedStyle = !hasPlaceholder
+   	? style
+   	: typeof style === "string"
+   		? `${Object.entries(placeholderStyle)
+   				.map(([prop, val]) => `${prop}: ${val}`)
+   				.join("; ")}; ${style}`
+   		: { ...placeholderStyle, ...style };
+   ---
+
+   <Image
+   	{...imageProps}
+   	src={resolvedSrc}
+   	{...(mergedStyle != null ? { style: mergedStyle } : {})}
+   />
+   ```
+
+   Because the placeholder is rendered as a CSS background on the `<img>` itself, opaque formats (JPEG, opaque WebP, AVIF, or flat PNG) cover the placeholder completely the instant they finish decoding—no wrapper `<div>`, no hydration, and no client script required.
+
+3. **Use `<PlaceholderImage />` in your pages.**
+
+   Use `"blur"` selectively for hero photography and `"dominantColor"` (or `"none"`) for denser lists or UI graphics.
+
+   ```astro title="src/pages/index.astro"
+   ---
+   import PlaceholderImage from "~/components/PlaceholderImage.astro";
+   import heroPhoto from "~/assets/hero.jpg";
+   import cardThumb from "~/assets/card.jpg";
+   import diagram from "~/assets/architecture.png";
+   ---
+
+   <!-- Above-the-fold hero: eager + high priority, blurred LQIP -->
+   <PlaceholderImage
+   	src={heroPhoto}
+   	alt="Sunlight over a mountain ridge at dawn"
+   	layout="full-width"
+   	priority
+   	placeholder="blur"
+   />
+
+   <!-- Grid card: tiny dominant-color fill to keep HTML lean -->
+   <PlaceholderImage
+   	src={cardThumb}
+   	alt="Coffee cup on a wooden desk"
+   	width={640}
+   	layout="constrained"
+   	placeholder="dominantColor"
+   />
+
+   <!-- Crisp technical graphic: skip the placeholder altogether -->
+   <PlaceholderImage
+   	src={diagram}
+   	alt="Request flow diagram"
+   	width={800}
+   	layout="constrained"
+   	placeholder="none"
+   />
+   ```
+
+   Notice how `priority` composes naturally with the placeholder: Astro emits `loading="eager"`, `decoding="sync"`, and `fetchpriority="high"` on the hero `<img>`, so the real image starts downloading immediately while the inline background fills the frame during transfer.
+
+</Steps>
+
+## Handling transparent images
+
+If an image has transparent pixels—such as a cut-out product shot or a transparent PNG logo—the CSS `background` will stay visible behind the transparent areas even after the image loads.
+
+The simplest fix is to pass `placeholder="none"` for transparent assets. If you want placeholders on transparent images anyway, add a `data-placeholder` attribute to `<Image />` and clear the background properties once the image finishes loading:
+
+```astro title="src/components/PlaceholderImage.astro" ins={5,8-34}
+<Image
+	{...imageProps}
+	src={resolvedSrc}
+	{...(mergedStyle != null ? { style: mergedStyle } : {})}
+	{...(hasPlaceholder ? { "data-placeholder": "" } : {})}
+/>
+
+<script>
+	function clearPlaceholder(img: HTMLImageElement) {
+		img.style.removeProperty("background-image");
+		img.style.removeProperty("background-color");
+		img.style.removeProperty("background-size");
+		img.style.removeProperty("background-position");
+		img.style.removeProperty("background-repeat");
+		img.removeAttribute("data-placeholder");
+	}
+
+	function initPlaceholders() {
+		document
+			.querySelectorAll<HTMLImageElement>("img[data-placeholder]")
+			.forEach((img) => {
+				if (img.dataset.placeholder === "bound") return;
+				if (img.complete && img.naturalHeight > 0) {
+					clearPlaceholder(img);
+					return;
+				}
+				img.dataset.placeholder = "bound";
+				img.addEventListener("load", () => clearPlaceholder(img), { once: true });
+			});
+	}
+
+	initPlaceholders();
+	document.addEventListener("astro:page-load", initPlaceholders);
+</script>
+```
+
+Two details here prevent subtle bugs that often sneak into image-loading scripts:
+
+- **Checking `img.complete && img.naturalHeight > 0`:** Images served from the browser cache often finish loading before a module script executes, meaning the `load` event has already fired. Checking `complete` alongside `naturalHeight > 0` (which excludes cached broken images) clears the background immediately instead of leaving it stuck behind a transparent asset.
+- **Never hiding the `<img>` with static `opacity: 0`:** Fade-in snippets that set `opacity: 0` in CSS and rely on `onload` to reveal the image break completely when JavaScript is disabled and can delay LCP on hero images. Keeping the `<img>` visible from the start makes the script a pure progressive enhancement.
+
+Listening to `astro:page-load` in addition to the initial call also ensures the cleanup runs smoothly after client-side navigations if your site uses [`<ClientRouter />`](https://docs.astro.build/en/guides/view-transitions/).
+
+## Remote and CDN-hosted images
+
+The Sharp helper above reads local files imported from `src/`. If your images live on a remote image CDN (such as Cloudinary, Imgix, Shopify, Unsplash, Netlify, or Vercel), [`@unpic/astro`](https://unpic.pics/img/astro/) supports build-time placeholders for remote URLs out of the box—either through its `<Image />` component or by registering `@unpic/astro/service` in `astro.config.mjs`:
+
+```js title="astro.config.mjs"
+import { defineConfig } from "astro/config";
+import { imageService } from "@unpic/astro/service";
+
+export default defineConfig({
+	image: {
+		service: imageService({
+			placeholder: "blurhash", // or "dominantColor" | "lqip"
+		}),
+	},
+});
+```
+
+Unpic decodes BlurHash placeholders on the server into tiny inline CSS backgrounds, so they require no client-side JavaScript either. Keep in mind that `@unpic/astro`'s `placeholder` option only applies to **remote** images and is ignored for local imports—which makes it a clean complement to the local Sharp component in this recipe.
+
+<LinkCard
+	title="@unpic/astro documentation"
+	description="Configure Unpic's Astro image service and remote CDN placeholders."
+	href="https://unpic.pics/img/astro/"
+/>
+
+For **on-demand rendered pages** backed by a CMS or database (such as Sanity, Contentful, Directus, or Strapi), avoid running Sharp on every incoming request. Instead, generate a dominant color or placeholder hash once at upload time, store it alongside the image record, and pass it into your Astro component as an inline `background-color` or data URI.
+
+## Pitfalls to watch out for
+
+- **HTML payload bloat on image-heavy pages:** A single `20 × 20` WebP LQIP adds roughly 350–600 bytes to your HTML. On an article with three photos, that is negligible; on a product grid with 60 thumbnails, it adds ~30 KB of uncacheable inline data to the initial document and pushes back First Contentful Paint. Switch dense grids to `placeholder="dominantColor"` or `"none"`.
+- **Internal `fsPath` is build-time only:** Astro populates `fsPath` with the file path on the machine that runs the build. Use `<PlaceholderImage />` on prerendered pages (Astro's default) and during `astro dev`, not on deployed on-demand routes where source files are absent from disk or native Sharp binaries are unavailable.
+- **Don't blur text, charts, or UI:** Photographs transition cleanly from a soft preview to crisp detail. Screenshots, diagrams, and typography turn into distracting blobs—reserve `"blur"` for photography and use a solid color or plain reserved dimensions for everything else.
+
+## Full code
+
+<Tabs>
+	<TabItem label="src/lib/image-placeholder.ts">
+		```ts
+		import type { ImageMetadata } from "astro";
+		import sharp from "sharp";
+
+		export type PlaceholderType = "blur" | "dominantColor" | "none";
+
+		type LocalImageMetadata = ImageMetadata & {
+			fsPath?: string;
+		};
+
+		type PlaceholderStyle = Record<string, string>;
+
+		const placeholderCache = new Map<string, Promise<PlaceholderStyle>>();
+
+		async function generatePlaceholder(
+			fsPath: string,
+			type: Exclude<PlaceholderType, "none">,
+		): Promise<PlaceholderStyle> {
+			if (type === "dominantColor") {
+				const { dominant } = await sharp(fsPath).stats();
+				return {
+					"background-color": `rgb(${dominant.r} ${dominant.g} ${dominant.b})`,
+				};
+			}
+
+			const buffer = await sharp(fsPath)
+				.resize(20, 20, { fit: "inside", withoutEnlargement: true })
+				.blur(1)
+				.webp({ quality: 20 })
+				.toBuffer();
+
+			const dataUri = `data:image/webp;base64,${buffer.toString("base64")}`;
+
+			return {
+				"background-image": `url("${dataUri}")`,
+				"background-size": "cover",
+				"background-position": "center",
+				"background-repeat": "no-repeat",
+			};
+		}
+
+		export async function getPlaceholderStyle(
+			src: ImageMetadata,
+			type: PlaceholderType = "blur",
+		): Promise<PlaceholderStyle> {
+			if (type === "none") {
+				return {};
+			}
+
+			const fsPath = (src as LocalImageMetadata).fsPath;
+			if (!fsPath) {
+				return {};
+			}
+
+			const cacheKey = `${fsPath}:${type}`;
+			let pending = placeholderCache.get(cacheKey);
+			if (!pending) {
+				pending = generatePlaceholder(fsPath, type);
+				placeholderCache.set(cacheKey, pending);
+			}
+
+			return pending;
+		}
+		```
+	</TabItem>
+	<TabItem label="src/components/PlaceholderImage.astro">
+		```astro
+		---
+		import { Image, type LocalImageProps } from "astro:assets";
+		import {
+			getPlaceholderStyle,
+			type PlaceholderType,
+		} from "~/lib/image-placeholder";
+
+		type Props = LocalImageProps & {
+			placeholder?: PlaceholderType;
+		};
+
+		const { placeholder = "blur", style, ...imageProps } = Astro.props;
+
+		const resolvedSrc =
+			"then" in imageProps.src ? (await imageProps.src).default : imageProps.src;
+		const placeholderStyle = await getPlaceholderStyle(resolvedSrc, placeholder);
+		const hasPlaceholder = Object.keys(placeholderStyle).length > 0;
+
+		const mergedStyle = !hasPlaceholder
+			? style
+			: typeof style === "string"
+				? `${Object.entries(placeholderStyle)
+						.map(([prop, val]) => `${prop}: ${val}`)
+						.join("; ")}; ${style}`
+				: { ...placeholderStyle, ...style };
+		---
+
+		<Image
+			{...imageProps}
+			src={resolvedSrc}
+			{...(mergedStyle != null ? { style: mergedStyle } : {})}
+			{...(hasPlaceholder ? { "data-placeholder": "" } : {})}
+		/>
+
+		<script>
+			function clearPlaceholder(img: HTMLImageElement) {
+				img.style.removeProperty("background-image");
+				img.style.removeProperty("background-color");
+				img.style.removeProperty("background-size");
+				img.style.removeProperty("background-position");
+				img.style.removeProperty("background-repeat");
+				img.removeAttribute("data-placeholder");
+			}
+
+			function initPlaceholders() {
+				document
+					.querySelectorAll<HTMLImageElement>("img[data-placeholder]")
+					.forEach((img) => {
+						if (img.dataset.placeholder === "bound") return;
+						if (img.complete && img.naturalHeight > 0) {
+							clearPlaceholder(img);
+							return;
+						}
+						img.dataset.placeholder = "bound";
+						img.addEventListener("load", () => clearPlaceholder(img), { once: true });
+					});
+			}
+
+			initPlaceholders();
+			document.addEventListener("astro:page-load", initPlaceholders);
+		</script>
+		```
+	</TabItem>
+</Tabs>
