@@ -12,20 +12,42 @@ export default defineConfig({
 			'wasm_source_url_support',
 			'request_signal_passthrough',
 			'remove_nodejs_compat_eol_v22',
+			'remove_nodejs_compat_eol_v24',
+			'global_fetch_strictly_public',
+			'pedantic_wpt',
 		],
 		entrypoint: '@astrojs/cloudflare/entrypoints/server',
 		assets: {
 			notFoundHandling: '404-page',
 		},
-		workersDev: true,
-		previewUrls: true,
+		limits: {
+			cpuMs: 60_000,
+		},
+		workersDev: false,
+		previewUrls: false,
 		observability: {
 			enabled: true,
-			logs: {
+			headSamplingRate: 1,
+			issues: {
 				enabled: true,
 			},
+			logs: {
+				enabled: true,
+				headSamplingRate: 1,
+			},
+			traces: {
+				enabled: true,
+				headSamplingRate: 1,
+			},
 		},
-		domains: ['astro-tips.dev', 'www.astro-tips.dev'],
+		domains: [
+			'astro-tips.dev',
+			{
+				hostname: 'previews.astro-tips.dev',
+				production: false,
+				previews: true,
+			},
+		],
 		env: {
 			ASSETS: bindings.assets(),
 		},
