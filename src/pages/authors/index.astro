@@ -1,0 +1,37 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import AuthorCard from '~/components/AuthorCard.astro';
+import { formatContributionSummary, getAllAuthorsWithCounts } from '~/lib/authors';
+
+const authors = await getAllAuthorsWithCounts();
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'Authors',
+		description: 'Meet the community contributors behind Astro Tips.',
+		tableOfContents: false,
+	}}
+>
+	<p>
+		Meet the community members who write, maintain, and share Astro recipes, quick tips, and
+		external resources on Astro Tips.
+	</p>
+
+	<div class="not-content authors-grid">
+		{
+			authors.map(({ author, counts }) => (
+				<AuthorCard author={author} summary={formatContributionSummary(counts)} />
+			))
+		}
+	</div>
+</StarlightPage>
+
+<style>
+	.authors-grid {
+		display: grid;
+		gap: 1rem;
+		margin-block-start: 1.5rem;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+	}
+</style>

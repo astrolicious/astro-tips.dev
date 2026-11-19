@@ -1,0 +1,68 @@
+---
+interface Props {
+	name: string;
+	avatarUrl?: string | undefined;
+	initials: string;
+	size?: number;
+	decorative?: boolean;
+}
+
+const { name, avatarUrl, initials, size = 48, decorative = false } = Astro.props;
+---
+
+{
+	avatarUrl ? (
+		<img
+			src={avatarUrl}
+			alt={decorative ? '' : name}
+			width={size}
+			height={size}
+			loading="lazy"
+			decoding="async"
+			class="author-avatar"
+			style={`--avatar-size: ${size}px;`}
+		/>
+	) : decorative ? (
+		<span
+			class="author-avatar author-initials"
+			style={`--avatar-size: ${size}px;`}
+			aria-hidden="true"
+		>
+			{initials}
+		</span>
+	) : (
+		<span
+			class="author-avatar author-initials"
+			style={`--avatar-size: ${size}px;`}
+			role="img"
+			aria-label={name}
+		>
+			{initials}
+		</span>
+	)
+}
+
+<style>
+	.author-avatar {
+		inline-size: var(--avatar-size);
+		block-size: var(--avatar-size);
+		border-radius: 9999px;
+		flex-shrink: 0;
+		object-fit: cover;
+		border: 1px solid var(--sl-color-gray-5);
+		background-color: var(--sl-color-gray-6);
+		display: block;
+	}
+
+	.author-initials {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--sl-color-accent-low);
+		color: var(--sl-color-accent-high);
+		border-color: var(--sl-color-accent);
+		font-weight: 600;
+		font-size: calc(var(--avatar-size) * 0.4);
+		line-height: 1;
+	}
+</style>

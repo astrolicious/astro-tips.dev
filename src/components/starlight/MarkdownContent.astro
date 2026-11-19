@@ -2,12 +2,15 @@
 import { Aside } from '@astrojs/starlight/components';
 import Default from '@astrojs/starlight/components/MarkdownContent.astro';
 import { minVersion, outside } from 'semver';
+import AuthorList from '~/components/AuthorList.astro';
 import CompatibilitySummary from '~/components/CompatibilitySummary.astro';
 import CompatibilityTable from '~/components/CompatibilityTable.astro';
+import { resolveAuthors } from '~/lib/authors';
 import { getSemverUrl, hasCompatibilityInfo } from '~/lib/compatibility';
 import pkg from '../../../package.json';
 
-const { astroRange, compatibility } = Astro.locals.starlightRoute.entry.data;
+const { astroRange, authors: authorRefs, compatibility } = Astro.locals.starlightRoute.entry.data;
+const authors = await resolveAuthors(authorRefs);
 const astroVersion = minVersion(pkg.dependencies.astro)?.version;
 // check if the Astro version is less than the required range.
 const outRange = Boolean(astroRange && astroVersion && outside(astroVersion, astroRange, '>'));
@@ -19,15 +22,11 @@ const showCompatibility = hasCompatibilityInfo(compatibility);
 	// only show if the Astro version is less than the required range.
 	outRange && astroRange && semverUrl && (
 		<Aside type="caution">
-			This guide was written for Astro <a href={semverUrl}>{astroRange}</a> and
-			may not work for versions outside of that range.
+			This guide was written for Astro <a href={semverUrl}>{astroRange}</a> and may not work for
+			versions outside of that range.
 			<br />
-			We always try to keep our tips up to date, but if you see this caution,
-			please open an{' '}
-			<a href="https://github.com/astrolicious/astro-tips.dev/issues">
-				issue
-			</a>{' '}
-			to let us know.
+			We always try to keep our tips up to date, but if you see this caution, please open an{' '}
+			<a href="https://github.com/astrolicious/astro-tips.dev/issues">issue</a> to let us know.
 		</Aside>
 	)
 }
@@ -45,3 +44,5 @@ const showCompatibility = hasCompatibilityInfo(compatibility);
 		)
 	}
 </Default>
+
+{authors.length > 0 && <AuthorList authors={authors} />}

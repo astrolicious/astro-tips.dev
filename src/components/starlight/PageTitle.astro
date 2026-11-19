@@ -1,46 +1,55 @@
 ---
 import { Icon } from '@astrojs/starlight/components';
 import Default from '@astrojs/starlight/components/PageTitle.astro';
+import AuthorByline from '~/components/AuthorByline.astro';
+import { resolveAuthors } from '~/lib/authors';
 import { getSemverUrl, hasCompatibilityInfo } from '~/lib/compatibility';
 
-const { astroRange, compatibility } = Astro.locals.starlightRoute.entry.data;
+const { astroRange, authors: authorRefs, compatibility } = Astro.locals.starlightRoute.entry.data;
+const authors = await resolveAuthors(authorRefs);
 const showAstroRange = Boolean(astroRange) && !hasCompatibilityInfo(compatibility);
 const semverUrl = astroRange ? getSemverUrl('astro', astroRange) : undefined;
+const hasMeta = Boolean((showAstroRange && astroRange && semverUrl) || authors.length > 0);
 ---
 
 <Default />
 
 {
-	showAstroRange && astroRange && semverUrl && (
-		<div>
-			<p>
-				<span class="sr-only">Astro</span>
-				<Icon name="astro" />
-				<a href={semverUrl} title={`Compatible with Astro version ${astroRange}`}>
-					{astroRange}
-				</a>
-			</p>
+	hasMeta && (
+		<div class="page-meta">
+			{showAstroRange && astroRange && semverUrl && (
+				<p class="astro-range">
+					<span class="sr-only">Astro</span>
+					<Icon name="astro" />
+					<a href={semverUrl} title={`Compatible with Astro version ${astroRange}`}>
+						{astroRange}
+					</a>
+				</p>
+			)}
+			{authors.length > 0 && <AuthorByline authors={authors} />}
 		</div>
 	)
 }
 
 <style>
-  p {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
+	.astro-range {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin: 0;
+	}
 
-  div {
-    /* biome-ignore lint/complexity/noImportantStyles: overrides Starlight heading margin */
-    margin-block-start: 0.5rem !important;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem 1rem;
-    font-size: var(--sl-text-xs);
-  }
-  a {
-    color: var(--sl-color-text-accent);
-  }
+	.page-meta {
+		/* biome-ignore lint/complexity/noImportantStyles: overrides Starlight heading margin */
+		margin-block-start: 0.5rem !important;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem 1.25rem;
+		font-size: var(--sl-text-xs);
+	}
+
+	.astro-range a {
+		color: var(--sl-color-text-accent);
+	}
 </style>

@@ -74,12 +74,19 @@ export default defineConfig({
 					badge: 'Updated',
 					link: '/external-resources',
 				},
+				{
+					label: 'Authors',
+					link: '/authors',
+				},
 			],
 			components: {
 				PageTitle: './src/components/starlight/PageTitle.astro',
 				MarkdownContent: './src/components/starlight/MarkdownContent.astro',
 			},
-			routeMiddleware: './src/middleware/compatibility-toc.ts',
+			routeMiddleware: [
+				'./src/middleware/compatibility-toc.ts',
+				'./src/middleware/authors-meta.ts',
+			],
 			credits: true,
 		}),
 	],

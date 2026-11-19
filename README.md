@@ -8,6 +8,32 @@ This is a community driven collection of recipes, quick tips and external commun
 2. Close an issue with a PR
 3. [Join the Discord](https://chat.astrolicious.dev/)
 
+### Adding yourself as an author
+
+1. Create a JSON file in `src/content/authors/<your-slug>.json` (for example `src/content/authors/jane-doe.json`):
+
+```json
+{
+  "name": "Jane Doe",
+  "github": "janedoe",
+  "bio": "Short bio or tagline",
+  "website": "https://janedoe.dev",
+  "socials": {
+    "bluesky": "https://bsky.app/profile/janedoe.dev"
+  }
+}
+```
+
+Only `name` is required. Setting `github` automatically populates your GitHub link and avatar (unless you provide a custom `avatar` URL). Supported `socials` keys: `bluesky`, `x`, `mastodon`, `linkedin`, `youtube`, `discord`, `twitch`, `threads`, `instagram`, `gitlab`, `codeberg`, `codepen`, and `rss`.
+
+2. Reference your author ID (the filename without `.json`) in the `authors` array of any tip/recipe frontmatter or `src/content/resources.json` entry. Multiple authors are supported:
+
+```yaml
+authors:
+  - jane-doe
+  - co-author
+```
+
 ## Goals
 
 - Provide best practice solutions to common problems related building sites with Astro
