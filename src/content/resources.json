@@ -63,7 +63,7 @@
     "slug": "how-to-set-up-unit-tests-for-astro-components"
   },
   {
-    "tags": ["RSS"],
+    "tags": ["rss"],
     "title": "How to Send Any Data to Your RSS Feed? A Guide with Astro + RSS",
     "link": "https://aritraroy.live/tutorial/blogs/2023/how-to-send-any-data-to-rss-feed/",
     "updated": "2023-08-06",
@@ -77,7 +77,7 @@
     "slug": "extend-typescript-types-for-third-party-modules-in-an-astro-site"
   },
   {
-    "tags": ["API Endpoints"],
+    "tags": ["api-endpoints"],
     "title": "Streaming a file in Astro",
     "link": "https://astropatterns.dev/p/gems/server-endpoints-file-streaming",
     "updated": "2024-10-09",
@@ -98,7 +98,7 @@
     "slug": "how-to-preserve-react-components'-state-in-astro"
   },
   {
-    "tags": ["RSS"],
+    "tags": ["rss"],
     "title": "Adding RSS Feed Content and Fixing Markdown Image Paths in Astro",
     "link": "https://billyle.dev/posts/adding-rss-feed-content-and-fixing-markdown-image-paths-in-astro",
     "updated": "2024-05-04",
@@ -119,7 +119,7 @@
     "slug": "adding-related-articles-with-astro-content-collections"
   },
   {
-    "tags": ["RSS"],
+    "tags": ["rss"],
     "title": "Astro RSS MDX",
     "link": "https://blog.damato.design/posts/astro-rss-mdx/",
     "updated": "2023-10-24",
@@ -175,7 +175,7 @@
     "slug": "add-searching-to-your-site-with-pagefind"
   },
   {
-    "tags": ["Starlight"],
+    "tags": ["starlight"],
     "title": "Add sponsors to your Starlight site",
     "link": "https://blog.otterlord.dev/posts/starlight-sponsors/",
     "updated": "2024-01-11",
@@ -189,7 +189,7 @@
     "slug": "using-htmx-with-astro-partials"
   },
   {
-    "tags": ["Starlight"],
+    "tags": ["starlight"],
     "title": "How to make your Starlight sidebar items look better",
     "link": "https://blog.trueberryless.org/blog/starlight-sidebar-whitespace/",
     "updated": "2025-06-13",
@@ -434,7 +434,7 @@
     "slug": "deploy-astrojs-with-ftp-via-github-actions"
   },
   {
-    "tags": ["RSS"],
+    "tags": ["rss"],
     "title": "Building Better RSS/Atom Feeds in Astro with the `unified` Ecosystem",
     "link": "https://gsong.dev/articles/astro-feed-unified/",
     "updated": "2025-04-30",
@@ -448,7 +448,7 @@
     "slug": "adding-file-icons-to-expressive-code-frames"
   },
   {
-    "tags": ["Starlight"],
+    "tags": ["starlight"],
     "title": "Add diagrams to your Starlight documentation using D2",
     "link": "https://hideoo.dev/notes/starlight-add-diagrams-using-d2",
     "updated": "2024-02-08",
@@ -497,7 +497,7 @@
     "slug": "adding-reading-time-to-astro-without-the-hassle"
   },
   {
-    "tags": ["Starlight"],
+    "tags": ["starlight"],
     "title": "Adding Structured Data in Starlight",
     "link": "https://jamcomments.com/posts/structured-data-with-starlight/",
     "updated": "2024-05-30",
@@ -532,119 +532,119 @@
     "slug": "build-a-table-of-contents-from-astro's-markdown-headings"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Create a countdown with Tailwind CSS and Alpine",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-countdown-with-tailwind-css-and-alpinejs/",
     "updated": "2024-04-30",
     "slug": "create-a-countdown-with-tailwind-css-and-alpine"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create a dynamic feature grid with Astrojs and Tailwind CSS",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-dynamic-feature-grid-with-astrojs-and-tailwind-css/",
     "updated": "2024-03-01",
     "slug": "how-to-create-a-dynamic-feature-grid-with-astrojs-and-tailwind-css"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Image Gallery with TailwindCSS and Alpine",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-image-gallery-with-tailwind-css-and-alpinejs/",
     "updated": "2024-04-30",
     "slug": "image-gallery-with-tailwindcss-and-alpine"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create a login form with Tailwind CSS and Alpinejs",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-login-register-form-with-tailwind-and-alpinejs/",
     "updated": "2024-04-30",
     "slug": "how-to-create-a-login-form-with-tailwind-css-and-alpinejs"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Create a multistep form with Tailwind CSS and Alpinejs",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-multistep-form-with-tailwind-css-and-alpinejs/",
     "updated": "2024-04-30",
     "slug": "create-a-multistep-form-with-tailwind-css-and-alpinejs"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Pricing Slider with Tailwind CSS and Alpine",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-pricing-slider-with-tailwind-css-and-alpinejs/",
     "updated": "2024-04-30",
     "slug": "pricing-slider-with-tailwind-css-and-alpine"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create a progress-bar with Tailwind CSS and Alpinejs",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-progress-bar-with-tailwind-css-and-alpine-js/",
     "updated": "2024-04-30",
     "slug": "how-to-create-a-progress-bar-with-tailwind-css-and-alpinejs"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create a rating system with Tailwind CSS and Alpinejs",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-rating-system-with-tailwind-css-and-alpine-js/",
     "updated": "2024-04-30",
     "slug": "how-to-create-a-rating-system-with-tailwind-css-and-alpinejs"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create a sidebar navigation with Astro, Tailwind CSS and Alpine.js",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-sidebar-navigation-with-tailwindcss-and-alpine-js/",
     "updated": "2024-03-11",
     "slug": "how-to-create-a-sidebar-navigation-with-astro,-tailwind-css-and-alpine.js"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create a Tab component with Tailwind CSS and AlpineJS",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-tab-component-with-tailwind-css-and-alpinejs/",
     "updated": "2024-04-30",
     "slug": "how-to-create-a-tab-component-with-tailwind-css-and-alpinejs"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create a tag input with Tailwind CSS and Alpinejs",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-tag-input-with-alpine-js-and-tailwind-css/",
     "updated": "2024-04-30",
     "slug": "how-to-create-a-tag-input-with-tailwind-css-and-alpinejs"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create a Theme toggle with Tailwind CSS and AlpineJS",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-theme-toggle-with-tailwind-css-and-alpine-js/",
     "updated": "2024-04-30",
     "slug": "how-to-create-a-theme-toggle-with-tailwind-css-and-alpinejs"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Create a TODO list with Tailwind CSS and Alpine",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-a-todo-with-alpine-js-and-tailwind-css/",
     "updated": "2024-04-30",
     "slug": "create-a-todo-list-with-tailwind-css-and-alpine"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create an accordion with Tailwind CSS and Alpinejs",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-an-accordion-with-tailwind-css-and-alpinejs/",
     "updated": "2024-04-30",
     "slug": "how-to-create-an-accordion-with-tailwind-css-and-alpinejs"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create an interactive testimonial with Astrojs, Tailwind CSS and Alpine.js",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-an-interactive-testimonial-with-astro-tailwind-css-and-alpine-js/",
     "updated": "2024-03-26",
     "slug": "how-to-create-an-interactive-testimonial-with-astrojs,-tailwind-css-and-alpine.js"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create and print an invoice with Astrojs and Tailwind CSS",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-and-print-an-invoice-with-astrojs-and-tailwind-css/",
     "updated": "2024-03-11",
     "slug": "how-to-create-and-print-an-invoice-with-astrojs-and-tailwind-css"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create animated blog cards with Astrojs and Tailwind CSS",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-animated-blog-cards-with-astrojs-and-tailwind-css/",
     "updated": "2024-03-25",
@@ -658,7 +658,7 @@
     "slug": "how-to-create-animated-images-with-tailwindcss-and-astro"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to simplify your code and avoid repeating your markup with Astrojs and Tailwind CSS",
     "link": "https://lexingtonthemes.com/tutorials/how-to-simplify-your-code-and-avoid-repeating-your-markup-with-astrojs-and-tailwind-css/",
     "updated": "2024-03-28",
@@ -672,7 +672,7 @@
     "slug": "how-to-implement-incremental-static-regeneration-(isr)-in-astro"
   },
   {
-    "tags": ["SPA"],
+    "tags": ["spa"],
     "title": "Building a Single Page Application with Astro",
     "link": "https://logsnag.com/blog/react-spa-with-astro",
     "updated": "2024-01-05",
@@ -791,7 +791,7 @@
     "slug": "get-vscode,-eslint-&-prettier-working-with-astro"
   },
   {
-    "tags": ["API Endpoints"],
+    "tags": ["api-endpoints"],
     "title": "Adding an Astro \"healthcheck\" endpoint",
     "link": "https://playfulprogramming.com/posts/astro-heathcheck-monitor-blog-for-issues",
     "updated": "2024-12-31",
@@ -847,7 +847,7 @@
     "slug": "creating-drafts-in-astro-5"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Tailwind Dark Mode: With or Without Javascript.",
     "link": "https://shelbyjenkins.github.io/easy/blog/light-dark-modes/",
     "updated": "2024-02-18",
@@ -861,7 +861,7 @@
     "slug": "how-to-generate-opengraph-images-with-astro-and-satori"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Build a Perfect Dark Theme Toggle with Astro",
     "link": "https://spilled.online/posts/astro-dark-theme-toggle/",
     "updated": "2025-01-31",
@@ -896,7 +896,7 @@
     "slug": "enhance-your-astro-builds:-modify-html-files-post-build"
   },
   {
-    "tags": ["RSS"],
+    "tags": ["rss"],
     "title": "Add an RSS feed to Astro using Storyblok's stories",
     "link": "https://straffesites.com/en/blog/rss-feed-astro-storyblok",
     "updated": "2023-06-14",
@@ -917,7 +917,7 @@
     "slug": "integrate-pagefind's-search-with-astro:-a-complete-setup-guide"
   },
   {
-    "tags": ["RSS"],
+    "tags": ["rss"],
     "title": "Astro Component: Fetching Latest YouTube Videos with RSS",
     "link": "https://techsquidtv.com/blog/astro-fetching-youtube-videos-with-rss/",
     "updated": "2024-02-13",
@@ -966,7 +966,7 @@
     "slug": "add-username-and-password-authentication-with-lucia"
   },
   {
-    "tags": ["RSS"],
+    "tags": ["rss"],
     "title": "Use a dynamic filename when importing images",
     "link": "https://vaihe.com/blog/astro/astro-dynamic-image-prop/",
     "updated": "2023-01-25",
@@ -1001,7 +1001,7 @@
     "slug": "how-to-optimize-background-images-in-astro-(including-responsive-versions)"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to change the active class depending on the page being displayed in Astro",
     "link": "https://webtech-media.jp/article/astro-pathname-based-active-class",
     "updated": "2025-01-31",
@@ -1043,14 +1043,14 @@
     "slug": "animate-code-blocks"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Use Bootstrap with Astro",
     "link": "https://www.drsys.de/use-bootstrap-with-astro/",
     "updated": "2024-05-07",
     "slug": "use-bootstrap-with-astro"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Use UnoCSS in Astro",
     "link": "https://www.elian.codes/blog/23-02-11-implementing-unocss-in-astro/",
     "updated": "2023-02-14",
@@ -1092,7 +1092,7 @@
     "slug": "how-to-add-bluesky-comments-to-your-astro-blog"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Add dark mode to Astro with Tailwind CSS",
     "link": "https://www.kevinzc.com/blog/dark-mode-in-astro/",
     "updated": "2022-05-04",
@@ -1113,7 +1113,7 @@
     "slug": "using-animate-on-scroll-(aos)-in-astro:-a-step-by-step-guide"
   },
   {
-    "tags": ["authentication"],
+    "tags": ["auth"],
     "title": "Authenticating users in Astro with Better Auth: A Step-by-Step Guide",
     "link": "https://www.launchfa.st/blog/astro-better-auth",
     "updated": "2024-11-24",
@@ -1190,7 +1190,7 @@
     "slug": "using-unplug-icons-in-astro-with-react:-a-step-by-step-guide"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Shiki transformers in Astro",
     "link": "https://www.launchfa.st/blog/shiki",
     "updated": "2024-04-30",
@@ -1218,7 +1218,7 @@
     "slug": "block-ai-bots-from-scraping-your-astro-website"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Upgrading Astro Code Snippets",
     "link": "https://www.namchee.dev/posts/upgrading-astro-code-snippets/",
     "updated": "2024-12-31",
@@ -1421,7 +1421,7 @@
     "slug": "add-youtube-videos-astro-blog"
   },
   {
-    "tags": ["API Endpoints"],
+    "tags": ["api-endpoints"],
     "title": "Build a Lightning-Fast Real-Time App with Astro and Convex",
     "link": "https://www.bitdoze.com/astro-convex-realtime-app/",
     "updated": "2025-08-12",
@@ -1463,7 +1463,7 @@
     "slug": "how-to-protect-auth-forms-with-cloudflare-supabase-ssr-and-astro-actions"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to install and set up HextaUI in your Astro project",
     "link": "https://www.hextaui.com/docs/ui/installation/astro",
     "updated": "2025-06-30",
@@ -1491,14 +1491,14 @@
     "slug": "modify-astro-slot-children"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "How to create an interactive testimonial with Astrojs, Tailwind CSS and JavaScript",
     "link": "https://lexingtonthemes.com/tutorials/how-to-create-an-interactive-testimonial-with-astro-tailwind-css-and-javascript/",
     "updated": "2025-06-30",
     "slug": "how-to-create-an-interactive-testimonial-with-astro-tailwind-css-and-javascript"
   },
   {
-    "tags": ["Starlight"],
+    "tags": ["starlight"],
     "title": "How to create a horizontal progress indicator for your Starlight site",
     "link": "https://blog.trueberryless.org/blog/starlight-progress-indicator/",
     "updated": "2025-06-30",
@@ -1540,7 +1540,7 @@
     "slug": "building-perfect-toc-component"
   },
   {
-    "tags": ["Starlight"],
+    "tags": ["starlight"],
     "title": "How to fully autogenerate Starlight sidebars (without losing control)",
     "link": "https://blog.trueberryless.org/blog/starlight-autogenerate-whole-sidebar/",
     "updated": "2025-08-31",
@@ -1631,7 +1631,7 @@
     "slug": "astro-contact-form-server-actions-resend"
   },
   {
-    "tags": ["markdown", "CSS"],
+    "tags": ["markdown", "css"],
     "title": "My Custom Code Block Setup in Astro",
     "link": "https://pyk.sh/blog/2025-09-30-my-custom-code-block-setup-in-astro",
     "updated": "2025-10-31",
@@ -1715,7 +1715,7 @@
     "slug": "google-analytics-partytown"
   },
   {
-    "tags": ["API Endpoints"],
+    "tags": ["api-endpoints"],
     "title": "How to Create an Astro API Endpoint",
     "link": "https://chocolat5.com/tips/how-to-create-astro-api-endpoint/",
     "updated": "2025-11-30",
@@ -1750,14 +1750,14 @@
     "slug": "trailing-slash-tax"
   },
   {
-    "tags": ["Starlight"],
+    "tags": ["starlight"],
     "title": "Customize the “Overview” title of your Starlight Table of Contents",
     "link": "https://blog.trueberryless.org/blog/starlight-customize-toc-overview-title/",
     "updated": "2025-11-30",
     "slug": "starlight-customize-toc-overview-title"
   },
   {
-    "tags": ["Starlight"],
+    "tags": ["starlight"],
     "title": "Add Additional Content to Starlight’s Table of Contents",
     "link": "https://blog.trueberryless.org/blog/starlight-customize-toc-additional-content/",
     "updated": "2025-11-30",
@@ -1813,14 +1813,14 @@
     "slug": "setup-tinybird-analytics-astro"
   },
   {
-    "tags": ["API Endpoints", "deploy"],
+    "tags": ["api-endpoints", "deploy"],
     "title": "Implement Rate Limiting in Astro with Cloudflare Workers",
     "link": "https://www.launchfa.st/blog/rate-limiting-astro-cloudflare-workers",
     "updated": "2025-12-30",
     "slug": "rate-limiting-astro-cloudflare-workers"
   },
   {
-    "tags": ["API Endpoints", "3rd-party"],
+    "tags": ["api-endpoints", "3rd-party"],
     "title": "Generating PDFs in Astro with Cloudflare Browser Rendering at the Edge",
     "link": "https://www.launchfa.st/blog/astro-cloudflare-browser-rendering-pdf",
     "updated": "2025-12-30",
@@ -1841,7 +1841,7 @@
     "slug": "astro-turnstile-bot-protection"
   },
   {
-    "tags": ["Starlight", "view-transitions"],
+    "tags": ["starlight", "view-transitions"],
     "title": "View Transitions for Starlight sites",
     "link": "https://events-3bg.pages.dev/jotter/starlight/",
     "updated": "2025-12-30",
@@ -1946,7 +1946,7 @@
     "slug": "forms-astro-actions"
   },
   {
-    "tags": ["Starlight", "view-transitions"],
+    "tags": ["starlight", "view-transitions"],
     "title": "Add Native View Transitions to your Starlight site",
     "link": "https://vtbag.dev/fwvt/twinkling/",
     "updated": "2026-02-28",
@@ -1974,7 +1974,7 @@
     "slug": "vercel-static-github-actions"
   },
   {
-    "tags": ["Starlight", "3rd-party"],
+    "tags": ["starlight", "3rd-party"],
     "title": "How to Add a “Was This Page Helpful?” Feedback Widget to Any Website, including a Starlight custom footer component",
     "link": "https://forminit.com/blog/was-this-page-helpful-feedback-widget/",
     "updated": "2026-02-28",
@@ -1995,7 +1995,7 @@
     "slug": "a-wordpress-like-more-tag-in-astro"
   },
   {
-    "tags": ["RSS"],
+    "tags": ["rss"],
     "title": "Using Astro for a Combined RSS View and Generator",
     "link": "https://www.raymondcamden.com/2026/03/03/using-astro-for-a-combined-rss-view-and-generator",
     "updated": "2026-03-31",
@@ -2044,7 +2044,7 @@
     "slug": "astro-clientrouter-mobile-menu-trap"
   },
   {
-    "tags": ["CSS"],
+    "tags": ["css"],
     "title": "Flashless Dark Mode: The Perfect Implementation with Astro and CSS Variables",
     "link": "https://www.vbesse.com/en/blog/flashless-dark-mode/",
     "updated": "2026-03-31",
@@ -2128,7 +2128,7 @@
     "slug": "creating-custom-page-transitions-in-astro-with-barba-js-and-gsap"
   },
   {
-    "tags": ["markdown", "API Endpoints"],
+    "tags": ["markdown", "api-endpoints"],
     "title": "Serve markdown versions of Astro pages for agents",
     "link": "https://www.larocque.dev/projects/content-negotiation-project-pages/",
     "updated": "2026-04-30",
@@ -2198,14 +2198,14 @@
     "slug": "how-to-use-astro-blog-as-a-development-log"
   },
   {
-    "tags": ["3rd-party", "API Endpoints"],
+    "tags": ["3rd-party", "api-endpoints"],
     "title": "How to use Algolia indexes to add powerful search features to your Webflow site using webhooks via an Astro app",
     "link": "https://webflow.com/blog/search-webflow-site-algolia",
     "updated": "2026-05-31",
     "slug": "search-webflow-site-algolia"
   },
   {
-    "tags": ["CSS", "animation"],
+    "tags": ["css", "animation"],
     "title": "How I Built a Tech-Stack Marquee as an Astro Developer",
     "link": "https://hansmartens.dev/blog/astro-developer-stack-marquee/",
     "updated": "2026-06-30",
@@ -2219,7 +2219,7 @@
     "slug": "how-to-create-draft-post-or-page-in-astro"
   },
   {
-    "tags": ["deploy", "SPA"],
+    "tags": ["deploy", "spa"],
     "title": "How to deploy a static site, an SPA, or a full Astro app on Cloudflare Workers using the static assets feature, with a Worker for the dynamic parts.",
     "link": "https://flaviocopes.com/cloudflare-workers-static-assets/",
     "updated": "2026-06-30",
@@ -2247,7 +2247,7 @@
     "slug": "generate-og-images-astro"
   },
   {
-    "tags": ["API Endpoints", "utilities"],
+    "tags": ["api-endpoints", "utilities"],
     "title": "Dynamic sitemap.xml in Astro SSR",
     "link": "https://flaviocopes.com/dynamic-sitemap-astro-ssr/",
     "updated": "2026-07-31",
@@ -2387,7 +2387,7 @@
     "slug": "chasing-100-lighthouse-scores-on-my-astro-blog"
   },
   {
-    "tags": ["Starlight", "i18n"],
+    "tags": ["starlight", "i18n"],
     "title": "Find translation issues in Starlight using x18n",
     "link": "https://hideoo.dev/notes/starlight-translation-issues-x18n",
     "updated": "2026-10-31",
