@@ -1,6 +1,6 @@
 # Astro Tips
 
-This is a community driven collection of recipes, quick tips and external community resources 
+This is a community driven collection of recipes, quick tips and external community resources
 
 ## How to help
 
@@ -12,7 +12,7 @@ This is a community driven collection of recipes, quick tips and external commun
 
 - Provide best practice solutions to common problems related building sites with Astro
 - Provide in depth recipes where they are warranted
-- Provide quick tips where they are warranted 
+- Provide quick tips where they are warranted
 
 ## Non-goals
 

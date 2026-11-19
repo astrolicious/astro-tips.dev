@@ -11,6 +11,7 @@
   </head>
   <script>
     const { default: JSConfetti } = await import("js-confetti");
+
     import { confetti } from "@tsparticles/confetti";
 
     const loadConfettiButton = document.getElementById("confetti");
@@ -31,8 +32,8 @@
   </script>
   <body>
     <h1>Dynamic import fetched on click</h1>
-    <button id="confetti">Confetti 🎉 38kb .js</button>
-    <button id="confetti2">Confetti 2 🎉 2.8kb .js</button>
+    <button type="button" id="confetti">Confetti 🎉 38kb .js</button>
+    <button type="button" id="confetti2">Confetti 2 🎉 2.8kb .js</button>
 
     <div>
       <a href="/">Dynamic import on click</a>

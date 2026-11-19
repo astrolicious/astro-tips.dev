@@ -8,16 +8,13 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": [
-      "**",
-      "!**/.prettierrc.mjs",
-      "!**/.prettierignore",
-      "!**/*.astro",
-      "!**/examples/shadcn-ui/**/*"
-    ]
+    "includes": ["**", "!**/*.svg", "!**/examples/shadcn-ui/**/*"]
   },
   "formatter": {
     "lineWidth": 100
+  },
+  "html": {
+    "experimentalFullSupportEnabled": true
   },
   "javascript": {
     "formatter": {
@@ -43,7 +40,7 @@
       "project": "recommended"
     },
     "rules": {
-      "recommended": true
+      "preset": "recommended"
     }
   }
 }

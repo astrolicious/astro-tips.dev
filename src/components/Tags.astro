@@ -1,6 +1,6 @@
 ---
-import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 import { getCollection } from "astro:content";
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
 interface Props {
   tags?: string[];
@@ -45,9 +45,6 @@ const style = allTags
     padding-inline: 0.75rem;
     background-color: var(--sl-color-gray-5);
     border-radius: 9999px;
-  }
-
-  .tag-container label {
   }
 
   form button {
@@ -108,7 +105,7 @@ const style = allTags
 
 <script is:inline>
   const form = document.getElementById("tags");
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", () => {
     const url = `${window.location.origin}${window.location.pathname}?${new URLSearchParams(new FormData(form)).toString()}`;
     window.navigator.clipboard.writeText(url);
   });

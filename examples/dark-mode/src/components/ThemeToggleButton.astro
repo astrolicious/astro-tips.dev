@@ -93,7 +93,7 @@ const { themeIconRelationship = "opposite" } = Astro.props;
         const currentTheme = theme.getTheme();
         const defaultTheme = theme.getDefaultTheme();
         const systemTheme = theme.getSystemTheme();
-        let newTheme;
+        let newTheme = defaultTheme;
 
         if (defaultTheme === "auto") {
           newTheme =

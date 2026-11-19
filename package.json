@@ -11,9 +11,9 @@
     "typecheck": "astro sync && tsc --noEmit --runExternalCode",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "biome check --write ./ && prettier -w \"**/*\" --ignore-unknown --cache",
+    "format": "biome check --write .",
     "lint": "biome check .",
-    "lint:fix": "biome check --apply .",
+    "lint:fix": "biome check --write .",
     "cf-typegen": "cf workers types",
     "deploy": "cf deploy"
   },
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@astrojs/ts-content-mapper": "0.2.0",
-    "@biomejs/biome": "2.0.6",
+    "@biomejs/biome": "2.6.8",
     "@cloudflare/vite-plugin": "2.0.0-rc.2",
     "@types/mdast": "4.0.4",
     "@types/node": "26.6.6",
@@ -35,8 +35,6 @@
     "cf": "1.0.0-rc.2",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.2.3",
-    "prettier": "3.6.2",
-    "prettier-plugin-astro": "0.14.1",
     "typescript": "7.1.0-beta"
   }
 }
