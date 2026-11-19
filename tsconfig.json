@@ -1,10 +1,17 @@
 {
   "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
+    "noUnusedLocals": false,
     "paths": {
       "~/*": ["./src/*"]
     }
   },
+  "contentMappers": [
+    {
+      "package": "@astrojs/ts-content-mapper",
+      "extensions": [".astro"]
+    }
+  ],
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "examples"]
+  "exclude": ["dist", "examples", ".cloudflare"]
 }

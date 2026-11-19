@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro sync && tsc --noEmit --runExternalCode && astro build",
+    "typecheck": "astro sync && tsc --noEmit --runExternalCode",
     "preview": "astro preview",
     "astro": "astro",
     "format": "biome check --write ./ && prettier -w \"**/*\" --ignore-unknown --cache",
@@ -17,16 +18,15 @@
     "deploy": "cf deploy"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.6",
     "@astrojs/cloudflare": "15.0.0-beta.6",
     "@astrojs/starlight": "0.43.1",
     "astro": "7.4.13",
     "semver": "7.8.6",
     "sharp": "0.35.5",
-    "starlight-package-managers": "0.13.1",
-    "typescript": "5.8.3"
+    "starlight-package-managers": "0.13.1"
   },
   "devDependencies": {
+    "@astrojs/ts-content-mapper": "0.2.0",
     "@biomejs/biome": "2.0.6",
     "@cloudflare/vite-plugin": "2.0.0-rc.2",
     "@types/mdast": "4.0.4",
@@ -36,6 +36,7 @@
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.2.3",
     "prettier": "3.6.2",
-    "prettier-plugin-astro": "0.14.1"
+    "prettier-plugin-astro": "0.14.1",
+    "typescript": "7.1.0-beta"
   }
 }
