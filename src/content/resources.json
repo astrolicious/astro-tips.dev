@@ -1433,5 +1433,964 @@
     "link": "https://anav.dev/blogs/how-to-generate-dynamic-open-graph-images-with-astro-and-satori",
     "updated": "2026-01-13",
     "slug": "how-to-generate-dynamic-og-images-for-all-pages-during-runtime"
+  },
+  {
+    "tags": ["images"],
+    "title": "Generating open graph images in Astro",
+    "link": "https://cassidoo.co/post/og-image-gen-astro/",
+    "updated": "2025-06-30",
+    "slug": "og-image-gen-astro"
+  },
+  {
+    "tags": ["auth"],
+    "title": "How to Build Secure SSR Authentication with Supabase, Astro, and Cloudflare Turnstile",
+    "link": "https://www.freecodecamp.org/news/build-secure-ssr-authentication-with-supabase-astro-and-cloudflare-turnstile/",
+    "updated": "2025-06-30",
+    "slug": "build-secure-ssr-authentication-with-supabase-astro-and-cloudflare-turnstile"
+  },
+  {
+    "tags": ["images"],
+    "title": "Integrating the UnJS ipx Image Proxy as an Astro Middleware",
+    "link": "https://flori.dev/reads/astro-ipx-middleware",
+    "updated": "2025-06-30",
+    "slug": "astro-ipx-middleware"
+  },
+  {
+    "tags": ["auth"],
+    "title": "How to Protect Auth Forms with Cloudflare, Supabase SSR, and Astro Actions",
+    "link": "https://blog.hijabicoder.dev/how-to-protect-auth-forms-with-cloudflare-supabase-ssr-and-astro-actions",
+    "updated": "2025-06-30",
+    "slug": "how-to-protect-auth-forms-with-cloudflare-supabase-ssr-and-astro-actions"
+  },
+  {
+    "tags": ["CSS"],
+    "title": "How to install and set up HextaUI in your Astro project",
+    "link": "https://www.hextaui.com/docs/ui/installation/astro",
+    "updated": "2025-06-30",
+    "slug": "hextaui-installation-astro"
+  },
+  {
+    "tags": ["content-collections"],
+    "title": "Building faster content-driven sites with Astro",
+    "link": "https://strapi.io/blog/building-faster-content-driven-sites-with-astro",
+    "updated": "2025-06-30",
+    "slug": "building-faster-content-driven-sites-with-astro"
+  },
+  {
+    "tags": ["deploy"],
+    "title": "Build a fully customizable bun server for Astro",
+    "link": "https://dev.to/elite174/fully-customizable-bun-server-for-astro-2g61",
+    "updated": "2025-06-30",
+    "slug": "fully-customizable-bun-server-for-astro"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Modify slot children in Astro",
+    "link": "https://cassidysmith.dev/posts/modify-astro-slot-children",
+    "updated": "2025-06-30",
+    "slug": "modify-astro-slot-children"
+  },
+  {
+    "tags": ["CSS"],
+    "title": "How to create an interactive testimonial with Astrojs, Tailwind CSS and JavaScript",
+    "link": "https://lexingtonthemes.com/tutorials/how-to-create-an-interactive-testimonial-with-astro-tailwind-css-and-javascript/",
+    "updated": "2025-06-30",
+    "slug": "how-to-create-an-interactive-testimonial-with-astro-tailwind-css-and-javascript"
+  },
+  {
+    "tags": ["Starlight"],
+    "title": "How to create a horizontal progress indicator for your Starlight site",
+    "link": "https://blog.trueberryless.org/blog/starlight-progress-indicator/",
+    "updated": "2025-06-30",
+    "slug": "starlight-progress-indicator"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Building a Newsletter System Without the Headache - using Cloudflare and Resend",
+    "link": "https://sarthakmishra.com/blog/building-newsletter-with-astro-cloudflare-and-resend",
+    "updated": "2025-08-31",
+    "slug": "building-newsletter-with-astro-cloudflare-and-resend"
+  },
+  {
+    "tags": ["images"],
+    "title": "Building a personal photo stream for Astro/Cactus-theme",
+    "link": "https://walterra.dev/blog/2025-08-04-photo-stream-astro",
+    "updated": "2025-08-31",
+    "slug": "building-a-personal-photo-stream-for-astro-cactus-theme"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "I finally added Bluesky comments and likes to my blog (and you can too!)",
+    "link": "https://brittanyellich.com/bluesky-comments-likes/",
+    "updated": "2025-08-31",
+    "slug": "bluesky-comments-likes"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Adding Spotify now playing to Astro",
+    "link": "https://www.tommyp.org/blog/adding-spotify-now-playing-to-astro",
+    "updated": "2025-08-31",
+    "slug": "adding-spotify-now-playing-to-astro"
+  },
+  {
+    "tags": ["markdown"],
+    "title": "Perfecting an Astro TOC component",
+    "link": "https://sarthakmishra.com/blog/building-perfect-toc-component",
+    "updated": "2025-08-31",
+    "slug": "building-perfect-toc-component"
+  },
+  {
+    "tags": ["Starlight"],
+    "title": "How to fully autogenerate Starlight sidebars (without losing control)",
+    "link": "https://blog.trueberryless.org/blog/starlight-autogenerate-whole-sidebar/",
+    "updated": "2025-08-31",
+    "slug": "starlight-autogenerate-whole-sidebar"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Astro + Wordpress: post previews",
+    "link": "https://wpengine.com/builders/astro-wordpress-post-previews/",
+    "updated": "2025-08-31",
+    "slug": "astro-wordpress-post-previews"
+  },
+  {
+    "tags": ["content-collections", "3rd-party"],
+    "title": "How to use PagesCMS with Astro",
+    "link": "https://lexingtonthemes.com/blog/posts/how-to-use-pagescms-with-astro/",
+    "updated": "2025-08-31",
+    "slug": "how-to-use-pagescms-with-astro"
+  },
+  {
+    "tags": ["images"],
+    "title": "Building an automated photo gallery with Astro",
+    "link": "https://conragan.com/blog/2025/automated-astrojs-photo-gallery/",
+    "updated": "2025-08-31",
+    "slug": "automated-astrojs-photo-gallery"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Add Google Analytics to Astro: the complete guide",
+    "link": "https://farrosfr.com/blog/add-google-analytics-to-astro-the-complete-guide/",
+    "updated": "2025-08-31",
+    "slug": "add-google-analytics-to-astro-the-complete-guide"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Building a TypeSafe SDK with TypeScript for a Headless Statamic website using Astro",
+    "link": "https://www.luckymedia.dev/blog/building-a-typesafe-sdk-with-typescript-for-a-headless-statamic-website-using-astro",
+    "updated": "2025-08-31",
+    "slug": "building-a-typesafe-sdk-with-typescript-for-a-headless-statamic-website-using-astro"
+  },
+  {
+    "tags": ["content-collections", "3rd-party"],
+    "title": "Build a zero-cost Astro website with Pages CMS",
+    "link": "https://www.frontendhire.com/learn/frontend/courses/marketing-website-with-zero-cost-cms/overview",
+    "updated": "2025-09-30",
+    "slug": "build-a-zero-cost-astro-website-with-pages-cms"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "How to use Dynamic Components in Astro",
+    "link": "https://www.luckymedia.dev/blog/how-to-use-dynamic-components-in-astro",
+    "updated": "2025-09-30",
+    "slug": "how-to-use-dynamic-components-in-astro"
+  },
+  {
+    "tags": ["view-transitions"],
+    "title": "Switch Off Smooth Scrolling on History Traversals (Only)",
+    "link": "https://events-3bg.pages.dev/jotter/tips/instant-scrolling-history-navigation/",
+    "updated": "2025-09-30",
+    "slug": "instant-scrolling-history-navigation"
+  },
+  {
+    "tags": ["migration"],
+    "title": "How to migrate your website from Nuxt.js to Astro",
+    "link": "https://www.luckymedia.dev/blog/how-to-migrate-your-website-from-nuxtjs-to-astro",
+    "updated": "2025-09-30",
+    "slug": "how-to-migrate-your-website-from-nuxtjs-to-astro"
+  },
+  {
+    "tags": ["utilities", "performance"],
+    "title": "SEO for Astro: How to make the fastest framework also the smartest",
+    "link": "https://dev.to/cookieduster_n/seo-for-astro-how-to-make-the-fastest-framework-also-the-smartest-501o",
+    "updated": "2025-10-31",
+    "slug": "seo-for-astro-how-to-make-the-fastest-framework-also-the-smartest"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "How to add fast client-side search to Astro static sites",
+    "link": "https://evilmartians.com/chronicles/how-to-add-fast-client-side-search-to-astro-static-sites?q=1",
+    "updated": "2025-10-31",
+    "slug": "how-to-add-fast-client-side-search-to-astro-static-sites"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Contact forms in Astro with Server Actions and Resend",
+    "link": "https://contentisland.net/en/blog/astro-contact-form-server-actions-resend/",
+    "updated": "2025-10-31",
+    "slug": "astro-contact-form-server-actions-resend"
+  },
+  {
+    "tags": ["markdown", "CSS"],
+    "title": "My Custom Code Block Setup in Astro",
+    "link": "https://pyk.sh/blog/2025-09-30-my-custom-code-block-setup-in-astro",
+    "updated": "2025-10-31",
+    "slug": "my-custom-code-block-setup-in-astro"
+  },
+  {
+    "tags": ["db"],
+    "title": "How I got Prisma working in Astro",
+    "link": "https://www.reddit.com/r/astrojs/comments/1of33u2/how_i_got_prisma_working_in_astro/",
+    "updated": "2025-10-31",
+    "slug": "how-i-got-prisma-working-in-astro"
+  },
+  {
+    "tags": ["i18n", "3rd-party"],
+    "title": "Build a Regionally Localized Website with Storyblok and Astro",
+    "link": "https://www.storyblok.com/tp/regionally-localized-website-storyblok-astro",
+    "updated": "2025-10-31",
+    "slug": "regionally-localized-website-storyblok-astro"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "How to build a knowledge base with Astro and ButterCMS",
+    "link": "https://buttercms.com/blog/astro-tutorial-knowledge-base/",
+    "updated": "2025-10-31",
+    "slug": "astro-tutorial-knowledge-base"
+  },
+  {
+    "tags": ["editor"],
+    "title": "From VS Code to Helix: Getting the most of Markdown and Astro in Helix",
+    "link": "https://ergaster.org/posts/2025/10/29-vscode-to-helix/#getting-the-most-of-markdown-and-astro-in-helix",
+    "updated": "2025-10-31",
+    "slug": "getting-the-most-of-markdown-and-astro-in-helix"
+  },
+  {
+    "tags": ["view-transitions"],
+    "title": "Fix Flash of Unstyled Content using Astro’s Client Router",
+    "link": "https://events-3bg.pages.dev/jotter/tips/flash-of-unstyled-content-during-view-transition/",
+    "updated": "2025-11-30",
+    "slug": "flash-of-unstyled-content-during-view-transition"
+  },
+  {
+    "tags": ["3rd-party", "performance"],
+    "title": "Using Partytown with Google Tag Manager in Astro: A Step-by-Step Guide",
+    "link": "https://www.launchfa.st/blog/astro-gtm-partytown",
+    "updated": "2025-11-30",
+    "slug": "astro-gtm-partytown"
+  },
+  {
+    "tags": ["content-collections", "3rd-party"],
+    "title": "Loading Ghost CMS posts with Astro Content Collections",
+    "link": "https://jonathanyeong.com/writing/loading-ghost-cms-posts-with-astro-content-collections/",
+    "updated": "2025-11-30",
+    "slug": "loading-ghost-cms-posts-with-astro-content-collections"
+  },
+  {
+    "tags": ["deploy"],
+    "title": "Serving multiple Astro projects under one domain",
+    "link": "https://corsfix.com/blog/multiple-astro-projects-one-domain",
+    "updated": "2025-11-30",
+    "slug": "multiple-astro-projects-one-domain"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Building a Page Builder with Astro and Contentful",
+    "link": "https://www.luckymedia.dev/blog/building-a-page-builder-with-astro-and-contentful",
+    "updated": "2025-11-30",
+    "slug": "building-a-page-builder-with-astro-and-contentful"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Astro/JS Randomized Banner Icons",
+    "link": "https://www.nickstambaugh.dev/posts/random-banner-icons",
+    "updated": "2025-11-30",
+    "slug": "random-banner-icons"
+  },
+  {
+    "tags": ["3rd-party", "performance"],
+    "title": "Making Google Analytics and Partytown work: lazy-load third party libraries",
+    "link": "https://sometechblog.com/posts/google-analytics-partytown/",
+    "updated": "2025-11-30",
+    "slug": "google-analytics-partytown"
+  },
+  {
+    "tags": ["API Endpoints"],
+    "title": "How to Create an Astro API Endpoint",
+    "link": "https://chocolat5.com/tips/how-to-create-astro-api-endpoint/",
+    "updated": "2025-11-30",
+    "slug": "how-to-create-astro-api-endpoint"
+  },
+  {
+    "tags": ["content-collections"],
+    "title": "No BS Using a Content Loader for Separate Content Repo in AstroJS Blogs",
+    "link": "https://devavatar.com/posts/using-content-loader-for-separate-content-repo-astrojs/",
+    "updated": "2025-11-30",
+    "slug": "using-content-loader-for-separate-content-repo-astrojs"
+  },
+  {
+    "tags": ["performance", "deploy"],
+    "title": "Caching Astro Build Assets on CI",
+    "link": "https://walterra.dev/blog/2025-11-09-astro-build-caching",
+    "updated": "2025-11-30",
+    "slug": "astro-build-caching"
+  },
+  {
+    "tags": ["performance"],
+    "title": "Building a High Performance YouTube Embed in Astro",
+    "link": "https://www.luckymedia.dev/blog/building-a-high-performance-youtube-embed-in-astro",
+    "updated": "2025-11-30",
+    "slug": "building-a-high-performance-youtube-embed-in-astro"
+  },
+  {
+    "tags": ["deploy", "performance"],
+    "title": "Avoiding the Trailing Slash Tax on GitHub Pages and Astro",
+    "link": "https://justoffbyone.com/posts/trailing-slash-tax/",
+    "updated": "2025-11-30",
+    "slug": "trailing-slash-tax"
+  },
+  {
+    "tags": ["Starlight"],
+    "title": "Customize the “Overview” title of your Starlight Table of Contents",
+    "link": "https://blog.trueberryless.org/blog/starlight-customize-toc-overview-title/",
+    "updated": "2025-11-30",
+    "slug": "starlight-customize-toc-overview-title"
+  },
+  {
+    "tags": ["Starlight"],
+    "title": "Add Additional Content to Starlight’s Table of Contents",
+    "link": "https://blog.trueberryless.org/blog/starlight-customize-toc-additional-content/",
+    "updated": "2025-11-30",
+    "slug": "starlight-customize-toc-additional-content"
+  },
+  {
+    "tags": ["db", "performance"],
+    "title": "Reusing Database Queries in Astro SSG",
+    "link": "https://www.launchfa.st/blog/optimize-database-calls-astro-ssg",
+    "updated": "2025-11-30",
+    "slug": "optimize-database-calls-astro-ssg"
+  },
+  {
+    "tags": ["deploy", "3rd-party"],
+    "title": "Self-Hosting My Astro Site with Headless WordPress on Hetzner",
+    "link": "https://ahmetalmaz.com/blog/astro-headless-wordpress-hetzner",
+    "updated": "2025-12-30",
+    "slug": "astro-headless-wordpress-hetzner"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Adding llms.txt to Your Astro Blog",
+    "link": "https://kumak.dev/adding-llms-txt-to-astro/",
+    "updated": "2025-12-30",
+    "slug": "adding-llms-txt-to-astro"
+  },
+  {
+    "tags": ["markdown", "images"],
+    "title": "Enhancing Markdown Image Handling in Astro",
+    "link": "https://logarithmicspirals.com/blog/stable-markdown-image-urls-astro/",
+    "updated": "2025-12-30",
+    "slug": "stable-markdown-image-urls-astro"
+  },
+  {
+    "tags": ["3rd-party", "deploy"],
+    "title": "Live Collaborative Editing in Astro with Cloudflare Durable Objects",
+    "link": "https://www.launchfa.st/blog/astro-collaborative-editing-durable-objects",
+    "updated": "2025-12-30",
+    "slug": "astro-collaborative-editing-durable-objects"
+  },
+  {
+    "tags": ["3rd-party", "deploy"],
+    "title": "Building Real-Time Chat in Astro with Cloudflare Durable Objects and WebSocket Hibernation",
+    "link": "https://www.launchfa.st/blog/real-time-chat-astro-cloudflare-durable-objects",
+    "updated": "2025-12-30",
+    "slug": "real-time-chat-astro-cloudflare-durable-objects"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Setting Up Privacy-Focused Analytics with Tinybird in Astro",
+    "link": "https://www.launchfa.st/blog/setup-tinybird-analytics-astro",
+    "updated": "2025-12-30",
+    "slug": "setup-tinybird-analytics-astro"
+  },
+  {
+    "tags": ["API Endpoints", "deploy"],
+    "title": "Implement Rate Limiting in Astro with Cloudflare Workers",
+    "link": "https://www.launchfa.st/blog/rate-limiting-astro-cloudflare-workers",
+    "updated": "2025-12-30",
+    "slug": "rate-limiting-astro-cloudflare-workers"
+  },
+  {
+    "tags": ["API Endpoints", "3rd-party"],
+    "title": "Generating PDFs in Astro with Cloudflare Browser Rendering at the Edge",
+    "link": "https://www.launchfa.st/blog/astro-cloudflare-browser-rendering-pdf",
+    "updated": "2025-12-30",
+    "slug": "astro-cloudflare-browser-rendering-pdf"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Fixing GTM Events in Partytown: Forwarding dataLayer & gtag",
+    "link": "https://fatbobman.com/en/snippet/how-to-forward-custom-tag-events-to-gtm-running-inside-partytown/",
+    "updated": "2025-12-30",
+    "slug": "how-to-forward-custom-tag-events-to-gtm-running-inside-partytown"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Bot Protection in Astro with Cloudflare Turnstile",
+    "link": "https://www.launchfa.st/blog/astro-turnstile-bot-protection",
+    "updated": "2025-12-30",
+    "slug": "astro-turnstile-bot-protection"
+  },
+  {
+    "tags": ["Starlight", "view-transitions"],
+    "title": "View Transitions for Starlight sites",
+    "link": "https://events-3bg.pages.dev/jotter/starlight/",
+    "updated": "2025-12-30",
+    "slug": "view-transitions-for-starlight-sites"
+  },
+  {
+    "tags": ["db"],
+    "title": "Type-safe full-stack development with Astro DB × Actions (Japanese)",
+    "link": "https://qiita.com/YushiYamamoto/items/21ac083feda1beb871c8",
+    "updated": "2025-12-30",
+    "slug": "type-safe-full-stack-development-with-astro-db-actions"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "How to use GitHub as a Real-Time Headless CMS for Astro",
+    "link": "https://theonlyanil.com/dev/blog/how-to-use-github-headless-cms-astrojs",
+    "updated": "2025-12-30",
+    "slug": "how-to-use-github-headless-cms-astrojs"
+  },
+  {
+    "tags": ["markdown", "3rd-party"],
+    "title": "Astro + reveal.js = Convert Markdown into Stunning Slides",
+    "link": "https://andrewmarder.net/revealjs/",
+    "updated": "2025-12-30",
+    "slug": "astro-revealjs-convert-markdown-into-stunning-slides"
+  },
+  {
+    "tags": ["images", "markdown"],
+    "title": "Painless PhotoSwipe Lightboxes for Astro MDX Blog Posts",
+    "link": "https://aaronjbecker.com/posts/photoswipe-astro-mdx-image-lightbox/",
+    "updated": "2026-01-31",
+    "slug": "photoswipe-astro-mdx-image-lightbox"
+  },
+  {
+    "tags": ["db", "3rd-party"],
+    "title": "Building a View Counter for Static Sites with Supabase and Astro",
+    "link": "https://nanamanu.com/posts/building-view-counter-supabase-astro/",
+    "updated": "2026-01-31",
+    "slug": "building-view-counter-supabase-astro"
+  },
+  {
+    "tags": ["images"],
+    "title": "Dynamic OpenGraph images in Astro",
+    "link": "https://nerdpress.org/2025/12/23/dynamic-opengraph-images-in-astro/",
+    "updated": "2026-01-31",
+    "slug": "dynamic-opengraph-images-in-astro"
+  },
+  {
+    "tags": ["content-collections"],
+    "title": "Turning recipe data into an Astro content collection",
+    "link": "https://www.raymondcamden.com/2026/01/05/turning-recipe-data-into-an-astro-content-collection",
+    "updated": "2026-01-31",
+    "slug": "turning-recipe-data-into-an-astro-content-collection"
+  },
+  {
+    "tags": ["utilities", "3rd-party"],
+    "title": "The right way to add Orama search to Astro",
+    "link": "https://sarthakmishra.com/blog/orama-astro",
+    "updated": "2026-01-31",
+    "slug": "orama-astro"
+  },
+  {
+    "tags": ["images", "deploy"],
+    "title": "Hosting images on my Cloudflare blog with R2",
+    "link": "https://www.emgoto.com/astro-blog-cloudflare-r2/",
+    "updated": "2026-01-31",
+    "slug": "astro-blog-cloudflare-r2"
+  },
+  {
+    "tags": ["3rd-party", "deploy"],
+    "title": "Building My Personal Blog Using Notion and Cloudflare Pages (for free)",
+    "link": "https://soumyadeeppurkait.xyz/blog/host-blog-notion-cloudflare/",
+    "updated": "2026-01-31",
+    "slug": "host-blog-notion-cloudflare"
+  },
+  {
+    "tags": ["deploy"],
+    "title": "Deploying an Astro site to AWS — the full pipeline",
+    "link": "https://friquelme.dev/blog/deploying-astro-to-aws/",
+    "updated": "2026-02-28",
+    "slug": "deploying-astro-to-aws"
+  },
+  {
+    "tags": ["images", "3rd-party"],
+    "title": "How to Create Dynamic OG Images in Astro with Cloudinary",
+    "link": "https://www.chrisnowicki.dev/blog/dynamic-og-images-astro-cloudinary/",
+    "updated": "2026-02-28",
+    "slug": "dynamic-og-images-astro-cloudinary"
+  },
+  {
+    "tags": ["3rd-party", "performance"],
+    "title": "Pro Google Analytics in Astro with Partytown",
+    "link": "https://farrosfr.com/blog/pro-google-analytics-in-astro-with-partytown/",
+    "updated": "2026-02-28",
+    "slug": "pro-google-analytics-in-astro-with-partytown"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Forms with Astro Actions",
+    "link": "https://ui.bejamas.com/docs/forms-astro-actions/",
+    "updated": "2026-02-28",
+    "slug": "forms-astro-actions"
+  },
+  {
+    "tags": ["Starlight", "view-transitions"],
+    "title": "Add Native View Transitions to your Starlight site",
+    "link": "https://vtbag.dev/fwvt/twinkling/",
+    "updated": "2026-02-28",
+    "slug": "add-native-view-transitions-to-your-starlight-site"
+  },
+  {
+    "tags": ["images"],
+    "title": "No more sad links: Generate automatic social images (OG) with Astro (French)",
+    "link": "https://www.vbesse.com/blog/generation-images-social/",
+    "updated": "2026-02-28",
+    "slug": "generation-images-social"
+  },
+  {
+    "tags": ["deploy"],
+    "title": "Building a Serverless Blog with Astro, Cloudflare, and Zero Monthly Cost",
+    "link": "https://scopecreeplabs.com/blog/building-a-serverless-blog-with-astro-cloudflare-and-zero-monthly-cost/",
+    "updated": "2026-02-28",
+    "slug": "building-a-serverless-blog-with-astro-cloudflare-and-zero-monthly-cost"
+  },
+  {
+    "tags": ["deploy"],
+    "title": "Automating the deployment of a static website to Vercel with GitHub Actions",
+    "link": "https://nemanjamitic.com/blog/2026-02-26-vercel-static-github-actions",
+    "updated": "2026-02-28",
+    "slug": "vercel-static-github-actions"
+  },
+  {
+    "tags": ["Starlight", "3rd-party"],
+    "title": "How to Add a “Was This Page Helpful?” Feedback Widget to Any Website, including a Starlight custom footer component",
+    "link": "https://forminit.com/blog/was-this-page-helpful-feedback-widget/",
+    "updated": "2026-02-28",
+    "slug": "was-this-page-helpful-feedback-widget"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Speaking Google’s language: JSON-LD and automated technical SEO in Astro (French)",
+    "link": "https://www.vbesse.com/blog/la-langue-de-google/",
+    "updated": "2026-02-28",
+    "slug": "la-langue-de-google"
+  },
+  {
+    "tags": ["markdown"],
+    "title": "A WordPress-like More Tag in Astro",
+    "link": "https://nerdpress.org/2026/02/28/a-wordpress-like-more-tag-in-astro/",
+    "updated": "2026-03-31",
+    "slug": "a-wordpress-like-more-tag-in-astro"
+  },
+  {
+    "tags": ["RSS"],
+    "title": "Using Astro for a Combined RSS View and Generator",
+    "link": "https://www.raymondcamden.com/2026/03/03/using-astro-for-a-combined-rss-view-and-generator",
+    "updated": "2026-03-31",
+    "slug": "using-astro-for-a-combined-rss-view-and-generator"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "3 UX details that make a difference on an Astro blog",
+    "link": "https://www.vbesse.com/en/blog/3-ux-details-astro-blog/",
+    "updated": "2026-03-31",
+    "slug": "3-ux-details-astro-blog"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Ship a Privacy Policy and Terms of Service with Your Astro Site — OpenPolicy",
+    "link": "https://www.openpolicy.sh/blog/astro",
+    "updated": "2026-03-31",
+    "slug": "ship-a-privacy-policy-and-terms-of-service-with-your-astro-site-openpolicy"
+  },
+  {
+    "tags": ["i18n", "utilities"],
+    "title": "Automating i18n sitemaps in Astro (Spanish)",
+    "link": "https://campa.dev/es/til/automatizando-sitemaps-i18n-astro/",
+    "updated": "2026-03-31",
+    "slug": "automatizando-sitemaps-i18n-astro"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Add LLM.TXT to Astro Blog",
+    "link": "https://blog.redlinesoft.net/posts/add-llm-txt-to-astro-blog/",
+    "updated": "2026-03-31",
+    "slug": "add-llm-txt-to-astro-blog"
+  },
+  {
+    "tags": ["images", "utilities"],
+    "title": "Config-Driven Screenshots: Using Astro for Docs Without a Single Manual Screenshot",
+    "link": "https://dev.to/omachala/astro-docs-without-a-single-manual-screenshot-3fi8",
+    "updated": "2026-03-31",
+    "slug": "astro-docs-without-a-single-manual-screenshot"
+  },
+  {
+    "tags": ["view-transitions"],
+    "title": "Astro Client Router: The Persistent Mobile Menu Trap",
+    "link": "https://www.vbesse.com/en/blog/astro-clientrouter-mobile-menu-trap/",
+    "updated": "2026-03-31",
+    "slug": "astro-clientrouter-mobile-menu-trap"
+  },
+  {
+    "tags": ["CSS"],
+    "title": "Flashless Dark Mode: The Perfect Implementation with Astro and CSS Variables",
+    "link": "https://www.vbesse.com/en/blog/flashless-dark-mode/",
+    "updated": "2026-03-31",
+    "slug": "flashless-dark-mode"
+  },
+  {
+    "tags": ["i18n", "view-transitions"],
+    "title": "Astro & i18n: Making a bilingual blog without sacrificing View Transitions",
+    "link": "https://www.vbesse.com/en/blog/astro-i18n-view-transitions/",
+    "updated": "2026-03-31",
+    "slug": "astro-i18n-view-transitions"
+  },
+  {
+    "tags": ["auth"],
+    "title": "Implementing OAuth in Astro",
+    "link": "https://www.raymondcamden.com/2026/03/23/implementing-oauth-in-astro",
+    "updated": "2026-03-31",
+    "slug": "implementing-oauth-in-astro"
+  },
+  {
+    "tags": ["i18n", "deploy"],
+    "title": "Stop Shipping Translations to the Client: Edge-Native i18n with Astro & Cloudflare (Part 1)",
+    "link": "https://edgekits.dev/en/blog/edge-native-i18n-astro-cloudflare-part-1/",
+    "updated": "2026-03-31",
+    "slug": "edge-native-i18n-astro-cloudflare-part-1"
+  },
+  {
+    "tags": ["i18n", "deploy"],
+    "title": "Stop Shipping Translations to the Client: Edge-Native i18n with Astro & Cloudflare (Part 2)",
+    "link": "https://edgekits.dev/en/blog/edge-native-i18n-astro-cloudflare-part-2/",
+    "updated": "2026-03-31",
+    "slug": "edge-native-i18n-astro-cloudflare-part-2"
+  },
+  {
+    "tags": ["3rd-party", "deploy"],
+    "title": "How to Build a Headless WordPress Frontend with Astro SSR on Cloudflare Pages",
+    "link": "https://www.freecodecamp.org/news/how-to-build-a-headless-wordpress-frontend-with-astro-ssr-on-cloudflare-pages/",
+    "updated": "2026-04-30",
+    "slug": "how-to-build-a-headless-wordpress-frontend-with-astro-ssr-on-cloudflare-pages"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Build a Verified Recent Sales Notification with Polar and Astro",
+    "link": "https://www.launchfa.st/blog/polar-verified-latest-sale-badge-astro",
+    "updated": "2026-04-30",
+    "slug": "polar-verified-latest-sale-badge-astro"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Build your own Parity Pricing for SaaS with Polar and Astro",
+    "link": "https://www.launchfa.st/blog/parity-pricing-polar-astro",
+    "updated": "2026-04-30",
+    "slug": "parity-pricing-polar-astro"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Automate Astro Upgrades with GitHub Agentic Workflows",
+    "link": "https://laurentkempe.com/2026/04/11/github-agentic-workflows-astro-upgrade/",
+    "updated": "2026-04-30",
+    "slug": "github-agentic-workflows-astro-upgrade"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "How I added Bluesky likes to my Astro blog",
+    "link": "https://loige.co/how-i-added-bluesky-likes-to-my-astro-blog/",
+    "updated": "2026-04-30",
+    "slug": "how-i-added-bluesky-likes-to-my-astro-blog"
+  },
+  {
+    "tags": ["markdown"],
+    "title": "Enhancing Astro with a Markdown component",
+    "link": "https://css-tricks.com/astro-markdown-component/",
+    "updated": "2026-04-30",
+    "slug": "astro-markdown-component"
+  },
+  {
+    "tags": ["animation", "view-transitions"],
+    "title": "Creating Custom Page Transitions in Astro with Barba.js and GSAP",
+    "link": "https://tympanus.net/codrops/2026/04/08/creating-custom-page-transitions-in-astro-with-barba-js-and-gsap/",
+    "updated": "2026-04-30",
+    "slug": "creating-custom-page-transitions-in-astro-with-barba-js-and-gsap"
+  },
+  {
+    "tags": ["markdown", "API Endpoints"],
+    "title": "Serve markdown versions of Astro pages for agents",
+    "link": "https://www.larocque.dev/projects/content-negotiation-project-pages/",
+    "updated": "2026-04-30",
+    "slug": "serve-markdown-versions-of-astro-pages-for-agents"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Ship a cookie banner in your Astro site without a framework",
+    "link": "https://www.policystack.dev/blog/astro-cookie-banner",
+    "updated": "2026-05-31",
+    "slug": "astro-cookie-banner"
+  },
+  {
+    "tags": ["images", "3rd-party"],
+    "title": "How to Build Dynamic Open Graph Images With Astro and Cloudinary",
+    "link": "https://cloudinary.com/blog/dynamic-open-graph-images-astro",
+    "updated": "2026-05-31",
+    "slug": "dynamic-open-graph-images-astro"
+  },
+  {
+    "tags": ["animation"],
+    "title": "Add a LetterGlitch Effect to Your Astro 6 Site",
+    "link": "https://hansmartens.dev/blog/letter-glitch-astro-6",
+    "updated": "2026-05-31",
+    "slug": "letter-glitch-astro-6"
+  },
+  {
+    "tags": ["images", "3rd-party"],
+    "title": "Generate Dynamic OG Images in Astro with Orshot",
+    "link": "https://orshot.com/blog/astro-dynamic-og-images",
+    "updated": "2026-05-31",
+    "slug": "astro-dynamic-og-images"
+  },
+  {
+    "tags": ["i18n", "3rd-party"],
+    "title": "Building a Multilingual Slide System Inside Astro with Reveal.js",
+    "link": "https://xergioalex.com/blog/building-slide-system-inside-astro-revealjs/",
+    "updated": "2026-05-31",
+    "slug": "building-slide-system-inside-astro-revealjs"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Adding Webmention support to my Astro site",
+    "link": "https://frasermclean.com/posts/webmentions-comments-and-likes",
+    "updated": "2026-05-31",
+    "slug": "webmentions-comments-and-likes"
+  },
+  {
+    "tags": ["deploy"],
+    "title": "Wiring auxiliary Cloudflare workers into an Astro 6 application",
+    "link": "https://humanwhocodes.com/snippets/2026/05/astro-6-cloudflare-auxiliary-workers/",
+    "updated": "2026-05-31",
+    "slug": "astro-6-cloudflare-auxiliary-workers"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Building an Astro Blog While Exploring Fate",
+    "link": "https://jsdev.space/meet-fate-react-astro/",
+    "updated": "2026-05-31",
+    "slug": "meet-fate-react-astro"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "How to use Astro Blog as a development log (Japanese)",
+    "link": "https://2026-04-06as.vercel.app/blog/2026-05-08/",
+    "updated": "2026-05-31",
+    "slug": "how-to-use-astro-blog-as-a-development-log"
+  },
+  {
+    "tags": ["3rd-party", "API Endpoints"],
+    "title": "How to use Algolia indexes to add powerful search features to your Webflow site using webhooks via an Astro app",
+    "link": "https://webflow.com/blog/search-webflow-site-algolia",
+    "updated": "2026-05-31",
+    "slug": "search-webflow-site-algolia"
+  },
+  {
+    "tags": ["CSS", "animation"],
+    "title": "How I Built a Tech-Stack Marquee as an Astro Developer",
+    "link": "https://hansmartens.dev/blog/astro-developer-stack-marquee/",
+    "updated": "2026-06-30",
+    "slug": "astro-developer-stack-marquee"
+  },
+  {
+    "tags": ["markdown", "content-collections"],
+    "title": "How to create draft posts or pages in Astro",
+    "link": "https://themefisher.com/how-to-create-draft-post-or-page-in-astro",
+    "updated": "2026-06-30",
+    "slug": "how-to-create-draft-post-or-page-in-astro"
+  },
+  {
+    "tags": ["deploy", "SPA"],
+    "title": "How to deploy a static site, an SPA, or a full Astro app on Cloudflare Workers using the static assets feature, with a Worker for the dynamic parts.",
+    "link": "https://flaviocopes.com/cloudflare-workers-static-assets/",
+    "updated": "2026-06-30",
+    "slug": "cloudflare-workers-static-assets"
+  },
+  {
+    "tags": ["auth", "3rd-party"],
+    "title": "How I Built a Passwordless Client Portal with Astro and Moneybird",
+    "link": "https://hansmartens.dev/blog/astro-client-portal-moneybird",
+    "updated": "2026-06-30",
+    "slug": "astro-client-portal-moneybird"
+  },
+  {
+    "tags": ["3rd-party", "performance"],
+    "title": "Comments on Blog Posts — Giscus, Cusdis, or Artalk, Lazy-Loaded",
+    "link": "https://hansmartens.dev/blog/giscus-comments/",
+    "updated": "2026-07-31",
+    "slug": "comments-on-blog-posts-giscus-cusdis-or-artalk-lazy-loaded"
+  },
+  {
+    "tags": ["images"],
+    "title": "How I generate an Open Graph image for every post",
+    "link": "https://flaviocopes.com/generate-og-images-astro/",
+    "updated": "2026-07-31",
+    "slug": "generate-og-images-astro"
+  },
+  {
+    "tags": ["API Endpoints", "utilities"],
+    "title": "Dynamic sitemap.xml in Astro SSR",
+    "link": "https://flaviocopes.com/dynamic-sitemap-astro-ssr/",
+    "updated": "2026-07-31",
+    "slug": "dynamic-sitemap-astro-ssr"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "How I added Polar payments to an Astro app",
+    "link": "https://flaviocopes.com/polar-payments-astro/",
+    "updated": "2026-07-31",
+    "slug": "polar-payments-astro"
+  },
+  {
+    "tags": ["auth", "deploy"],
+    "title": "Better Auth in Astro on Cloudflare Workers",
+    "link": "https://flaviocopes.com/better-auth-astro-cloudflare/",
+    "updated": "2026-07-31",
+    "slug": "better-auth-astro-cloudflare"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Type-safe form handling in Astro with Actions: validation, spam protection, and file uploads",
+    "link": "https://www.launchfa.st/blog/astro-actions-forms",
+    "updated": "2026-07-31",
+    "slug": "astro-actions-forms"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "How to build an Astro integration",
+    "link": "https://flaviocopes.com/build-astro-integration/",
+    "updated": "2026-07-31",
+    "slug": "build-astro-integration"
+  },
+  {
+    "tags": ["performance", "deploy"],
+    "title": "How I made this Astro site build faster and cut its deploy size",
+    "link": "https://flaviocopes.com/optimize-astro-build-deploy-time/",
+    "updated": "2026-08-31",
+    "slug": "optimize-astro-build-deploy-time"
+  },
+  {
+    "tags": ["markdown", "content-collections"],
+    "title": "Rendering Remote Content in Astro Using React Components",
+    "link": "https://dev.to/kabartolo/rendering-remote-mdx-in-astro-using-react-components-3p8h",
+    "updated": "2026-08-31",
+    "slug": "rendering-remote-mdx-in-astro-using-react-components"
+  },
+  {
+    "tags": ["migration"],
+    "title": "How to Migrate a Site From Webflow to Astro",
+    "link": "https://ypakala.com/notes/en/migrate-webflow-site-to-astro/",
+    "updated": "2026-08-31",
+    "slug": "migrate-webflow-site-to-astro"
+  },
+  {
+    "tags": ["deploy"],
+    "title": "Moving my Astro blog to Laravel Cloud",
+    "link": "https://hedger.ch/posts/2026/astro-laravel-cloud",
+    "updated": "2026-08-31",
+    "slug": "astro-laravel-cloud"
+  },
+  {
+    "tags": ["auth"],
+    "title": "Members Area on an Astro 7 Website: How It Works",
+    "link": "https://hansmartens.dev/blog/members-area-astro-7/",
+    "updated": "2026-08-31",
+    "slug": "members-area-astro-7"
+  },
+  {
+    "tags": ["auth"],
+    "title": "Client Portal on an Astro 7 Website: How It Works",
+    "link": "https://hansmartens.dev/blog/client-portal-astro-7/",
+    "updated": "2026-08-31",
+    "slug": "client-portal-astro-7"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "How to create your own personal blog with Astro",
+    "link": "https://dev.to/thomasbnt/how-to-create-your-own-personal-blog-with-astro-5d7h",
+    "updated": "2026-08-31",
+    "slug": "how-to-create-your-own-personal-blog-with-astro"
+  },
+  {
+    "tags": ["3rd-party", "deploy"],
+    "title": "Webflow Cloud + Astro: A Hybrid Approach for High-Performance, Visually Editable Websites",
+    "link": "https://www.afteractive.com/blog/webflow-cloud-astro",
+    "updated": "2026-08-31",
+    "slug": "webflow-cloud-astro"
+  },
+  {
+    "tags": ["markdown"],
+    "title": "Build a documentation site with Astro and Markdown",
+    "link": "https://flaviocopes.com/astro-documentation-site/",
+    "updated": "2026-09-30",
+    "slug": "astro-documentation-site"
+  },
+  {
+    "tags": ["3rd-party"],
+    "title": "Build a contact form with Astro and Resend",
+    "link": "https://philna.sh/blog/2026/07/23/build-contact-form-astro-resend/",
+    "updated": "2026-09-30",
+    "slug": "build-contact-form-astro-resend"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Build a Docs Wayback Machine with Astro",
+    "link": "https://www.plakar.io/posts/2026-09-07/docs-wayback-machine/",
+    "updated": "2026-09-30",
+    "slug": "docs-wayback-machine"
+  },
+  {
+    "tags": ["utilities"],
+    "title": "Astro Tutorial: Make a Static Site with Interactive Components",
+    "link": "https://www.debugbear.com/blog/astro-tutorial",
+    "updated": "2026-10-31",
+    "slug": "astro-tutorial-make-a-static-site-with-interactive-components"
+  },
+  {
+    "tags": ["deploy", "utilities"],
+    "title": "Testing Old URLs on an Astro Site After the Redirect Leaves Your Application",
+    "link": "https://modernlabyrinth.com/blog/testing-legacy-urls-astro-hosting-layer",
+    "updated": "2026-10-31",
+    "slug": "testing-legacy-urls-astro-hosting-layer"
+  },
+  {
+    "tags": ["i18n"],
+    "title": "Make missing translations fail your Astro build",
+    "link": "https://dev.to/mabb0512/make-missing-translations-fail-your-astro-build-4m49",
+    "updated": "2026-10-31",
+    "slug": "make-missing-translations-fail-your-astro-build"
+  },
+  {
+    "tags": ["performance"],
+    "title": "Chasing 100 Lighthouse scores on my Astro blog",
+    "link": "https://tomekdev.com/posts/chasing-100-lighthouse-scores-on-my-astro-blog",
+    "updated": "2026-10-31",
+    "slug": "chasing-100-lighthouse-scores-on-my-astro-blog"
+  },
+  {
+    "tags": ["Starlight", "i18n"],
+    "title": "Find translation issues in Starlight using x18n",
+    "link": "https://hideoo.dev/notes/starlight-translation-issues-x18n",
+    "updated": "2026-10-31",
+    "slug": "starlight-translation-issues-x18n"
   }
 ]
