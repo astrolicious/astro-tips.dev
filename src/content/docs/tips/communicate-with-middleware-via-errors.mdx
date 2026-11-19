@@ -1,0 +1,171 @@
+---
+title: Communicate with middleware via errors
+description: Throw a custom error class or tagged Response from server-rendered pages and helpers to handle redirects and authorization cleanly in Astro middleware.
+astroRange: ">=5.0.0"
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+In an [on-demand rendered](https://docs.astro.build/en/guides/on-demand-rendering/) Astro page, you can return a `Response` directly from the page's frontmatter—for example, `return Astro.redirect("/login")`.
+
+That works well for one-off checks, but gets repetitive once you extract shared logic like page-level authentication or role checks into helper functions. Because a helper function cannot return on behalf of the page, every page ends up repeating the same guard boilerplate:
+
+```astro
+---
+const auth = requireAuth(Astro);
+if (auth instanceof Response) return auth;
+const { user } = auth;
+---
+```
+
+Because Astro executes a page's frontmatter (and [API endpoint](https://docs.astro.build/en/guides/endpoints/) handlers) inside your [middleware's](https://docs.astro.build/en/guides/middleware/) `await next()` call, you can invert this pattern: **throw a signal from your helper and catch it in middleware to return the `Response`**.
+
+This gives you two benefits:
+
+- **Cleaner page code and TypeScript narrowing:** Helpers throw when access is denied and return a narrowed, guaranteed-valid value otherwise.
+- **Centralized error handling:** Middleware can turn intentional control-flow signals into responses while letting unexpected errors flow to your logger and [`500.astro`](https://docs.astro.build/en/basics/astro-pages/#custom-500-error-page) error page.
+
+Below are two ways to implement this pattern.
+
+## Option 1: Custom error class (recommended)
+
+Wrapping the response builder in a custom `Error` subclass is the most idiomatic approach. It preserves stack traces, avoids mutating Web Standard `Response` objects, and works cleanly with linters and error-tracking tools.
+
+First, define an `ErrorWithResponse` class whose `render()` method produces the `Response` (synchronously or asynchronously):
+
+```ts title="src/lib/errors.ts"
+export class ErrorWithResponse extends Error {
+	readonly #builder: () => Response | Promise<Response>;
+
+	constructor(message: string, builder: () => Response | Promise<Response>) {
+		super(message);
+		this.name = "ErrorWithResponse";
+		this.#builder = builder;
+	}
+
+	render() {
+		return this.#builder();
+	}
+}
+```
+
+Next, catch `ErrorWithResponse` instances in your middleware and return the response they build, rethrowing everything else:
+
+```ts title="src/middleware.ts"
+import { defineMiddleware } from "astro:middleware";
+import { ErrorWithResponse } from "./lib/errors";
+
+export const onRequest = defineMiddleware(async (_context, next) => {
+	try {
+		return await next();
+	} catch (error) {
+		if (error instanceof ErrorWithResponse) {
+			return await error.render();
+		}
+
+		// Report or log unexpected errors here before rethrowing
+		throw error;
+	}
+});
+```
+
+Now your authorization helper can throw an `ErrorWithResponse` whenever a check fails, and narrow the return type when it succeeds:
+
+```ts title="src/lib/auth.ts"
+import type { APIContext } from "astro";
+import { ErrorWithResponse } from "./errors";
+
+export type AuthUser =
+	| { id: string; role: "free" }
+	| { id: string; role: "premium" }
+	| { id: string; role: "admin" };
+
+type RouteContext = Pick<APIContext, "locals" | "url" | "redirect">;
+
+export function requireRole<T extends AuthUser["role"] = "premium">(
+	{ locals, url, redirect }: RouteContext,
+	roles: T[] = ["premium"] as T[],
+) {
+	const user = locals.user;
+	if (!user || !roles.includes(user.role as T)) {
+		const loginUrl = `/login?redirect=${encodeURIComponent(url.pathname + url.search)}`;
+		throw new ErrorWithResponse("Unauthorized", () => redirect(loginUrl, 302));
+	}
+
+	return {
+		user: user as Extract<AuthUser, { role: T }>,
+	};
+}
+```
+
+<Aside type="note">
+This example assumes an earlier middleware populates `context.locals.user` and that `App.Locals` is typed in `src/env.d.ts`. See the [Astro Middleware docs](https://docs.astro.build/en/guides/middleware/#storing-data-in-contextlocals) for details.
+</Aside>
+
+In any server-rendered page, call the helper directly in the frontmatter without any `instanceof Response` checks:
+
+```astro title="src/pages/premium.astro"
+---
+import { requireRole } from "../lib/auth";
+
+// Redirects unauthorized visitors via middleware.
+// `user` is narrowed to `{ id: string; role: "premium" }`.
+const { user } = requireRole(Astro);
+---
+
+<h1>Welcome, premium member {user.id}</h1>
+```
+
+The same helper also works inside [API endpoints](https://docs.astro.build/en/guides/endpoints/), or with custom status codes like `new Response("Forbidden", { status: 403 })` or `Response.json(...)`.
+
+## Option 2: Throwing a tagged `Response`
+
+If you prefer not to introduce a custom error class, you can throw a `Response` directly—such as the one returned by `Astro.redirect()`—and attach a marker so your middleware only intercepts responses you threw intentionally.
+
+Using a `Symbol` avoids accidental property collisions:
+
+```ts title="src/lib/auth.ts"
+import type { APIContext } from "astro";
+
+export const INTERNAL_RESPONSE = Symbol("internalResponse");
+
+type RouteContext = Pick<APIContext, "locals" | "url" | "redirect">;
+
+export function requireAuth({ locals, url, redirect }: RouteContext) {
+	if (!locals.user) {
+		const loginUrl = `/login?redirect=${encodeURIComponent(url.pathname + url.search)}`;
+		throw Object.assign(redirect(loginUrl, 302), {
+			[INTERNAL_RESPONSE]: true,
+		});
+	}
+
+	return { user: locals.user };
+}
+```
+
+Then check for both `instanceof Response` and the marker in your middleware:
+
+```ts title="src/middleware.ts"
+import { defineMiddleware } from "astro:middleware";
+import { INTERNAL_RESPONSE } from "./lib/auth";
+
+export const onRequest = defineMiddleware(async (_context, next) => {
+	try {
+		return await next();
+	} catch (error) {
+		if (error instanceof Response && INTERNAL_RESPONSE in error) {
+			return error;
+		}
+
+		// Report or log unexpected errors here before rethrowing
+		throw error;
+	}
+});
+```
+
+## Things to keep in mind
+
+- **Only works in page frontmatter and API endpoints, not child components:** Astro streams HTML responses by default. Once a page's frontmatter finishes executing, `await next()` resolves and the response begins streaming. If a child `.astro` component throws during template rendering, the middleware's `try / catch` block has already finished and will not catch it. Always run checks that throw in the top-level page frontmatter or endpoint handler.
+- **Requires on-demand rendering:** Prerendered static pages are generated at build time rather than per request. Make sure routes using this pattern are server-rendered (`output: "server"` or `export const prerender = false`).
+- **Always rethrow unknown errors:** Only intercept errors you explicitly recognize so unexpected bugs are still logged and handled by Astro's error page.
+- **Ordering with `sequence()`:** When composing multiple middleware with [`sequence()`](https://docs.astro.build/en/reference/modules/astro-middleware/#sequence), place your error-catching middleware ahead of any middleware whose errors you also want it to intercept (and ensure intermediate middleware do not swallow thrown errors).
