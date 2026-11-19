@@ -1,0 +1,29 @@
+amends "package://github.com/jdx/hk/releases/download/v2.13.0/hk@2.13.0#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v2.13.0/hk@2.13.0#/Builtins.pkl"
+
+local linters = new Mapping<String, Step> {
+    ["biome"] = (Builtins.biome) {
+        glob = List("*.js", "*.mjs", "*.cjs", "*.ts", "*.mts", "*.cts", "*.jsx", "*.tsx", "*.json", "*.jsonc", "*.css", "*.astro")
+        exclude = List("examples/shadcn-ui/**")
+        check = "pnpm exec biome check {{files}}"
+        fix = "pnpm exec biome check --write {{files}}"
+    }
+    ["jactionlint"] = (Builtins.jactionlint) {
+        check = "jactionlint --profile pedantic {{files}}"
+    }
+}
+
+hooks {
+    ["pre-commit"] {
+        fix = true
+        stash = "git"
+        steps = linters
+    }
+    ["check"] {
+        steps = linters
+    }
+    ["fix"] {
+        fix = true
+        steps = linters
+    }
+}
