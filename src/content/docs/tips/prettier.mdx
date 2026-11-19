@@ -74,7 +74,7 @@ You can use Prettier CLI with your preferred package manager by adding following
 
 ## Prettier Plugin for Tailwind CSS
 
-When using the Tailwind CSS integration, there is another dev dependency for automated class sorting: [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss).
+When using Tailwind CSS (via `@tailwindcss/vite`), there is another dev dependency for automated class sorting: [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss).
 
 Start by installing `prettier-plugin-tailwindcss` using your preferred package manager:
 
@@ -96,7 +96,7 @@ Start by installing `prettier-plugin-tailwindcss` using your preferred package m
     </TabItem>
 </Tabs>
 
-Next, update the [Prettier Config](https://prettier.io/docs/en/configuration) to include following plugins. This example will use `.prettierrc`:
+Next, update the [Prettier Config](https://prettier.io/docs/en/configuration) to include the following plugins. This example will use `.prettierrc.json`:
 
 ```json title=".prettierrc.json" del={2} ins={3}
 {
@@ -106,7 +106,7 @@ Next, update the [Prettier Config](https://prettier.io/docs/en/configuration) to
     {
       "files": "*.astro",
       "options": {
-        "parser": "astro",
+        "parser": "astro"
       }
     }
   ]

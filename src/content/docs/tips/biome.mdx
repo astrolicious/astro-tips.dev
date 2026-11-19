@@ -8,12 +8,12 @@ import { Tabs, TabItem, Aside, Steps } from "@astrojs/starlight/components";
 Quickly configure Biome for your Astro project
 
 <Aside>
-With `v1.6` Biome provides partial support for Astro. Linting and Formatting is available for the [component script](https://docs.astro.build/en/basics/astro-components/#the-component-script) of any `.astro` file. To achieve formatting over component template, you might want to resort to a tool like [Prettier](/tips/prettier).
+Biome v2 supports linting and formatting `.astro` files (including component scripts, styles, and templates) via `html.experimentalFullSupportEnabled` and the `astro` linter domain. If you prefer not to enable experimental HTML formatting yet, you can combine Biome with [Prettier](/tips/prettier) for `.astro` templates.
 </Aside>
 
 <Steps>
 
-1. Install biome using your preferred package manager:
+1. Install Biome using your preferred package manager:
     <Tabs syncKey="biome">
       <TabItem label="npm" icon="seti:npm">
         ```sh
@@ -37,7 +37,7 @@ With `v1.6` Biome provides partial support for Astro. Linting and Formatting is 
       </TabItem>
     </Tabs>
 
-2. Next create the biome configuration:
+2. Next, create the Biome configuration:
 
     <Tabs syncKey="biome">
       <TabItem label="npm" icon="seti:npm">
@@ -67,42 +67,39 @@ With `v1.6` Biome provides partial support for Astro. Linting and Formatting is 
       </TabItem>
     </Tabs>
 
-3. Provide the overrides property inside biome config to support `.astro` files:
+3. Enable full `.astro` HTML support and the `astro` linter domain in `biome.json`:
 
-    ```json title="biome.json" ins={12-28} 
+    ```json title="biome.json" ins={3-5,15-17}
     {
-      "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
-      "organizeImports": {
-      "enabled": true
+      "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+      "html": {
+        "experimentalFullSupportEnabled": true
+      },
+      "assist": {
+        "actions": {
+          "source": {
+            "organizeImports": "on"
+          }
+        }
       },
       "linter": {
         "enabled": true,
+        "domains": {
+          "astro": "recommended"
+        },
         "rules": {
-          "recommended": true
+          "preset": "recommended"
         }
-      },
-      "overrides": [
-        {
-          "includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
-          "linter": {
-            "rules": {
-              "style": {
-                "useConst": "off",
-                "useImportType": "off"
-              },
-              "correctness": {
-                "noUnusedVariables": "off",
-                "noUnusedImports": "off"
-              }
-            }
-          }
-        }
-      ]
+      }
     }
     ```
 
+    <Aside type="tip">
+    If you prefer to keep `html.experimentalFullSupportEnabled` disabled and format `.astro` files with Prettier instead, add an `overrides` block for `**/*.astro` disabling `style/useConst`, `style/useImportType`, `correctness/noUnusedVariables`, and `correctness/noUnusedImports` so template usages don't trigger false positives.
+    </Aside>
+
 4. Run Biome's CLI to lint & format your project's files:
-  
+
     <Tabs syncKey="biome">
         <TabItem label="npm" icon="seti:npm">
           ```sh
@@ -137,15 +134,15 @@ In case of an existing configuration for ESLint and Prettier, you might want to 
 </Aside>
 
 
-## Adding package.json script
+## Adding package.json scripts
 
-You can use Biome CLI with your preferred package manager by adding following scripts in `package.json` of your project's directory:
+You can use Biome CLI with your preferred package manager by adding the following scripts in `package.json` of your project's directory:
 
 ```json title="package.json" ins={3-4}
 {
   "scripts": {
-    "lint": "biome lint --write .",
-    "lint:fix": "biome check --write ." // lints, formats and organizes imports
+    "lint": "biome check .",
+    "lint:fix": "biome check --write ."
   }
 }
 ```

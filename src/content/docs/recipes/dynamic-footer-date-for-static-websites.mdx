@@ -1,6 +1,6 @@
 ---
 title: Dynamic footer date for static websites
-astroRange: ^4.0.0
+astroRange: ">=4.0.0"
 ---
 
 import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
@@ -52,7 +52,7 @@ from our script. It has a default value of the fallback date of step 1.
     ```
 
 3. In our script we can get the `<span>` element by its id and update its content to the current year.
-The code differs depending on your Astro version, and whether you're using View Transitions.
+The code differs depending on your Astro version, and whether you're using View Transitions (`<ClientRouter />` in Astro 5+).
 
     <Tabs syncKey="footer">
       <TabItem label="MPA">
@@ -74,7 +74,7 @@ The code differs depending on your Astro version, and whether you're using View 
       </script>
       ```
       </TabItem>
-      <TabItem label="VT >= 4.5">
+      <TabItem label="VT >= 4.5 / ClientRouter">
       ```astro "is:inline" "data-astro-rerun"
       <script is:inline data-astro-rerun>
         document.getElementById("footer-year").innerText = new Date().getFullYear();  
@@ -123,7 +123,7 @@ The code differs depending on your Astro version, and whether you're using View 
   </script>
   ```
   </TabItem>
-  <TabItem label="VT >= 4.5">
+  <TabItem label="VT >= 4.5 / ClientRouter">
   ```astro "{year}" "is:inline" "data-astro-rerun" {2}
   ---
   const year = new Date().getFullYear()

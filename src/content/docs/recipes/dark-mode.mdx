@@ -1,6 +1,6 @@
 ---
 title: How to handle dark mode
-astroRange: ^5.0.0
+astroRange: ">=5.0.0"
 tableOfContents:
   maxHeadingLevel: 2
 ---
@@ -13,7 +13,7 @@ Having a light and dark theme is almost necessary for a website, and there are m
 This recipe will have three parts:
 1. Client side scripts that handles the theme and provides global methods available on the window.
 2. An example theme toggle [web component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
-3. How to handle styling, using and intergrating with tooling.
+3. How to handle styling, using and integrating with tooling.
 
 
 Check out an example of this recipe:
@@ -103,7 +103,7 @@ The first script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/
     </script>
     ```
     Note that our `applyTheme` function will also set the [color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme), and the way we have set this up relies on our theme names being light and dark, if you are going to extend this to have other themes you'll need to refactor this.
-4. Now, let's create the methods that will become our developer-facing API. Any function we return here will be available client-side on the global `window.theme`. Finally, we need to set the initial theme. 
+3. Now, let's create the methods that will become our developer-facing API. Any function we return here will be available client-side on the global `window.theme`. Finally, we need to set the initial theme. 
    
     ```astro
     <script is:inline data-default-theme={defaultTheme}>
@@ -137,7 +137,7 @@ The first script is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/
 
 ### `<ClientRouter/>` Considerations
 
-If you are using the [`<ClientRouter/>`](https://docs.astro.build/en/reference/components-reference/#clientrouter) component, you will need to add another `<script>` to the ThemeManger Component that will re-apply the theme when navigating between pages. This is because the `<ClientRouter/>` component will not re-run the inline script on navigation.
+If you are using the [`<ClientRouter/>`](https://docs.astro.build/en/reference/components-reference/#clientrouter) component, you will need to add another `<script>` to the ThemeManager component that will re-apply the theme when navigating between pages. This is because the `<ClientRouter/>` component will not re-run the inline script on navigation.
 
 
 ```astro title="ThemeManager.astro"
@@ -206,7 +206,7 @@ Of course we need a way to allow users to switch between themes, and for this re
 
 So, obviously, our theme solution wouldn't be complete without styling the different themes! This can be done many ways, of course, but in essence, we will be setting up CSS variables according to the `data-theme`. 
 
-One important consideration is what happens when Javascript is disabled. There are two options here: chose a default theme or respect the users system theme. In the code below we have chosen to respect the users system theme. To ship a default theme remove the media query and set the variables for `:root` to the theme you want as a default.
+One important consideration is what happens when JavaScript is disabled. There are two options here: choose a default theme or respect the user's system theme. In the code below we have chosen to respect the user's system theme. To ship a default theme remove the media query and set the variables for `:root` to the theme you want as a default.
 
 :::note[Accessibility]
 Do not rely on `color-scheme` for accessibility, for example Chrome does not style the placeholder text for `<input>` elements with proper contrast in dark mode by default.
@@ -214,25 +214,31 @@ Do not rely on `color-scheme` for accessibility, for example Chrome does not sty
 
 ```astro
 <style is:global>
-	:root,
-	:root[data-theme="light"] {
+  :root,
+  :root[data-theme="light"] {
     --background-color: #ffffff;
     --text-color: #000000;
     color-scheme: light;
-	}
+  }
 
-	@media (prefers-color-scheme: dark), :root[data-theme="dark"] {
-	:root {
-		--background-color: #333333;
-		--text-color: #ffffff;
-		color-scheme: dark;
-	}
-	}
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --background-color: #333333;
+      --text-color: #ffffff;
+      color-scheme: dark;
+    }
+  }
 
-	body {
+  :root[data-theme="dark"] {
+    --background-color: #333333;
+    --text-color: #ffffff;
+    color-scheme: dark;
+  }
+
+  body {
     background-color: var(--background-color);
     color: var(--text-color);
-	}
+  }
 </style>
 ```
 
@@ -240,7 +246,7 @@ Do not rely on `color-scheme` for accessibility, for example Chrome does not sty
 
 What would a recipe's style section be if it didn't mention [Tailwind CSS](https://tailwindcss.com/docs/dark-mode), especially when setting it up is easy as this:
 
-```ts title="tailwind.css" ins={3}
+```css title="tailwind.css" ins={2}
 @import "tailwindcss";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 ```
@@ -296,12 +302,12 @@ import ThemeSelect from "./ThemeSelect.astro";
     <!-- ... -->
     <ThemeManager defaultTheme="auto" />
   </head>
-  <main>
-    <body>
+  <body>
+    <main>
       <ThemeSelect />
       <slot />
-    </body>
-  </main>
+    </main>
+  </body>
   <style is:global>
     :root[data-theme="light"] {
       /* CSS variables */
