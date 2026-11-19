@@ -1,0 +1,671 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+import ResourceCard from '~/components/ResourceCard.astro';
+import { getResolvedResources } from '~/lib/resources';
+
+const { resources, tags, newCountAtBuild } = await getResolvedResources();
+const totalCount = resources.length;
+---
+
+<section class="not-content resource-explorer" data-resource-explorer>
+	<div class="resource-controls">
+		<div class="controls-row">
+			<div class="search-field">
+				<label for="resource-search" class="sr-only">Search external resources</label>
+				<Icon name="magnifier" size="1rem" class="search-icon" />
+				<input
+					id="resource-search"
+					type="search"
+					placeholder="Search by title, author, domain, or topic..."
+					autocomplete="off"
+					data-resource-search
+				/>
+			</div>
+
+			<div class="sort-field">
+				<label for="resource-sort" class="sort-label">Sort</label>
+				<select id="resource-sort" data-resource-sort>
+					<option value="newest">Newest first</option>
+					<option value="oldest">Oldest first</option>
+					<option value="az">Title (A–Z)</option>
+				</select>
+			</div>
+		</div>
+
+		<fieldset class="filter-pills">
+			<legend class="sr-only">Filter resources by topic</legend>
+			<button
+				type="button"
+				class="filter-pill filter-pill-new"
+				data-new-toggle
+				aria-pressed="false"
+				hidden={newCountAtBuild === 0}
+			>
+				<span>New</span>
+				<span class="pill-count" data-new-count>{newCountAtBuild}</span>
+			</button>
+
+			{
+				tags.map((tag) => (
+					<button
+						type="button"
+						class="filter-pill"
+						data-tag-toggle={tag.id}
+						aria-pressed="false"
+					>
+						<span>{tag.title}</span>
+						<span class="pill-count">{tag.count}</span>
+					</button>
+				))
+			}
+		</fieldset>
+
+		<div class="status-row">
+			<p class="results-summary" data-resource-count aria-live="polite">
+				Showing {totalCount} of {totalCount} resources
+			</p>
+
+			<div class="status-actions">
+				<button type="button" class="action-button" data-clear-filters hidden>
+					Clear filters
+				</button>
+				<button type="button" class="action-button action-button-copy" data-copy-link>
+					<Icon name="document" size="0.875rem" />
+					<span data-copy-label>Copy filter link</span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="resource-grid" data-resource-grid>
+		{resources.map((resource) => <ResourceCard resource={resource} interactiveTags />)}
+	</div>
+
+	<div class="empty-state" data-resource-empty hidden>
+		<p>No resources match the current search or filters.</p>
+		<button type="button" class="action-button" data-empty-reset>Reset filters</button>
+	</div>
+</section>
+
+<script>
+	type SortMode = 'newest' | 'oldest' | 'az';
+
+	interface CardEntry {
+		el: HTMLElement;
+		tags: Set<string>;
+		updated: number;
+		added: number;
+		title: string;
+		search: string;
+		isNew: boolean;
+		tagButtons: HTMLButtonElement[];
+	}
+
+	const LEGACY_TAG_ALIASES: Record<string, string> = {
+		authentication: 'auth',
+		'api endpoints': 'api-endpoints',
+	};
+
+	function normalizeTagParam(raw: string, validTags: Set<string>): string | null {
+		const trimmed = raw.trim().toLowerCase();
+		const aliased = LEGACY_TAG_ALIASES[trimmed] ?? trimmed.replace(/\s+/g, '-');
+		return validTags.has(aliased) ? aliased : null;
+	}
+
+	function parseSortMode(raw: string | null): SortMode {
+		if (raw === 'oldest' || raw === 'az' || raw === 'newest') {
+			return raw;
+		}
+		return 'newest';
+	}
+
+	function initResourceExplorer(root: HTMLElement): void {
+		const searchInput = root.querySelector<HTMLInputElement>('[data-resource-search]');
+		const sortSelect = root.querySelector<HTMLSelectElement>('[data-resource-sort]');
+		const newToggle = root.querySelector<HTMLButtonElement>('[data-new-toggle]');
+		const newCountEl = root.querySelector<HTMLElement>('[data-new-count]');
+		const countEl = root.querySelector<HTMLElement>('[data-resource-count]');
+		const clearBtn = root.querySelector<HTMLButtonElement>('[data-clear-filters]');
+		const copyBtn = root.querySelector<HTMLButtonElement>('[data-copy-link]');
+		const copyLabelEl = root.querySelector<HTMLElement>('[data-copy-label]');
+		const grid = root.querySelector<HTMLElement>('[data-resource-grid]');
+		const emptyState = root.querySelector<HTMLElement>('[data-resource-empty]');
+		const emptyResetBtn = root.querySelector<HTMLButtonElement>('[data-empty-reset]');
+
+		if (!grid) {
+			return;
+		}
+
+		const tagToggles = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-tag-toggle]'));
+		const validTags = new Set(
+			tagToggles
+				.map((button) => button.dataset.tagToggle)
+				.filter((id): id is string => Boolean(id))
+		);
+
+		const nowMs = Date.now();
+		let activeNewCount = 0;
+
+		const cards: CardEntry[] = Array.from(
+			grid.querySelectorAll<HTMLElement>('[data-resource-card]')
+		).map((el) => {
+			const newUntilRaw = el.dataset.newUntil;
+			const newUntilMs = newUntilRaw ? Date.parse(newUntilRaw) : Number.NaN;
+			const isNew = !Number.isNaN(newUntilMs) && nowMs <= newUntilMs;
+
+			el.dataset.isNew = isNew ? 'true' : 'false';
+			const badge = el.querySelector<HTMLElement>('[data-new-badge]');
+			if (badge) {
+				badge.hidden = !isNew;
+			}
+			if (isNew) {
+				activeNewCount += 1;
+			}
+
+			return {
+				el,
+				tags: new Set((el.dataset.tags ?? '').split(/\s+/).filter(Boolean)),
+				updated: Number(el.dataset.updated ?? 0),
+				added: Number(el.dataset.added ?? 0),
+				title: el.dataset.title ?? '',
+				search: el.dataset.search ?? '',
+				isNew,
+				tagButtons: Array.from(el.querySelectorAll<HTMLButtonElement>('[data-filter-tag]')),
+			};
+		});
+
+		if (newToggle) {
+			newToggle.hidden = activeNewCount === 0;
+		}
+		if (newCountEl) {
+			newCountEl.textContent = String(activeNewCount);
+		}
+
+		const selectedTags = new Set<string>();
+		let newOnly = false;
+		let searchQuery = '';
+		let sortMode: SortMode = 'newest';
+		let appliedSort: SortMode | null = null;
+
+		// Hydrate initial state from URL parameters
+		const params = new URLSearchParams(window.location.search);
+		for (const rawTag of params.getAll('tag')) {
+			const normalized = normalizeTagParam(rawTag, validTags);
+			if (normalized) {
+				selectedTags.add(normalized);
+			}
+		}
+
+		const initialQuery = params.get('q') ?? '';
+		if (initialQuery) {
+			searchQuery = initialQuery;
+			if (searchInput) {
+				searchInput.value = initialQuery;
+			}
+		}
+
+		sortMode = parseSortMode(params.get('sort'));
+		if (sortSelect) {
+			sortSelect.value = sortMode;
+		}
+
+		const initialNew = params.get('new');
+		if ((initialNew === '1' || initialNew === 'true') && activeNewCount > 0) {
+			newOnly = true;
+		}
+
+		function buildShareUrl(): string {
+			const nextParams = new URLSearchParams();
+			if (searchQuery.trim()) {
+				nextParams.set('q', searchQuery.trim());
+			}
+			if (sortMode !== 'newest') {
+				nextParams.set('sort', sortMode);
+			}
+			if (newOnly) {
+				nextParams.set('new', '1');
+			}
+			for (const tag of Array.from(selectedTags).sort()) {
+				nextParams.append('tag', tag);
+			}
+			const query = nextParams.toString();
+			return query
+				? `${window.location.pathname}?${query}`
+				: window.location.pathname;
+		}
+
+		function syncUrl(): void {
+			const nextPath = buildShareUrl();
+			window.history.replaceState(null, '', nextPath);
+		}
+
+		function sortCards(force: boolean): void {
+			if (!force && appliedSort === sortMode) {
+				return;
+			}
+			appliedSort = sortMode;
+
+			cards.sort((a, b) => {
+				if (sortMode === 'az') {
+					return a.title.localeCompare(b.title);
+				}
+				if (sortMode === 'oldest') {
+					const diff = a.updated - b.updated;
+					return diff !== 0 ? diff : a.title.localeCompare(b.title);
+				}
+				// newest: boost currently-new resources first, then updated desc, then added desc
+				if (a.isNew !== b.isNew) {
+					return a.isNew ? -1 : 1;
+				}
+				const updatedDiff = b.updated - a.updated;
+				if (updatedDiff !== 0) {
+					return updatedDiff;
+				}
+				const addedDiff = b.added - a.added;
+				if (addedDiff !== 0) {
+					return addedDiff;
+				}
+				return a.title.localeCompare(b.title);
+			});
+
+			const fragment = document.createDocumentFragment();
+			for (const card of cards) {
+				fragment.append(card.el);
+			}
+			grid?.append(fragment);
+		}
+
+		function applyState(shouldSyncUrl: boolean, forceSort = false): void {
+			sortCards(forceSort);
+
+			const tokens = searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
+			let visibleCount = 0;
+
+			for (const card of cards) {
+				let visible = true;
+
+				if (newOnly && !card.isNew) {
+					visible = false;
+				}
+
+				if (visible && selectedTags.size > 0) {
+					let matchesTag = false;
+					for (const tag of selectedTags) {
+						if (card.tags.has(tag)) {
+							matchesTag = true;
+							break;
+						}
+					}
+					if (!matchesTag) {
+						visible = false;
+					}
+				}
+
+				if (visible && tokens.length > 0) {
+					for (const token of tokens) {
+						if (!card.search.includes(token)) {
+							visible = false;
+							break;
+						}
+					}
+				}
+
+				card.el.hidden = !visible;
+				if (visible) {
+					visibleCount += 1;
+				}
+
+				for (const btn of card.tagButtons) {
+					const tagId = btn.dataset.filterTag;
+					btn.dataset.active = tagId && selectedTags.has(tagId) ? 'true' : 'false';
+				}
+			}
+
+			for (const toggle of tagToggles) {
+				const tagId = toggle.dataset.tagToggle;
+				toggle.setAttribute('aria-pressed', tagId && selectedTags.has(tagId) ? 'true' : 'false');
+			}
+
+			if (newToggle) {
+				newToggle.setAttribute('aria-pressed', newOnly ? 'true' : 'false');
+			}
+
+			if (countEl) {
+				countEl.textContent = `Showing ${visibleCount} of ${cards.length} resources`;
+			}
+
+			const hasActiveFilters =
+				selectedTags.size > 0 || newOnly || searchQuery.trim().length > 0;
+
+			if (clearBtn) {
+				clearBtn.hidden = !hasActiveFilters;
+			}
+
+			if (emptyState) {
+				emptyState.hidden = visibleCount > 0;
+			}
+
+			if (shouldSyncUrl) {
+				syncUrl();
+			}
+		}
+
+		function resetFilters(): void {
+			selectedTags.clear();
+			newOnly = false;
+			searchQuery = '';
+			if (searchInput) {
+				searchInput.value = '';
+			}
+			applyState(true);
+		}
+
+		searchInput?.addEventListener('input', () => {
+			searchQuery = searchInput.value;
+			applyState(true);
+		});
+
+		sortSelect?.addEventListener('change', () => {
+			sortMode = parseSortMode(sortSelect.value);
+			applyState(true);
+		});
+
+		newToggle?.addEventListener('click', () => {
+			newOnly = !newOnly;
+			applyState(true);
+		});
+
+		for (const toggle of tagToggles) {
+			toggle.addEventListener('click', () => {
+				const tagId = toggle.dataset.tagToggle;
+				if (!tagId) {
+					return;
+				}
+				if (selectedTags.has(tagId)) {
+					selectedTags.delete(tagId);
+				} else {
+					selectedTags.add(tagId);
+				}
+				applyState(true);
+			});
+		}
+
+		grid.addEventListener('click', (event) => {
+			const target = event.target;
+			if (!(target instanceof Element)) {
+				return;
+			}
+			const tagBtn = target.closest<HTMLButtonElement>('[data-filter-tag]');
+			const tagId = tagBtn?.dataset.filterTag;
+			if (!tagId || !validTags.has(tagId)) {
+				return;
+			}
+			if (selectedTags.has(tagId)) {
+				selectedTags.delete(tagId);
+			} else {
+				selectedTags.add(tagId);
+			}
+			applyState(true);
+		});
+
+		clearBtn?.addEventListener('click', resetFilters);
+		emptyResetBtn?.addEventListener('click', resetFilters);
+
+		let copyTimeoutId: number | undefined;
+		copyBtn?.addEventListener('click', async () => {
+			const absoluteUrl = `${window.location.origin}${buildShareUrl()}`;
+			try {
+				await window.navigator.clipboard.writeText(absoluteUrl);
+				if (copyLabelEl) {
+					copyLabelEl.textContent = 'Copied!';
+					window.clearTimeout(copyTimeoutId);
+					copyTimeoutId = window.setTimeout(() => {
+						copyLabelEl.textContent = 'Copy filter link';
+					}, 2000);
+				}
+			} catch {
+				// Clipboard access may be blocked in restricted contexts
+			}
+		});
+
+		applyState(false, true);
+	}
+
+	for (const explorer of document.querySelectorAll<HTMLElement>('[data-resource-explorer]')) {
+		initResourceExplorer(explorer);
+	}
+</script>
+
+<style>
+	.resource-explorer {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		margin-block-start: 1.5rem;
+	}
+
+	.resource-controls {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		padding-block: 1rem;
+		padding-inline: 1.125rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.75rem;
+		background-color: var(--sl-color-bg-nav);
+	}
+
+	.controls-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.search-field {
+		position: relative;
+		flex: 1 1 16rem;
+		display: flex;
+		align-items: center;
+	}
+
+	.search-icon {
+		position: absolute;
+		inset-inline-start: 0.75rem;
+		color: var(--sl-color-gray-3);
+		pointer-events: none;
+	}
+
+	.search-field input {
+		inline-size: 100%;
+		padding-block: 0.5rem;
+		padding-inline: 2.25rem 0.75rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		background-color: var(--sl-color-bg);
+		color: var(--sl-color-white);
+		font-family: inherit;
+		font-size: var(--sl-text-sm);
+		line-height: 1.4;
+	}
+
+	.search-field input::placeholder {
+		color: var(--sl-color-gray-3);
+	}
+
+	.search-field input:focus-visible,
+	.sort-field select:focus-visible,
+	.filter-pill:focus-visible,
+	.action-button:focus-visible {
+		outline: 2px solid var(--sl-color-text-accent);
+		outline-offset: 2px;
+	}
+
+	.sort-field {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-shrink: 0;
+	}
+
+	.sort-label {
+		font-size: var(--sl-text-xs);
+		font-weight: 600;
+		color: var(--sl-color-gray-3);
+	}
+
+	.sort-field select {
+		padding-block: 0.5rem;
+		padding-inline: 0.75rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		background-color: var(--sl-color-bg);
+		color: var(--sl-color-white);
+		font-family: inherit;
+		font-size: var(--sl-text-sm);
+		line-height: 1.4;
+		cursor: pointer;
+	}
+
+	.filter-pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		min-inline-size: 0;
+	}
+
+	.filter-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding-block: 0.3rem;
+		padding-inline: 0.7rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 9999px;
+		background-color: var(--sl-color-bg);
+		color: var(--sl-color-gray-2);
+		font-family: inherit;
+		font-size: var(--sl-text-xs);
+		font-weight: 500;
+		line-height: 1.3;
+		cursor: pointer;
+		transition:
+			border-color 0.15s ease,
+			background-color 0.15s ease,
+			color 0.15s ease;
+	}
+
+	.filter-pill[hidden] {
+		display: none;
+	}
+
+	.filter-pill:hover {
+		border-color: var(--sl-color-text-accent);
+		color: var(--sl-color-white);
+	}
+
+	.filter-pill[aria-pressed='true'] {
+		border-color: var(--sl-color-text-accent);
+		background-color: var(--sl-color-accent-low);
+		color: var(--sl-color-accent-high);
+	}
+
+	.filter-pill-new {
+		border-color: var(--sl-color-purple);
+		color: var(--sl-color-purple-high);
+	}
+
+	.filter-pill-new[aria-pressed='true'] {
+		border-color: var(--sl-color-purple);
+		background-color: var(--sl-color-purple-low);
+		color: #ffffff;
+	}
+
+	.pill-count {
+		font-size: var(--sl-text-2xs);
+		opacity: 0.8;
+	}
+
+	.status-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		padding-block-start: 0.75rem;
+		border-block-start: 1px solid var(--sl-color-hairline-light);
+	}
+
+	.results-summary {
+		margin: 0;
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-3);
+	}
+
+	.status-actions {
+		display: inline-flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.action-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding-block: 0.35rem;
+		padding-inline: 0.75rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 9999px;
+		background-color: var(--sl-color-bg);
+		color: var(--sl-color-gray-2);
+		font-family: inherit;
+		font-size: var(--sl-text-xs);
+		font-weight: 500;
+		line-height: 1.3;
+		cursor: pointer;
+		transition:
+			border-color 0.15s ease,
+			color 0.15s ease;
+	}
+
+	.action-button[hidden] {
+		display: none;
+	}
+
+	.action-button:hover {
+		border-color: var(--sl-color-text-accent);
+		color: var(--sl-color-text-accent);
+	}
+
+	.resource-grid {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+	}
+
+	.empty-state {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+		padding-block: 2.5rem;
+		padding-inline: 1.5rem;
+		border: 1px dashed var(--sl-color-gray-5);
+		border-radius: 0.75rem;
+		text-align: center;
+		color: var(--sl-color-gray-3);
+	}
+
+	.empty-state[hidden] {
+		display: none;
+	}
+
+	.empty-state p {
+		margin: 0;
+		font-size: var(--sl-text-sm);
+	}
+</style>
