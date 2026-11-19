@@ -4,7 +4,8 @@ description: Throw a custom error class or tagged Response from server-rendered 
 astroRange: ">=5.0.0"
 ---
 
-import { Aside } from "@astrojs/starlight/components";
+import { Aside, LinkCard } from "@astrojs/starlight/components";
+import AllPackageManagers from "~/components/AllPackageManagers.astro";
 
 In an [on-demand rendered](https://docs.astro.build/en/guides/on-demand-rendering/) Astro page, you can return a `Response` directly from the page's frontmatter—for example, `return Astro.redirect("/login")`.
 
@@ -25,7 +26,7 @@ This gives you two benefits:
 - **Cleaner page code and TypeScript narrowing:** Helpers throw when access is denied and return a narrowed, guaranteed-valid value otherwise.
 - **Centralized error handling:** Middleware can turn intentional control-flow signals into responses while letting unexpected errors flow to your logger and [`500.astro`](https://docs.astro.build/en/basics/astro-pages/#custom-500-error-page) error page.
 
-Below are two ways to implement this pattern.
+Below are two ways to implement this pattern yourself, plus a ready-made integration ([`@inox-tools/cut-short`](#skip-the-boilerplate-with-inox-toolscut-short)) if you would rather skip writing the middleware boilerplate.
 
 ## Option 1: Custom error class (recommended)
 
@@ -163,9 +164,47 @@ export const onRequest = defineMiddleware(async (_context, next) => {
 });
 ```
 
+## Skip the boilerplate with `@inox-tools/cut-short`
+
+If you don't want to maintain your own error class and middleware, [`@inox-tools/cut-short`](https://inox-tools.fryuni.dev/cut-short/) wraps this exact pattern into an Astro integration. Under the hood, it injects a middleware that catches an internal `CarrierError` thrown by its `endRequest()` helper.
+
+Add the integration to your project:
+
+<AllPackageManagers type="exec" pkg="astro" args="add @inox-tools/cut-short" />
+
+Then call `endRequest()` from any page frontmatter, API endpoint, middleware, or helper called by them—with either a `Response` or a sync/async builder function:
+
+```ts title="src/lib/auth.ts"
+import { endRequest } from "@it-astro:cut-short";
+import type { APIContext } from "astro";
+
+type RouteContext = Pick<APIContext, "locals" | "url" | "redirect">;
+
+export function requireAuth({ locals, url, redirect }: RouteContext) {
+	if (!locals.user) {
+		const loginUrl = `/login?redirect=${encodeURIComponent(url.pathname + url.search)}`;
+		endRequest(redirect(loginUrl, 302));
+	}
+
+	// `endRequest` returns `never`, so `locals.user` is automatically narrowed.
+	return { user: locals.user };
+}
+```
+
+Beyond eliminating the custom middleware, `@inox-tools/cut-short` also provides:
+
+- **`disableStreaming: true`:** An optional integration setting that disables HTML streaming so even child components inside a page can call `endRequest()`.
+- **`cancelPrerender()`:** Skips emitting a static file for a prerendered route during builds.
+
+<LinkCard
+	title="@inox-tools/cut-short documentation"
+	description="API reference, streaming trade-offs, and prerendering options."
+	href="https://inox-tools.fryuni.dev/cut-short/"
+/>
+
 ## Things to keep in mind
 
-- **Only works in page frontmatter and API endpoints, not child components:** Astro streams HTML responses by default. Once a page's frontmatter finishes executing, `await next()` resolves and the response begins streaming. If a child `.astro` component throws during template rendering, the middleware's `try / catch` block has already finished and will not catch it. Always run checks that throw in the top-level page frontmatter or endpoint handler.
+- **Only works in page frontmatter and API endpoints, not child components:** Astro streams HTML responses by default. Once a page's frontmatter finishes executing, `await next()` resolves and the response begins streaming. If a child `.astro` component throws during template rendering, the middleware's `try / catch` block has already finished and will not catch it. Always run checks that throw in the top-level page frontmatter or endpoint handler (unless you explicitly disable HTML streaming, e.g. via `@inox-tools/cut-short`'s `disableStreaming` option).
 - **Requires on-demand rendering:** Prerendered static pages are generated at build time rather than per request. Make sure routes using this pattern are server-rendered (`output: "server"` or `export const prerender = false`).
 - **Always rethrow unknown errors:** Only intercept errors you explicitly recognize so unexpected bugs are still logged and handled by Astro's error page.
 - **Ordering with `sequence()`:** When composing multiple middleware with [`sequence()`](https://docs.astro.build/en/reference/modules/astro-middleware/#sequence), place your error-catching middleware ahead of any middleware whose errors you also want it to intercept (and ensure intermediate middleware do not swallow thrown errors).
