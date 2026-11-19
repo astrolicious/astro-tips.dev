@@ -20,7 +20,7 @@
     "@astrojs/cloudflare": "12.6.12",
     "@astrojs/starlight": "0.34.8",
     "astro": "5.16.13",
-    "semver": "7.7.2",
+    "semver": "7.8.6",
     "sharp": "0.35.5",
     "starlight-package-managers": "0.11.0",
     "typescript": "5.8.3"
@@ -29,7 +29,7 @@
     "@biomejs/biome": "2.0.6",
     "@types/mdast": "4.0.4",
     "@types/node": "26.6.6",
-    "@types/semver": "7.7.0",
+    "@types/semver": "7.8.0",
     "mdast-util-mdx": "3.0.0",
     "mdast-util-to-markdown": "2.1.2",
     "prettier": "3.6.2",
