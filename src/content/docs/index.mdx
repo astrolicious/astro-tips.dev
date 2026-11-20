@@ -1,11 +1,20 @@
 ---
 title: Welcome to Astro tips!
-description: The place for content that goes beyond the official docs, for all Astronauts!
+description: Astro best practices, tips, and recipes from the community. Learn how to build fast, maintainable Astro sites with guides that go beyond the official docs.
+head:
+  - tag: title
+    content: Astro Tips — Astro best practices, tips & recipes
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-The place for content that goes beyond the official docs, for all Astronauts!
+The place for content that goes beyond the official docs, for all Astronauts! Astro Tips collects **Astro best practices**, in-depth recipes, and quick tips written and curated by the community.
+
+<LinkCard
+	title="Astro best practices"
+	description="A practical checklist for rendering, islands, images, scripts, content collections, middleware, SEO, and tooling."
+	href="/best-practices"
+/>
 
 <CardGrid>
 	<Card title="Find community resources" icon="magnifier">
@@ -24,7 +33,7 @@ The place for content that goes beyond the official docs, for all Astronauts!
 
 ## Why Astro Tips?
 
-[Astro Docs](https://docs.astro.build) is a wonderful resource if you have a Astro site. We do suggest to always go there first at see if you find what you are looking for. Astro Tips is born as an addition to Astro Docs, we try to gather more advanced, unusual, experimental, and community written recipes, tutorials, and quick tips.
+[Astro Docs](https://docs.astro.build) is a wonderful resource if you have a Astro site. We do suggest to always go there first at see if you find what you are looking for. Astro Tips is born as an addition to Astro Docs, we try to gather more advanced, unusual, experimental, and community written recipes, tutorials, quick tips, and [Astro best practices](/best-practices).
 
 ## How to use Astro Tips?
 
