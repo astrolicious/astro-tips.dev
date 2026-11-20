@@ -1,0 +1,111 @@
+---
+title: Post-processing rendered Markdown HTML
+description: Capture fully rendered Markdown content—including optimized Astro images—for rehype or custom HTML post-processing without breaking asset pipelines.
+astroRange: ">=5.0.0"
+compatibility:
+  rendering:
+    prerendered: supported
+    on-demand: supported
+authors:
+  - chris-swithinbank
+---
+
+import { Aside, LinkCard } from "@astrojs/starlight/components";
+import AllPackageManagers from "~/components/AllPackageManagers.astro";
+
+When you load a Markdown entry from a [Content Collection](https://docs.astro.build/en/guides/content-collections/), `entry.rendered.html` looks like the easiest way to grab its HTML string for custom post-processing—such as rewriting links, stripping tags, injecting wrapper markup, or running a per-page rehype transform.
+
+However, `entry.rendered.html` contains intermediate markup from **before** Astro's `<Content />` component resolves local and remote images. Any optimized Markdown image still carries an internal `__ASTRO_IMAGE_` placeholder attribute instead of a final `src` and `srcset`, so rendering or transforming `entry.rendered.html` directly leaves you with broken images.
+
+To get the **exact, fully processed HTML** that `<Content />` produces, render `<Content />` first and capture its output.
+
+## Option 1: Capture `<Content />` with a slot wrapper component
+
+In an Astro page or layout, create a small wrapper component that renders its default slot into a string using [`Astro.slots.render('default')`](https://docs.astro.build/en/reference/api-reference/#slotsrender), runs your post-processing logic, and emits the transformed HTML via `<Fragment set:html={...} />`:
+
+```astro title="src/components/ProcessHTML.astro"
+---
+import { rehype } from "rehype";
+
+interface Props {
+	transform?: (html: string) => string | Promise<string>;
+}
+
+const rawHTML = await Astro.slots.render("default");
+
+// Example: post-process the rendered HTML fragment with rehype
+const processedHTML = Astro.props.transform
+	? await Astro.props.transform(rawHTML)
+	: String(
+			await rehype()
+				.data("settings", { fragment: true })
+				// .use(yourRehypePlugin)
+				.process(rawHTML),
+		);
+---
+
+<Fragment set:html={processedHTML} />
+```
+
+<Aside type="note">
+Setting `fragment: true` on rehype prevents it from wrapping the slot's markup in extra `<html>`, `<head>`, and `<body>` tags. If you want to use `rehype` as shown above, install it first:
+
+<AllPackageManagers pkg="rehype" />
+</Aside>
+
+Then wrap `<Content />` inside `<ProcessHTML>` in your page:
+
+```astro title="src/pages/blog/[...slug].astro"
+---
+import { getEntry, render } from "astro:content";
+import ProcessHTML from "../../components/ProcessHTML.astro";
+
+const entry = await getEntry("blog", Astro.params.slug!);
+if (!entry) return Astro.redirect("/404");
+
+const { Content } = await render(entry);
+---
+
+<article>
+	<ProcessHTML>
+		<Content />
+	</ProcessHTML>
+</article>
+```
+
+Because `<Content />` runs inside Astro's normal component renderer before `Astro.slots.render("default")` returns, all local and remote Markdown images are already resolved to their final optimized `<img>` tags with `src`, `width`, `height`, and `srcset`.
+
+## Option 2: Render to a string outside `.astro` templates
+
+If you need faithful HTML inside an [API endpoint](https://docs.astro.build/en/guides/endpoints/) (such as an RSS feed or search index generator) where you can't wrap `<Content />` in a `.astro` component, use Astro's experimental [Container API](https://docs.astro.build/en/reference/container-reference/):
+
+```ts title="src/lib/render-entry-html.ts"
+import { type CollectionEntry, render } from "astro:content";
+import { experimental_AstroContainer as AstroContainer } from "astro/container";
+
+export async function renderEntryHTML(entry: CollectionEntry<"blog">) {
+	const container = await AstroContainer.create();
+	const { Content } = await render(entry);
+	return await container.renderToString(Content);
+}
+```
+
+You can then pass the returned HTML string into rehype, a sanitizer, or an RSS feed serializer with all Astro image assets intact.
+
+<Aside type="caution">
+`astro/container` is currently marked experimental and its API may change between Astro versions. Prefer the `Astro.slots.render()` wrapper component whenever you are already rendering inside an `.astro` page or layout.
+</Aside>
+
+## Things to keep in mind
+
+- **Prefer build-time Markdown plugins when possible:** If your transformation doesn't depend on resolved `/_astro/...` image URLs or per-request runtime context, a Sätteri `hastPlugins` or `rehypePlugins` transform runs once at compile time and avoids parsing HTML a second time.
+- **Sanitize untrusted transformations:** [`set:html`](https://docs.astro.build/en/reference/directives-reference/#sethtml) injects raw HTML without escaping. Only pass trusted HTML or output that has been sanitized.
+- **Slot buffering:** Calling `await Astro.slots.render("default")` buffers the entire slot in memory before streaming it to the client. For standard Markdown articles this overhead is negligible, but avoid wrapping an entire page layout in a slot-rendering component.
+
+## Source discussion
+
+<LinkCard
+	title="Getting Markdown entry's fully faithful HTML (as in <Content />)"
+	description="Original community support discussion introducing the Astro.slots.render() wrapper pattern."
+	href="https://github.com/withastro/community-support/discussions/10"
+/>
