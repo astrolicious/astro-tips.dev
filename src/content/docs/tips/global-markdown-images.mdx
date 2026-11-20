@@ -1,0 +1,206 @@
+---
+title: Global images directory for Markdown
+description: Reference Markdown and frontmatter images from a single shared folder using TypeScript import aliases, a Vite regex alias, or a CDN rewrite plugin.
+astroRange: ">=5.0.0"
+compatibility:
+  rendering:
+    prerendered: supported
+    on-demand: supported
+authors:
+  - andres-zapata
+---
+
+import { Aside, LinkCard, TabItem, Tabs } from "@astrojs/starlight/components";
+import AllPackageManagers from "~/components/AllPackageManagers.astro";
+
+To run Markdown images through Astro's [built-in image optimization pipeline](https://docs.astro.build/en/guides/images/), Astro expects relative paths from the `.md` file (such as `../../assets/images/cat.png`). That works for small blogs, but becomes awkward with headless or Git-based CMSs that upload every media file into a single shared folder like `src/assets/images/`.
+
+Depending on how you want authors and your CMS to reference images, you have three clean ways to point Markdown at a shared image root without losing Astro's image optimization:
+
+- **[Import aliases (`@images/cat.png`)](#option-1-typescript-import-aliases)** — simplest setup, works in both Markdown bodies and frontmatter `image()` fields.
+- **[Vite regex alias (`cat.png`)](#option-2-bare-filenames-with-a-vite-regex-alias)** — lets authors write bare filenames with no prefix at all.
+- **[CDN rewrite plugin](#option-3-rewrite-bare-filenames-to-a-remote-cdn)** — maps bare filenames to a remote image host while still optimizing and inferring dimensions.
+
+## Option 1: TypeScript import aliases
+
+Astro passes Markdown image specifiers through Vite's module resolver using the `.md` file as the importer. That means [TypeScript path aliases](https://docs.astro.build/en/guides/typescript/#import-aliases) work automatically in Markdown image syntax **and** in content collection frontmatter validated with `image()`.
+
+Add a path alias in `tsconfig.json`:
+
+```json title="tsconfig.json" ins={5-7}
+{
+	"extends": "astro/tsconfigs/strict",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@images/*": ["src/assets/images/*"]
+		}
+	}
+}
+```
+
+You can now reference images from any nested Markdown directory with the same prefix:
+
+```md title="src/content/blog/2026/my-post.md"
+---
+title: My post
+cover: "@images/cat.png"
+---
+
+![A sleeping cat](@images/cat.png)
+```
+
+Both the body image and the `cover` frontmatter image resolve to `src/assets/images/cat.png` and are emitted as optimized `/_astro/cat.*.webp` assets.
+
+## Option 2: Bare filenames with a Vite regex alias
+
+If your CMS or authors expect plain filenames like `![](cat.png)` without any prefix, Astro normally treats `cat.png` as a bare package specifier and fails the build with `ImageNotFound`.
+
+You can solve this entirely in `astro.config.mjs` with a regex Vite `resolve.alias` that maps bare image filenames (containing no `/`) to your shared images directory:
+
+```js title="astro.config.mjs"
+import { fileURLToPath } from "node:url";
+import { defineConfig } from "astro/config";
+
+const imagesDir = fileURLToPath(
+	new URL("./src/assets/images/", import.meta.url),
+);
+
+export default defineConfig({
+	vite: {
+		resolve: {
+			alias: [
+				{
+					find: /^([\w-][\w.-]*\.(?:png|jpe?g|webp|avif|gif|svg))$/i,
+					replacement: `${imagesDir}$1`,
+				},
+			],
+		},
+	},
+});
+```
+
+With this alias in place, bare filenames work in both Markdown bodies and frontmatter (`cover: cat.png`), during both `astro dev` and `astro build`:
+
+```md title="src/content/blog/2026/my-post.md"
+---
+title: My post
+cover: cat.png
+---
+
+![A sleeping cat](cat.png)
+```
+
+Because the regular expression only matches specifiers without a slash, existing relative paths (`./local.png`), root-relative `public/` paths (`/logo.svg`), and path aliases (`@images/cat.png`) keep working unchanged.
+
+<Aside type="note">
+If your filenames include spaces or subdirectories (for example `posts/cat.png`), adjust the regex pattern accordingly—or prefer Option 1 (`@images/...`) so the prefix stays explicit and cannot collide with npm package imports.
+</Aside>
+
+## Option 3: Rewrite bare filenames to a remote CDN
+
+When images live on an external CDN rather than in `src/assets/`, Markdown images whose host is listed in [`image.domains`](https://docs.astro.build/en/reference/configuration-reference/#imagedomains) (or `image.remotePatterns`) are still optimized at build time with their dimensions inferred automatically.
+
+Because user Markdown plugins run **before** Astro collects images, you can rewrite bare filenames into full CDN URLs in a small Markdown plugin and let Astro's built-in image pipeline pick them up:
+
+<Tabs syncKey="markdown-processor">
+	<TabItem label="Astro 7 (Sätteri)">
+		```js title="astro.config.mjs"
+		import { satteri } from "@astrojs/markdown-satteri";
+		import { defineConfig } from "astro/config";
+
+		const cdnPrefix = (base) => ({
+			name: "cdn-prefix",
+			image(node, ctx) {
+				if (/^[\w-][\w.-]*\.\w+$/.test(node.url)) {
+					ctx.setField(node, "url", new URL(node.url, base).href);
+				}
+			},
+		});
+
+		export default defineConfig({
+			image: {
+				domains: ["cdn.example.com"],
+			},
+			markdown: {
+				processor: satteri({
+					mdastPlugins: [cdnPrefix("https://cdn.example.com/images/")],
+				}),
+			},
+		});
+		```
+	</TabItem>
+	<TabItem label="Astro 7 (Remark)">
+		Install `@astrojs/markdown-remark` and `unist-util-visit`:
+
+		<AllPackageManagers pkg="@astrojs/markdown-remark unist-util-visit" />
+
+		```js title="astro.config.mjs"
+		import { unified } from "@astrojs/markdown-remark";
+		import { defineConfig } from "astro/config";
+		import { visit } from "unist-util-visit";
+
+		function remarkCdnPrefix(base) {
+			return () => (tree) => {
+				visit(tree, "image", (node) => {
+					if (/^[\w-][\w.-]*\.\w+$/.test(node.url)) {
+						node.url = new URL(node.url, base).href;
+					}
+				});
+			};
+		}
+
+		export default defineConfig({
+			image: {
+				domains: ["cdn.example.com"],
+			},
+			markdown: {
+				processor: unified({
+					remarkPlugins: [remarkCdnPrefix("https://cdn.example.com/images/")],
+				}),
+			},
+		});
+		```
+	</TabItem>
+	<TabItem label="Astro 5–6 (Remark)">
+		Install `unist-util-visit`:
+
+		<AllPackageManagers pkg="unist-util-visit" />
+
+		```js title="astro.config.mjs"
+		import { defineConfig } from "astro/config";
+		import { visit } from "unist-util-visit";
+
+		function remarkCdnPrefix(base) {
+			return () => (tree) => {
+				visit(tree, "image", (node) => {
+					if (/^[\w-][\w.-]*\.\w+$/.test(node.url)) {
+						node.url = new URL(node.url, base).href;
+					}
+				});
+			};
+		}
+
+		export default defineConfig({
+			image: {
+				domains: ["cdn.example.com"],
+			},
+			markdown: {
+				remarkPlugins: [remarkCdnPrefix("https://cdn.example.com/images/")],
+			},
+		});
+		```
+	</TabItem>
+</Tabs>
+
+<Aside type="caution">
+Unlike import aliases and Vite regex aliases, Markdown plugins only rewrite images inside the Markdown body—not frontmatter fields. If you also store bare CDN filenames in frontmatter, prepend the CDN base URL in your content collection schema using Zod's `.transform()` or when rendering `<Image />`.
+</Aside>
+
+## Source discussion
+
+<LinkCard
+	title="Specifying global images root directory for Markdown relative-path images"
+	description="Original community support discussion where these patterns were explored and tested on Astro 7."
+	href="https://github.com/withastro/community-support/discussions/11"
+/>
