@@ -1,0 +1,179 @@
+---
+title: Rendering videos from Markdown
+description: Convert Markdown image syntax pointing to video files into <video> elements before Astro's image pipeline runs.
+astroRange: ">=5.0.0"
+compatibility:
+  rendering:
+    prerendered: supported
+    on-demand: supported
+authors:
+  - max-koval
+---
+
+import { Aside, LinkCard, TabItem, Tabs } from "@astrojs/starlight/components";
+import AllPackageManagers from "~/components/AllPackageManagers.astro";
+
+Out of the box, Astro turns every Markdown `![](...)` node into an `<img>` tag regardless of its file extension:
+
+- A video in `public/` (`![Demo](/clip.mp4)`) compiles to `<img src="/clip.mp4" alt="Demo">`, which browsers will not play.
+- A relative path into `src/` (`![Demo](./clip.mp4)`) is even worse: Astro hands the file to its image optimization pipeline and the build fails with `MissingImageDimension`.
+
+You can fix this either with inline HTML or by teaching Astro's Markdown processor to emit `<video>` tags automatically.
+
+## Option 1: Write inline HTML (simplest)
+
+Standard Markdown supports raw HTML directly. Place the video file in `public/` (or host it on a CDN) and write a `<video>` element inline:
+
+```md title="src/content/blog/demo.md"
+<video src="/clip.mp4" controls preload="metadata"></video>
+```
+
+If you only embed videos occasionally, inline HTML requires zero configuration and gives you full control over attributes like `poster`, `muted`, `loop`, `playsinline`, and `<track>` captions.
+
+## Option 2: Convert `![](*.mp4)` automatically with a Markdown plugin
+
+If you want authors or a CMS to keep using standard Markdown image syntax (`![Demo clip](/clip.mp4)`), write a small Markdown plugin that swaps video `image` nodes for raw `<video>` HTML.
+
+Because user Markdown plugins run **before** Astro collects images for optimization, replacing the `image` node also prevents Astro from trying to process the video file as an image.
+
+<Tabs syncKey="markdown-processor">
+	<TabItem label="Astro 7 (Sätteri)">
+		Astro 7 uses [Sätteri](https://docs.astro.build/en/guides/markdown-content/) as its default Markdown processor, so you can register a lightweight `mdastPlugins` visitor directly without installing extra packages:
+
+		```js title="src/lib/satteri-video.mjs"
+		const VIDEO_EXT = /\.(mp4|webm|mov)(?:[?#].*)?$/i;
+
+		function escapeAttr(value) {
+			return value
+				.replace(/&/g, "&amp;")
+				.replace(/"/g, "&quot;")
+				.replace(/</g, "&lt;");
+		}
+
+		export const satteriVideo = {
+			name: "satteri-video",
+			image(node) {
+				if (!VIDEO_EXT.test(node.url)) return;
+				const src = escapeAttr(node.url);
+				const label = node.alt ? ` aria-label="${escapeAttr(node.alt)}"` : "";
+				return {
+					type: "html",
+					value: `<video src="${src}" controls preload="metadata"${label}></video>`,
+				};
+			},
+		};
+		```
+
+		Register the plugin in `astro.config.mjs`:
+
+		```js title="astro.config.mjs"
+		import { satteri } from "@astrojs/markdown-satteri";
+		import { defineConfig } from "astro/config";
+		import { satteriVideo } from "./src/lib/satteri-video.mjs";
+
+		export default defineConfig({
+			markdown: {
+				processor: satteri({
+					mdastPlugins: [satteriVideo],
+				}),
+			},
+		});
+		```
+	</TabItem>
+	<TabItem label="Astro 7 (Remark)">
+		If your Astro 7 project uses the unified/remark processor, install `@astrojs/markdown-remark` and `unist-util-visit`:
+
+		<AllPackageManagers pkg="@astrojs/markdown-remark unist-util-visit" />
+
+		```js title="src/lib/remark-video.mjs"
+		import { visit } from "unist-util-visit";
+
+		const VIDEO_EXT = /\.(mp4|webm|mov)(?:[?#].*)?$/i;
+
+		function escapeAttr(value) {
+			return value
+				.replace(/&/g, "&amp;")
+				.replace(/"/g, "&quot;")
+				.replace(/</g, "&lt;");
+		}
+
+		export function remarkVideo() {
+			return (tree) => {
+				visit(tree, "image", (node, index, parent) => {
+					if (!parent || index === undefined || !VIDEO_EXT.test(node.url)) {
+						return;
+					}
+					const src = escapeAttr(node.url);
+					const label = node.alt ? ` aria-label="${escapeAttr(node.alt)}"` : "";
+					parent.children[index] = {
+						type: "html",
+						value: `<video src="${src}" controls preload="metadata"${label}></video>`,
+					};
+				});
+			};
+		}
+		```
+
+		Register it through `unified()` in `astro.config.mjs`:
+
+		```js title="astro.config.mjs"
+		import { unified } from "@astrojs/markdown-remark";
+		import { defineConfig } from "astro/config";
+		import { remarkVideo } from "./src/lib/remark-video.mjs";
+
+		export default defineConfig({
+			markdown: {
+				processor: unified({
+					remarkPlugins: [remarkVideo],
+				}),
+			},
+		});
+		```
+	</TabItem>
+	<TabItem label="Astro 5–6 (Remark)">
+		Install `unist-util-visit`:
+
+		<AllPackageManagers pkg="unist-util-visit" />
+
+		Create `src/lib/remark-video.mjs` using the same plugin code shown in the **Astro 7 (Remark)** tab, then register it in `astro.config.mjs`:
+
+		```js title="astro.config.mjs"
+		import { defineConfig } from "astro/config";
+		import { remarkVideo } from "./src/lib/remark-video.mjs";
+
+		export default defineConfig({
+			markdown: {
+				remarkPlugins: [remarkVideo],
+			},
+		});
+		```
+	</TabItem>
+</Tabs>
+
+Now Markdown image syntax pointing to a video file:
+
+```md title="src/content/blog/demo.md"
+![Demo clip](/clip.mp4)
+```
+
+renders as:
+
+```html
+<p><video src="/clip.mp4" controls preload="metadata" aria-label="Demo clip"></video></p>
+```
+
+while regular images (`![Photo](./photo.png)`) continue through Astro's image pipeline untouched.
+
+## Things to keep in mind
+
+- **Store videos in `public/` or on an external CDN:** The plugin emits the URL verbatim inside an `html` node, so relative paths into `src/` will not be bundled or copied into `dist/`.
+- **Accessibility:** Mapping Markdown alt text to `aria-label` gives screen readers a concise description, while longer videos with spoken content should include `<track kind="captions">` via inline HTML or an MDX component.
+- **Need richer video embeds?** If you want custom poster frames, responsive containers, or captions without writing raw HTML in Markdown, consider [MDX](https://docs.astro.build/en/guides/integrations-guide/mdx/) with a reusable `<Video />` Astro component instead.
+
+## Source discussion
+
+<LinkCard
+	title="Rendering <video> tag from Markdown"
+	description="Original community support discussion showing the remark plugin approach and Astro 7 processor note."
+	href="https://github.com/withastro/community-support/discussions/14"
+/>
