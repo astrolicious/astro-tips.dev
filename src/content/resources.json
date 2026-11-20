@@ -191,9 +191,10 @@
   {
     "tags": ["starlight"],
     "title": "How to make your Starlight sidebar items look better",
-    "link": "https://blog.trueberryless.org/blog/starlight-sidebar-whitespace/",
+    "link": "https://felixs.dev/blog/3mpvca73jyk2x",
     "updated": "2025-06-13",
-    "slug": "how-to-make-your-starlight-sidebar-items-look-better"
+    "slug": "how-to-make-your-starlight-sidebar-items-look-better",
+    "authors": ["felix-schneider"]
   },
   {
     "tags": ["3rd-party"],
@@ -1384,9 +1385,10 @@
   {
     "tags": ["markdown"],
     "title": "How to create a Rehype plugin that turns GitHub links into beautiful badges",
-    "link": "https://blog.trueberryless.org/blog/rehype-github-badge-links/",
+    "link": "https://felixs.dev/blog/3mpvgufpwwk2m",
     "updated": "2025-08-12",
-    "slug": "rehype-github-badge-links"
+    "slug": "rehype-github-badge-links",
+    "authors": ["felix-schneider"]
   },
   {
     "tags": ["deploy"],
@@ -1503,9 +1505,10 @@
   {
     "tags": ["starlight"],
     "title": "How to create a horizontal progress indicator for your Starlight site",
-    "link": "https://blog.trueberryless.org/blog/starlight-progress-indicator/",
+    "link": "https://felixs.dev/blog/3mpvd3fc4ss23",
     "updated": "2025-06-30",
-    "slug": "starlight-progress-indicator"
+    "slug": "starlight-progress-indicator",
+    "authors": ["felix-schneider"]
   },
   {
     "tags": ["3rd-party"],
@@ -1545,9 +1548,10 @@
   {
     "tags": ["starlight"],
     "title": "How to fully autogenerate Starlight sidebars (without losing control)",
-    "link": "https://blog.trueberryless.org/blog/starlight-autogenerate-whole-sidebar/",
+    "link": "https://felixs.dev/blog/3mpvilyrxoc2f",
     "updated": "2025-08-31",
-    "slug": "starlight-autogenerate-whole-sidebar"
+    "slug": "starlight-autogenerate-whole-sidebar",
+    "authors": ["felix-schneider"]
   },
   {
     "tags": ["3rd-party"],
@@ -1755,16 +1759,18 @@
   {
     "tags": ["starlight"],
     "title": "Customize the “Overview” title of your Starlight Table of Contents",
-    "link": "https://blog.trueberryless.org/blog/starlight-customize-toc-overview-title/",
+    "link": "https://felixs.dev/blog/3mpvjajgyo22v",
     "updated": "2025-11-30",
-    "slug": "starlight-customize-toc-overview-title"
+    "slug": "starlight-customize-toc-overview-title",
+    "authors": ["felix-schneider"]
   },
   {
     "tags": ["starlight"],
     "title": "Add Additional Content to Starlight’s Table of Contents",
-    "link": "https://blog.trueberryless.org/blog/starlight-customize-toc-additional-content/",
+    "link": "https://felixs.dev/blog/3mpvkbvkhtc2u",
     "updated": "2025-11-30",
-    "slug": "starlight-customize-toc-additional-content"
+    "slug": "starlight-customize-toc-additional-content",
+    "authors": ["felix-schneider"]
   },
   {
     "tags": ["db", "performance"],
@@ -2429,5 +2435,50 @@
     "link": "https://www.scalebloom.com/blog/multi-domain-astro-netlify/",
     "updated": "2026-03-07",
     "slug": "serve-multiple-domains-from-one-astro-app-on-netlify"
+  },
+  {
+    "tags": ["starlight"],
+    "title": "A Stylish Way to Give Credit in Starlight Projects",
+    "description": "A customizable Starlight plugin that credits Starlight, Astro and the Starlight Blog, with multilingual support.",
+    "link": "https://felixs.dev/blog/3mq3ehqt2bc2w",
+    "updated": "2024-11-12",
+    "slug": "starlight-cooler-credit",
+    "authors": ["felix-schneider"]
+  },
+  {
+    "tags": ["starlight"],
+    "title": "A short history of Starlight Sidebar Topics plugins",
+    "description": "How Starlight plugins evolve, told through the case study of the Starlight Sidebar Topics plugin.",
+    "link": "https://felixs.dev/blog/3mq3efefkfs2j",
+    "updated": "2025-05-05",
+    "slug": "starlight-sidebar-topics-history",
+    "authors": ["felix-schneider"]
+  },
+  {
+    "tags": ["starlight", "css"],
+    "title": "Starlight Sidebar Topics Dropdown and List together",
+    "description": "Combine a topics list on desktop with a topics dropdown on mobile in your Starlight sidebar.",
+    "link": "https://felixs.dev/blog/3mpvcsbo2tk2x",
+    "updated": "2025-05-13",
+    "slug": "starlight-sidebar-topics-dropdown-and-list",
+    "authors": ["felix-schneider"]
+  },
+  {
+    "tags": ["content-collections", "editor"],
+    "title": "How VS Code Snippets can improve your workflow when working with Astro",
+    "description": "Use VS Code snippets to quickly insert frontmatter for Astro content collections in Markdown and MDX files.",
+    "link": "https://felixs.dev/blog/3mpvisgc65k2f",
+    "updated": "2025-10-28",
+    "slug": "vs-code-snippets-astro-frontmatter",
+    "authors": ["felix-schneider"]
+  },
+  {
+    "tags": ["markdown"],
+    "title": "Sätteri plugin that turns GitHub links into badges",
+    "description": "Build a Sätteri plugin that turns plain GitHub profile links into badge-like links with profile images.",
+    "link": "https://felixs.dev/blog/3mpvhzjwjlk2a",
+    "updated": "2026-07-05",
+    "slug": "satteri-github-badge-links",
+    "authors": ["felix-schneider"]
   }
 ]
