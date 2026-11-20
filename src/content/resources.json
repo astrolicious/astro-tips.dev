@@ -2403,5 +2403,14 @@
     "updated": "2026-11-17",
     "slug": "how-to-internationalize-an-astro-site-with-i18next-and-locize",
     "authors": ["adriano-raiano"]
+  },
+  {
+    "tags": ["markdown", "utilities"],
+    "title": "Reusing Astro's Markdown remark pipeline in a custom renderer",
+    "description": "Share a unified plugin configuration between Astro's Markdown processor and a custom createMarkdownProcessor() instance.",
+    "link": "https://github.com/withastro/community-support/discussions/16",
+    "updated": "2026-11-19",
+    "slug": "reusing-astros-markdown-remark-pipeline",
+    "authors": ["chris-swithinbank"]
   }
 ]
