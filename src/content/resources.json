@@ -2412,5 +2412,14 @@
     "updated": "2026-11-19",
     "slug": "reusing-astros-markdown-remark-pipeline",
     "authors": ["chris-swithinbank"]
+  },
+  {
+    "tags": ["markdown", "content-collections"],
+    "title": "Scoping remark and rehype plugins to specific content collections",
+    "description": "Run Markdown transforms only on selected content collections by inspecting file.path inside a plugin.",
+    "link": "https://github.com/withastro/community-support/discussions/5",
+    "updated": "2026-09-09",
+    "slug": "scoping-remark-and-rehype-plugins-per-collection",
+    "authors": ["chris-swithinbank"]
   }
 ]
