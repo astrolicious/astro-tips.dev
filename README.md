@@ -8,6 +8,10 @@ This is a community driven collection of recipes, quick tips and external commun
 2. Close an issue with a PR
 3. [Join the Discord](https://chat.astrolicious.dev/)
 
+### Editor support (JSON Schemas)
+
+Run `pnpm install` and `pnpm astro sync` (or `pnpm dev`) to generate collection JSON Schemas in `.astro/collections/`. VS Code is pre-configured in `.vscode/settings.json` to use these schemas for autocompletion and validation in `src/content/resources.json`, `src/content/tags.json`, and `src/content/authors/*.json`, as well as MDX frontmatter via Astro Content Intellisense.
+
 ### Adding yourself as an author
 
 1. Create a JSON file in `src/content/authors/<your-slug>.json` (for example `src/content/authors/jane-doe.json`):
