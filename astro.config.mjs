@@ -19,6 +19,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Astro Tips',
+			description: 'The place for content that goes beyond the official docs, for all Astronauts!',
 			logo: {
 				light: './src/assets/logo-light.svg',
 				dark: './src/assets/logo-dark.svg',
@@ -26,6 +27,13 @@ export default defineConfig({
 			},
 			customCss: ['./src/styles/custom.css'],
 			head: [
+				{
+					tag: 'meta',
+					attrs: {
+						name: 'theme-color',
+						content: '#ae1c66',
+					},
+				},
 				// https://cloud.umami.is/settings/websites/3c868d1b-5f9f-4de1-93c4-a21d4944e596
 				{
 					tag: 'script',
@@ -86,6 +94,7 @@ export default defineConfig({
 				'./src/middleware/compatibility-toc.ts',
 				'./src/middleware/authors-meta.ts',
 				'./src/middleware/resources-badge.ts',
+				'./src/middleware/og-meta.ts',
 			],
 			credits: true,
 		}),
