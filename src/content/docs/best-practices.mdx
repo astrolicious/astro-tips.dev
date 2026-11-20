@@ -1,0 +1,141 @@
+---
+title: Astro best practices
+description: A practical checklist of Astro best practices for rendering, islands, images, scripts, content collections, middleware, SEO, and tooling — with links to in-depth community tips and recipes.
+astroRange: ">=5.0.0"
+authors:
+  - alexander-niebuhr
+head:
+  - tag: title
+    content: Astro best practices — a practical checklist | Astro Tips
+---
+
+import { Aside, LinkCard, CardGrid } from "@astrojs/starlight/components";
+
+These **Astro best practices** collect the patterns our community reaches for again and again when building fast, maintainable Astro sites. Each section gives you the rule of thumb first, explains _why_ it matters, and links to a deeper tip or recipe on Astro Tips or to the relevant page in the [official Astro docs](https://docs.astro.build/).
+
+<Aside type="tip">
+Use this page as a checklist when you start a new Astro project or review an existing one. Every item is independent, so adopt the ones that fit your site.
+</Aside>
+
+## Rendering: prerender by default, go on-demand on purpose
+
+Astro prerenders every page to static HTML unless you tell it otherwise. That is the fastest, cheapest, and most cacheable output you can ship, so treat it as the default.
+
+- **Opt individual routes into on-demand rendering** with `export const prerender = false` only when they genuinely need per-request data such as cookies, sessions, or authenticated content.
+- **Use server islands** (`server:defer`) when a mostly static page needs a small personalized fragment, instead of server-rendering the whole route.
+- **Check runtime limits before you deploy.** Code that works at build time in Node.js (for example, reading files from disk or using native modules like Sharp) may not run inside an edge runtime at request time.
+
+Learn more in the official guide to [on-demand rendering](https://docs.astro.build/en/guides/on-demand-rendering/). Many pages on this site include a compatibility table showing whether a technique works for prerendered routes, on-demand routes, or both.
+
+<LinkCard title="Dynamic footer date for static websites" description="Avoid stale build-time values on prerendered pages." href="/recipes/dynamic-footer-date-for-static-websites" />
+
+## Islands: ship as little JavaScript as possible
+
+Astro renders UI framework components to HTML with zero client-side JavaScript unless you add a `client:*` directive. Keep it that way wherever you can.
+
+- **Pick the laziest directive that works:** prefer `client:visible` or `client:idle` over `client:load`, and use `client:media` for UI that only appears on certain screen sizes.
+- **Keep islands small and self-contained.** Each island hydrates independently, so framework context (React context, stores, providers) is **not** shared between islands. Wrap related interactive components in one framework component instead of composing them in an `.astro` file.
+- **Reach for a plain `<script>` before a framework** when you only need a bit of interactivity like a toggle, a dialog, or a copy button.
+
+<LinkCard title="Setting up Shadcn UI" description="Why React context breaks across islands and how to structure components so it doesn't." href="/tips/shadcn" />
+
+## Scripts: let Astro bundle them, load them lazily
+
+By default, Astro processes `<script>` tags in components: it bundles them, deduplicates them across the page, and emits them as `type="module"`.
+
+- **Keep scripts processed** unless you have a specific reason to use `is:inline`, so you get bundling, TypeScript, and deduplication for free.
+- **Use dynamic `import()`** inside a script to defer heavy code until it is actually needed (on interaction, on visibility, or behind a feature flag).
+- **Re-run setup logic after navigation** when you use the `<ClientRouter />` for view transitions, for example by listening to `astro:page-load`.
+
+<CardGrid>
+	<LinkCard title="Dynamic imports in module scripts" description="Granular control over fetch and execution order." href="/tips/script-tag-dynamic-imports" />
+	<LinkCard title="How to add GSAP" description="Use GSAP from a processed Astro script." href="/tips/how-to-add-gsap" />
+</CardGrid>
+
+## Images: use `astro:assets` and protect your Core Web Vitals
+
+Images are usually the largest bytes on a page and the most common cause of layout shift and slow Largest Contentful Paint (LCP).
+
+- **Use the `<Image />` and `<Picture />` components** from `astro:assets` for local and authorized remote images so Astro can resize, convert, and set `width` and `height` automatically.
+- **Always provide meaningful `alt` text**, and an empty `alt=""` only for purely decorative images.
+- **Don't lazy-load your LCP image.** Mark the hero image as eager and high priority; let everything below the fold lazy-load.
+- **Use lightweight placeholders** to improve perceived performance without adding client-side JavaScript.
+
+<CardGrid>
+	<LinkCard title="Adding image placeholders" description="Zero-JS dominant-color and blurred LQIP placeholders." href="/recipes/image-placeholders" />
+	<LinkCard title="Global images directory for Markdown" description="Reference images from one shared folder." href="/tips/global-markdown-images" />
+	<LinkCard title="Rendering videos from Markdown" description="Turn video links in Markdown into <video> elements." href="/tips/markdown-video" />
+</CardGrid>
+
+## Content: type-safe content collections
+
+Content collections are the recommended way to manage Markdown, MDX, JSON, or data from a CMS in Astro.
+
+- **Define a schema for every collection** in `src/content.config.ts`. Build-time validation catches missing or malformed frontmatter before it reaches production.
+- **Let the schema do the work:** use Zod's `transform`, `preprocess`, and `refine` to normalize data once, instead of repeating the same cleanup in every page.
+- **Use `reference()`** to link entries across collections (for example, posts to authors) rather than duplicating data.
+- **Post-process rendered HTML carefully.** If you need to transform Markdown output, do it in a way that keeps Astro's optimized images and assets intact.
+
+<CardGrid>
+	<LinkCard title="Leverage Zod's power" description="Use preprocess, transform, and refine in your schemas." href="/tips/leverage-zod-s-power" />
+	<LinkCard title="Post-processing rendered Markdown HTML" description="Transform rendered content without breaking the asset pipeline." href="/tips/post-process-rendered-markdown" />
+	<LinkCard title="Using web components in MDX" description="Load custom elements inside MDX content." href="/recipes/web-component-in-mdx" />
+</CardGrid>
+
+## Server logic: centralize it in middleware
+
+When parts of your site are rendered on demand, middleware is the right place for cross-cutting concerns.
+
+- **Handle authentication, redirects, and headers in `src/middleware.ts`** so every route gets consistent behavior.
+- **Pass data to pages through `Astro.locals`** rather than re-computing it in every component.
+- **Avoid repetitive guard boilerplate** in pages by throwing a well-defined error from shared helpers and translating it into a response in middleware.
+- **Validate environment variables** with `astro:env` so misconfiguration fails at startup rather than at request time.
+
+<LinkCard title="Communicate with middleware via errors" description="Handle redirects and authorization cleanly from helpers." href="/tips/communicate-with-middleware-via-errors" />
+
+## Styling and theming
+
+- **Prefer scoped `<style>` blocks** in components; reach for `is:global` or a global stylesheet only for true site-wide styles.
+- **Respect the user's color-scheme preference** and avoid a flash of the wrong theme by setting the theme in a tiny inline script before the page paints.
+- **Use the `color-scheme` CSS property** so built-in browser UI (scrollbars, form controls) matches your theme.
+
+<LinkCard title="How to handle dark mode" description="A dark mode setup that respects user preferences and works with view transitions." href="/recipes/dark-mode" />
+
+## SEO and social sharing
+
+Astro gives you full control over the HTML `<head>`, so good SEO is mostly about being consistent.
+
+- **Set `site` in `astro.config.mjs`.** Canonical URLs, sitemaps, and absolute Open Graph image URLs all depend on it.
+- **Give every page a unique `<title>` and `<meta name="description">`** that describe what the page actually covers.
+- **Generate a sitemap** with `@astrojs/sitemap` and reference it from `robots.txt`.
+- **Add Open Graph and Twitter card metadata** with a 1200×630 image so shared links render a rich preview.
+- **Use semantic HTML:** a single `<h1>`, logical heading levels, descriptive link text, and landmarks such as `<main>` and `<nav>`.
+
+<LinkCard title="Handling Open Graph images" description="Add static or generated social images with astro-og-canvas or satori-astro." href="/tips/og-images" />
+
+## Tooling: format, lint, and type-check in CI
+
+- **Run `astro check`** (or `astro sync` followed by `tsc --noEmit`) in CI to catch type errors in `.astro` files and content collections.
+- **Use a formatter and linter that understand `.astro` files**, such as Biome or Prettier with `prettier-plugin-astro`, and run them on every pull request.
+- **Keep Astro and its integrations up to date** and read the upgrade guide for each major version; most migrations are small when done regularly.
+
+<CardGrid>
+	<LinkCard title="Setting up Biome" description="Lint and format Astro projects with Biome." href="/tips/biome" />
+	<LinkCard title="Setting up Prettier" description="Format .astro files with Prettier." href="/tips/prettier" />
+</CardGrid>
+
+## Quick checklist
+
+- [ ] Pages are prerendered unless they need per-request data.
+- [ ] Interactive components use the laziest `client:*` directive possible.
+- [ ] Framework context is not expected to cross island boundaries.
+- [ ] Scripts are processed by Astro and heavy code is loaded with dynamic `import()`.
+- [ ] Images use `astro:assets`, have `alt` text, and the LCP image is not lazy-loaded.
+- [ ] Every content collection has a schema.
+- [ ] Shared server logic lives in middleware, and environment variables are validated.
+- [ ] `site` is set, and every page has a unique title, description, and Open Graph image.
+- [ ] `astro check`, a linter, and a formatter run in CI.
+
+## Contribute your own best practice
+
+Is there an Astro best practice you rely on that is missing here? [Open an issue or pull request on GitHub](https://github.com/astrolicious/astro-tips.dev) or share it in the [Astrolicious Discord](https://chat.astrolicious.dev). You can also browse hand-picked tutorials from across the web in [external resources](/external-resources).

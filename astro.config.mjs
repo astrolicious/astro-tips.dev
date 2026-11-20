@@ -19,7 +19,8 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Astro Tips',
-			description: 'The place for content that goes beyond the official docs, for all Astronauts!',
+			description:
+				'Astro best practices, tips, and recipes from the community — the place for content that goes beyond the official docs, for all Astronauts!',
 			logo: {
 				light: './src/assets/logo-light.svg',
 				dark: './src/assets/logo-dark.svg',
@@ -56,6 +57,10 @@ export default defineConfig({
 				{
 					label: 'Home',
 					link: '/',
+				},
+				{
+					label: 'Best practices',
+					link: '/best-practices',
 				},
 				{
 					label: 'Recipes',
@@ -95,6 +100,7 @@ export default defineConfig({
 				'./src/middleware/authors-meta.ts',
 				'./src/middleware/resources-badge.ts',
 				'./src/middleware/og-meta.ts',
+				'./src/middleware/structured-data.ts',
 			],
 			credits: true,
 		}),
