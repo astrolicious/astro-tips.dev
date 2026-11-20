@@ -2421,5 +2421,13 @@
     "updated": "2026-09-09",
     "slug": "scoping-remark-and-rehype-plugins-per-collection",
     "authors": ["chris-swithinbank"]
+  },
+  {
+    "tags": ["deploy", "utilities"],
+    "title": "Serve multiple domains from one Astro app on Netlify",
+    "description": "Build a multi-tenant Astro SSR app serving multiple domains from one codebase using hostname detection and per-site routing.",
+    "link": "https://www.scalebloom.com/blog/multi-domain-astro-netlify/",
+    "updated": "2026-03-07",
+    "slug": "serve-multiple-domains-from-one-astro-app-on-netlify"
   }
 ]
