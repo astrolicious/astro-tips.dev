@@ -2,6 +2,12 @@
 title: Communicate with middleware via errors
 description: Throw a custom error class or tagged Response from server-rendered pages and helpers to handle redirects and authorization cleanly in Astro middleware.
 astroRange: ">=5.0.0"
+compatibility:
+  rendering:
+    prerendered:
+      status: unsupported
+      note: Prerendered static pages are generated at build time rather than per request, so runtime middleware cannot intercept them.
+    on-demand: recommended
 ---
 
 import { Aside, LinkCard } from "@astrojs/starlight/components";

@@ -2,6 +2,19 @@
 title: Handling Open Graph images
 description: Add static or generated Open Graph images to your Astro site using astro-og-canvas or satori-astro.
 astroRange: ">=5.0.0"
+compatibility:
+  rendering:
+    prerendered:
+      status: recommended
+      note: Generates PNG social cards once at build time and serves them directly from your CDN.
+    on-demand:
+      status: supported
+      note: Supported with satori-astro (astro-og-canvas is built for static routes via getStaticPaths).
+  runtimes:
+    node: recommended
+    cloudflare:
+      status: unsupported
+      note: Native Sharp binaries cannot run inside Cloudflare Workers at request time; prerender OG images during your Node.js build or pair Satori with a WebAssembly rasterizer like @resvg/resvg-wasm.
 authors:
   - alexander-niebuhr
 ---
