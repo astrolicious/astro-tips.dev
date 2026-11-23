@@ -12,12 +12,23 @@ const DEFAULT_SITE = new URL('https://astro-tips.dev');
 export const onRequest = defineRouteMiddleware(async (context) => {
 	const { entry, head, id, siteTitle } = context.locals.starlightRoute;
 	const slug = normalizeOgSlug(id);
+	const isNotFound = slug === '404';
+
+	if (isNotFound) {
+		head.push({
+			tag: 'meta',
+			attrs: {
+				name: 'robots',
+				content: 'noindex',
+			},
+		});
+	}
 
 	const ogTypeEntry = head.find(
 		(item) => item.tag === 'meta' && item.attrs?.property === 'og:type'
 	);
 	if (ogTypeEntry?.attrs) {
-		if (slug === 'index' || slug === 'external-resources' || slug === 'authors') {
+		if (slug === 'index' || slug === 'external-resources' || slug === 'authors' || isNotFound) {
 			ogTypeEntry.attrs.content = 'website';
 		} else if (slug.startsWith('authors/')) {
 			ogTypeEntry.attrs.content = 'profile';
@@ -36,7 +47,9 @@ export const onRequest = defineRouteMiddleware(async (context) => {
 	const site = context.site ?? DEFAULT_SITE;
 	const ogImageUrl = new URL(`/og/${imageSlug}.png`, site).href;
 	const imageAlt =
-		slug === 'index' ? `${siteTitle} — ${SITE_DESCRIPTION}` : `${entry.data.title} — ${siteTitle}`;
+		imageSlug === 'index'
+			? `${siteTitle} — ${SITE_DESCRIPTION}`
+			: `${entry.data.title} — ${siteTitle}`;
 
 	head.push(
 		{

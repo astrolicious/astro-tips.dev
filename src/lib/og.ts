@@ -1,4 +1,4 @@
-import { getCollection, getEntries } from 'astro:content';
+import { getCollection } from 'astro:content';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { type SatoriAstroOGOptions, satoriAstroOG } from 'satori-astro';
@@ -10,7 +10,7 @@ export const OG_IMAGE_WIDTH = 1200;
 export const OG_IMAGE_HEIGHT = 630;
 export const SITE_TITLE = 'Astro Tips';
 export const SITE_DESCRIPTION =
-	'The place for content that goes beyond the official docs, for all Astronauts!';
+	'Astro best practices, tips, and recipes from the community — the place for content that goes beyond the official docs, for all Astronauts!';
 export const SITE_HOST = 'astro-tips.dev';
 export const THEME_COLOR = '#ae1c66';
 
@@ -183,6 +183,7 @@ export async function getOgCards(): Promise<OgCardData[]> {
 	const tipCount = allDocs.filter((doc) => doc.id.startsWith('tips/')).length;
 	const resourceCount = allResources.length;
 	const statsSummary = `${recipeCount} recipes · ${tipCount} tips · ${resourceCount} resources`;
+	const authorNameById = new Map(authorsWithCounts.map(({ author }) => [author.id, author.name]));
 
 	const cards: OgCardData[] = [];
 
@@ -202,8 +203,10 @@ export async function getOgCards(): Promise<OgCardData[]> {
 			continue;
 		}
 
-		const authorEntries = doc.data.authors ? await getEntries(doc.data.authors) : [];
-		const authorLine = formatAuthorNames(authorEntries.map((author) => author.data.name));
+		const authorNames = (doc.data.authors ?? [])
+			.map((ref) => authorNameById.get(ref.id))
+			.filter((name): name is string => Boolean(name));
+		const authorLine = formatAuthorNames(authorNames);
 		const metaBadge = doc.data.astroRange ? `Astro ${doc.data.astroRange}` : undefined;
 
 		let eyebrow = 'Guide';
@@ -267,9 +270,32 @@ export async function getOgCards(): Promise<OgCardData[]> {
 	return cards;
 }
 
+let cachedOgSlugSetPromise: Promise<Set<string>> | undefined;
+
+async function computeOgSlugSet(): Promise<Set<string>> {
+	const [allDocs, allAuthors] = await Promise.all([
+		getCollection('docs'),
+		getCollection('authors'),
+	]);
+
+	const slugs = new Set<string>(['external-resources', 'authors']);
+	for (const doc of allDocs) {
+		slugs.add(normalizeOgSlug(doc.id));
+	}
+	for (const author of allAuthors) {
+		slugs.add(`authors/${author.id}`);
+	}
+	return slugs;
+}
+
 export async function getOgSlugSet(): Promise<Set<string>> {
-	const cards = await getOgCards();
-	return new Set(cards.map((card) => card.slug));
+	if (import.meta.env.PROD) {
+		if (!cachedOgSlugSetPromise) {
+			cachedOgSlugSetPromise = computeOgSlugSet();
+		}
+		return cachedOgSlugSetPromise;
+	}
+	return computeOgSlugSet();
 }
 
 export async function renderOgImageResponse(card: OgCardData): Promise<Response> {
