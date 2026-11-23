@@ -40,26 +40,6 @@ const paragraph = (...children) => {
 };
 
 /**
- * @returns {import('mdast').ListItem}
- */
-const listItem = () => {
-	return {
-		type: 'listItem',
-		children: [
-			{
-				type: 'paragraph',
-				children: [
-					{
-						type: 'text',
-						value: 'Test',
-					},
-				],
-			},
-		],
-	};
-};
-
-/**
  * @param {string} href
  * @param {string} text
  * @returns {import('mdast').ListItem}
@@ -668,10 +648,7 @@ import DontEditWarning from '~/components/DontEditWarning.astro'
 	],
 };
 
-/**
- * @param {import('github-script').AsyncFunctionArguments} AsyncFunctionArguments
- */
-export default async ({ github, context, core }) => {
+export default async () => {
 	const markdown = toMarkdown(mdast, { extensions: [mdxToMarkdown()] });
 	mkdirSync('.tmp', { recursive: true });
 	writeFileSync('.tmp/content.mdx', markdown);
