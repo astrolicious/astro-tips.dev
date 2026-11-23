@@ -1,26 +1,57 @@
 ---
-type Props = {
-  stackblitzLink: URL;
-  githubLink: URL;
-};
+interface Props {
+	stackblitzLink: string | URL;
+	githubLink: string | URL;
+}
+
 const { stackblitzLink, githubLink } = Astro.props;
 ---
 
-<div>
-  <a href={stackblitzLink}>
-    <img
-      src="https://developer.stackblitz.com/img/open_in_stackblitz.svg"
-      alt="Open in StackBlitz"
-    />
-  </a>
-  <a href={githubLink}>
-    <img src="/view-on-github.svg" alt="View on GitHub" />
-  </a>
+<div class="not-content example-links">
+	<a href={stackblitzLink} target="_blank" rel="noopener noreferrer">
+		<img
+			src="https://developer.stackblitz.com/img/open_in_stackblitz.svg"
+			alt="Open in StackBlitz"
+			width="183"
+			height="32"
+			loading="lazy"
+			decoding="async"
+		/>
+	</a>
+	<a href={githubLink} target="_blank" rel="noopener noreferrer">
+		<img
+			src="/view-on-github.svg"
+			alt="View on GitHub"
+			width="162"
+			height="32"
+			loading="lazy"
+			decoding="async"
+		/>
+	</a>
 </div>
+
 <style>
-  div {
-    display: flex;
-    flex-direction: row;
-    column-gap: 1rem;
-  }
+	.example-links {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem 1rem;
+		margin-block: 1rem;
+	}
+
+	.example-links a {
+		display: inline-flex;
+		line-height: 0;
+		border-radius: 0.25rem;
+	}
+
+	.example-links a:focus-visible {
+		outline: 2px solid var(--sl-color-text-accent);
+		outline-offset: 2px;
+	}
+
+	.example-links img {
+		block-size: 2rem;
+		inline-size: auto;
+	}
 </style>
