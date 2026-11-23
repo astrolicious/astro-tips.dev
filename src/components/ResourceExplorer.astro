@@ -71,7 +71,7 @@ const totalCount = resources.length;
 				</button>
 				<button type="button" class="action-button action-button-copy" data-copy-link>
 					<Icon name="document" size="0.875rem" />
-					<span data-copy-label>Copy filter link</span>
+					<span data-copy-label aria-live="polite">Copy filter link</span>
 				</button>
 			</div>
 		</div>
@@ -145,13 +145,19 @@ const totalCount = resources.length;
 
 		const nowMs = Date.now();
 		let activeNewCount = 0;
+		let anyNewChanged = false;
 
 		const cards: CardEntry[] = Array.from(
 			grid.querySelectorAll<HTMLElement>('[data-resource-card]')
 		).map((el) => {
+			const wasNew = el.dataset.isNew === 'true';
 			const newUntilRaw = el.dataset.newUntil;
 			const newUntilMs = newUntilRaw ? Date.parse(newUntilRaw) : Number.NaN;
 			const isNew = !Number.isNaN(newUntilMs) && nowMs <= newUntilMs;
+
+			if (isNew !== wasNew) {
+				anyNewChanged = true;
+			}
 
 			el.dataset.isNew = isNew ? 'true' : 'false';
 			const badge = el.querySelector<HTMLElement>('[data-new-badge]');
@@ -412,23 +418,32 @@ const totalCount = resources.length;
 		emptyResetBtn?.addEventListener('click', resetFilters);
 
 		let copyTimeoutId: number | undefined;
+		const setCopyFeedback = (message: string) => {
+			if (!copyLabelEl) {
+				return;
+			}
+			copyLabelEl.textContent = message;
+			window.clearTimeout(copyTimeoutId);
+			copyTimeoutId = window.setTimeout(() => {
+				copyLabelEl.textContent = 'Copy filter link';
+			}, 2000);
+		};
+
 		copyBtn?.addEventListener('click', async () => {
 			const absoluteUrl = `${window.location.origin}${buildShareUrl()}`;
 			try {
 				await window.navigator.clipboard.writeText(absoluteUrl);
-				if (copyLabelEl) {
-					copyLabelEl.textContent = 'Copied!';
-					window.clearTimeout(copyTimeoutId);
-					copyTimeoutId = window.setTimeout(() => {
-						copyLabelEl.textContent = 'Copy filter link';
-					}, 2000);
-				}
+				setCopyFeedback('Copied!');
 			} catch {
-				// Clipboard access may be blocked in restricted contexts
+				setCopyFeedback('Copy failed');
 			}
 		});
 
-		applyState(false, true);
+		const needsInitialSort = sortMode !== 'newest' || anyNewChanged;
+		if (!needsInitialSort) {
+			appliedSort = 'newest';
+		}
+		applyState(false, needsInitialSort);
 	}
 
 	for (const explorer of document.querySelectorAll<HTMLElement>('[data-resource-explorer]')) {
@@ -581,7 +596,7 @@ const totalCount = resources.length;
 	.filter-pill-new[aria-pressed='true'] {
 		border-color: var(--sl-color-purple);
 		background-color: var(--sl-color-purple-low);
-		color: #ffffff;
+		color: var(--sl-color-purple-high);
 	}
 
 	.pill-count {
