@@ -26,6 +26,10 @@ export default defineConfig({
 				dark: './src/assets/logo-dark.svg',
 				replacesTitle: true,
 			},
+			editLink: {
+				baseUrl: 'https://github.com/astrolicious/astro-tips.dev/edit/main/',
+			},
+			lastUpdated: true,
 			customCss: ['./src/styles/custom.css'],
 			head: [
 				{
@@ -106,9 +110,6 @@ export default defineConfig({
 		}),
 	],
 	vite: {
-		build: {
-			minify: false,
-		},
 		resolve: {
 			alias: {
 				'~': resolve(dirname(fileURLToPath(import.meta.url)), './src'),
