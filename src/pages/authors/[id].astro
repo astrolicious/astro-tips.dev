@@ -31,6 +31,9 @@ const contributions = await getAuthorContributions(author.id);
 const resolvedResources = await resolveResourcesByEntries(contributions.resources);
 
 const headings: MarkdownHeading[] = [];
+if (contributions.guides.length > 0) {
+	headings.push({ depth: 2, slug: 'guides', text: 'Guides' });
+}
 if (contributions.recipes.length > 0) {
 	headings.push({ depth: 2, slug: 'recipes', text: 'Recipes' });
 }
@@ -42,6 +45,7 @@ if (contributions.resources.length > 0) {
 }
 
 const summary = formatContributionSummary({
+	guides: contributions.guides.length,
 	recipes: contributions.recipes.length,
 	tips: contributions.tips.length,
 	resources: contributions.resources.length,
@@ -104,6 +108,23 @@ const summary = formatContributionSummary({
 			}
 		</div>
 	</div>
+
+	{
+		contributions.guides.length > 0 && (
+			<>
+				<h2 id="guides">Guides</h2>
+				<CardGrid>
+					{contributions.guides.map((guide) => (
+						<LinkCard
+							title={guide.data.title}
+							href={`/${guide.id}`}
+							{...(guide.data.description ? { description: guide.data.description } : {})}
+						/>
+					))}
+				</CardGrid>
+			</>
+		)
+	}
 
 	{
 		contributions.recipes.length > 0 && (

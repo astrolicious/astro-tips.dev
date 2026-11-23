@@ -23,6 +23,7 @@ export interface ResolvedAuthor {
 }
 
 export interface AuthorContributions {
+	guides: CollectionEntry<'docs'>[];
 	recipes: CollectionEntry<'docs'>[];
 	tips: CollectionEntry<'docs'>[];
 	resources: CollectionEntry<'resources'>[];
@@ -32,6 +33,7 @@ export interface AuthorContributions {
 export interface AuthorWithCounts {
 	author: ResolvedAuthor;
 	counts: {
+		guides: number;
 		recipes: number;
 		tips: number;
 		resources: number;
@@ -150,6 +152,7 @@ export async function getAuthorContributions(authorId: string): Promise<AuthorCo
 		getCollection('resources'),
 	]);
 
+	const guides: CollectionEntry<'docs'>[] = [];
 	const recipes: CollectionEntry<'docs'>[] = [];
 	const tips: CollectionEntry<'docs'>[] = [];
 
@@ -162,9 +165,12 @@ export async function getAuthorContributions(authorId: string): Promise<AuthorCo
 			recipes.push(doc);
 		} else if (doc.id.startsWith('tips/')) {
 			tips.push(doc);
+		} else if (doc.id !== 'index' && doc.id !== '404') {
+			guides.push(doc);
 		}
 	}
 
+	guides.sort((a, b) => a.data.title.localeCompare(b.data.title));
 	recipes.sort((a, b) => a.data.title.localeCompare(b.data.title));
 	tips.sort((a, b) => a.data.title.localeCompare(b.data.title));
 
@@ -173,10 +179,11 @@ export async function getAuthorContributions(authorId: string): Promise<AuthorCo
 		.sort((a, b) => b.data.updated.getTime() - a.data.updated.getTime());
 
 	return {
+		guides,
 		recipes,
 		tips,
 		resources,
-		total: recipes.length + tips.length + resources.length,
+		total: guides.length + recipes.length + tips.length + resources.length,
 	};
 }
 
@@ -187,28 +194,37 @@ export async function getAllAuthorsWithCounts(): Promise<AuthorWithCounts[]> {
 		getCollection('resources'),
 	]);
 
-	const countsByAuthor = new Map<string, { recipes: number; tips: number; resources: number }>();
+	const countsByAuthor = new Map<
+		string,
+		{ guides: number; recipes: number; tips: number; resources: number }
+	>();
 	const getOrCreate = (id: string) => {
 		let entry = countsByAuthor.get(id);
 		if (!entry) {
-			entry = { recipes: 0, tips: 0, resources: 0 };
+			entry = { guides: 0, recipes: 0, tips: 0, resources: 0 };
 			countsByAuthor.set(id, entry);
 		}
 		return entry;
 	};
 
 	for (const doc of allDocs) {
-		const isRecipe = doc.id.startsWith('recipes/');
-		const isTip = doc.id.startsWith('tips/');
-		if (!isRecipe && !isTip) {
+		if (!doc.data.authors || doc.data.authors.length === 0) {
 			continue;
 		}
-		for (const ref of doc.data.authors ?? []) {
+		const isRecipe = doc.id.startsWith('recipes/');
+		const isTip = doc.id.startsWith('tips/');
+		const isGuide = !isRecipe && !isTip && doc.id !== 'index' && doc.id !== '404';
+		if (!isRecipe && !isTip && !isGuide) {
+			continue;
+		}
+		for (const ref of doc.data.authors) {
 			const counts = getOrCreate(ref.id);
 			if (isRecipe) {
 				counts.recipes += 1;
 			} else if (isTip) {
 				counts.tips += 1;
+			} else if (isGuide) {
+				counts.guides += 1;
 			}
 		}
 	}
@@ -222,12 +238,17 @@ export async function getAllAuthorsWithCounts(): Promise<AuthorWithCounts[]> {
 
 	return allAuthors
 		.map((entry) => {
-			const counts = countsByAuthor.get(entry.id) ?? { recipes: 0, tips: 0, resources: 0 };
+			const counts = countsByAuthor.get(entry.id) ?? {
+				guides: 0,
+				recipes: 0,
+				tips: 0,
+				resources: 0,
+			};
 			return {
 				author: resolveAuthor(entry),
 				counts: {
 					...counts,
-					total: counts.recipes + counts.tips + counts.resources,
+					total: counts.guides + counts.recipes + counts.tips + counts.resources,
 				},
 			};
 		})
@@ -240,6 +261,7 @@ export async function getAllAuthorsWithCounts(): Promise<AuthorWithCounts[]> {
 }
 
 export function formatContributionSummary(counts: {
+	guides?: number;
 	recipes: number;
 	tips: number;
 	resources: number;
@@ -250,6 +272,9 @@ export function formatContributionSummary(counts: {
 	}
 
 	const parts: string[] = [];
+	if (counts.guides && counts.guides > 0) {
+		parts.push(`${counts.guides} ${counts.guides === 1 ? 'guide' : 'guides'}`);
+	}
 	if (counts.recipes > 0) {
 		parts.push(`${counts.recipes} ${counts.recipes === 1 ? 'recipe' : 'recipes'}`);
 	}
