@@ -2480,5 +2480,13 @@
     "updated": "2026-07-05",
     "slug": "satteri-github-badge-links",
     "authors": ["felix-schneider"]
+  },
+  {
+    "tags": ["performance"],
+    "title": "Subsetting my Astro fonts at build time cut them by 40%",
+    "description": "astro-glyphcut subsets Fontsource or local fonts in the Astro build. On my site it cut 137 KB of woff2 to 82 KB and found 3 glyphs missing from Fontsource.",
+    "link": "https://celustka.dev/blog/astro-font-subsetting-build-time",
+    "updated": "2026-11-18",
+    "slug": "astro-font-subsetting-build-time"
   }
 ]
